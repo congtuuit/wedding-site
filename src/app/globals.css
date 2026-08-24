@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Balanced Luxury Wedding Palette: Pearl Ivory & Royal Ruby & Champagne Gold */
+  --color-background: #FAF7F2;   /* Warm Pearl Ivory (Clean & Soft) */
+  --color-surface: #FFFFFF;      /* Pure Crisp Card Surface */
+  --color-surface-dark: #F3ECE5; /* Soft Champagne Pearl */
+  --color-text: #280E12;         /* Deep Wine Charcoal (High Contrast & Warm) */
+  --color-muted: #6B4E53;        /* Warm Rosewood Gray (Comfortable Reading) */
+  --color-accent: #8C1425;       /* Royal Ruby Burgundy (Sang trọng & Quý phái) */
+  --color-accent-soft: #FCECEE;  /* Soft Velvet Petal Pink */
+  --color-accent-gold: #D4AF37;  /* 24K Champagne Gold */
+  --color-border: #E8DCDD;       /* Delicate Hairline Border */
+}
+
+/* Base styles & 60/120fps smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  overflow-x: hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Custom delicate scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D9B8BB;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* Selection */
+::selection {
+  background-color: #FCECEE;
+  color: #8C1425;
+}

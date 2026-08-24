@@ -1,0 +1,253 @@
+{
+  "couple": {
+    "groom": {
+      "name": "Tú Văn",
+      "fullName": "Văn Công Tú",
+      "fatherName": "Ông: Văn Công Pha",
+      "motherName": "Bà: Trần Thị Thanh Lan",
+      "role": "Trưởng Nam",
+      "hometown": "xã Bà Điểm, TP. Hồ Chí Minh"
+    },
+    "bride": {
+      "name": "Hường Nguyễn",
+      "fullName": "Nguyễn Thị Hường",
+      "fatherName": "Ông: Nguyễn Văn Dương",
+      "motherName": "Bà: Vũ Thị Chinh",
+      "role": "Út Nữ",
+      "hometown": "Cát Tiên 3, Lâm Đồng"
+    },
+    "initials": "T & H",
+    "weddingDate": "2026-12-12",
+    "weddingDateFormatted": "12 . 12 . 2026"
+  },
+  "hero": {
+    "mainPhoto": "/images/TOBI0448.webp",
+    "tagline": "Save Our Date",
+    "subTagline": "Chúng mình chính thức về chung một nhà"
+  },
+  "invitation": {
+    "headline": "Thư Mời Thành Hôn",
+    "quote": "Ngày hôm nay, chúng mình chọn nắm tay nhau, cùng bước vào những năm tháng dài rộng phía trước 🩷",
+    "messageParagraphs": [
+      "Gửi đến những người thân thương, cảm ơn bạn đã là một phần ấm áp trong hành trình của chúng mình.",
+      "Sự hiện diện và lời chúc phúc của bạn trong ngày vui này chính là món quà ý nghĩa nhất dành cho Tú & Hường."
+    ],
+    "closing": "Trân trọng kính mời!"
+  },
+  "events": [
+    {
+      "id": "event-nha-gai",
+      "category": "que",
+      "title": "LỄ GIA TIÊN & TIỆC CƯỚI NHÀ GÁI",
+      "subtitle": "Tư gia Nhà Gái (Lâm Đồng)",
+      "date": "Thứ Bảy, 10 Tháng 10 Năm 2026",
+      "time": "09:00 Sáng (Lễ Gia Tiên) - 11:30 Trưa (Khai Tiệc)",
+      "venue": "Tư Gia Nhà Gái",
+      "address": "Cát Tiên 3, Lâm Đồng",
+      "mapUrl": "https://maps.google.com/?q=C%C3%A1t+Ti%C3%AAn+L%C3%A2m+%C4%90%E1%BB%93ng",
+      "calendarTitle": "Lễ Gia Tiên & Tiệc Cưới Nhà Gái - Tú Văn & Hường Nguyễn",
+      "calendarDescription": "Lễ Gia Tiên và Tiệc Cưới tại tư gia Nhà Gái (Cát Tiên 3, Lâm Đồng)",
+      "calendarLocation": "Cát Tiên 3, Lâm Đồng",
+      "startDateIso": "2026-10-10T09:00:00+07:00",
+      "endDateIso": "2026-10-10T14:00:00+07:00"
+    },
+    {
+      "id": "event-nha-trai",
+      "category": "sg",
+      "title": "TIỆC CƯỚI NHÀ TRAI",
+      "subtitle": "TP. Hồ Chí Minh",
+      "date": "Thứ Bảy, 12 Tháng 12 Năm 2026",
+      "time": "18:00 Tối (Đón khách) - 19:00 Khai tiệc",
+      "venue": "Trung Tâm Hội Nghị & Tiệc Cưới",
+      "address": "xã Bà Điểm, TP. Hồ Chí Minh",
+      "mapUrl": "https://maps.google.com/?q=B%C3%A0+%C4%90i%E1%BB%83m+H%E1%BB%93+Ch%C3%AD+Minh",
+      "calendarTitle": "Tiệc Cưới Nhà Trai - Tú Văn & Hường Nguyễn",
+      "calendarDescription": "Tiệc cưới mừng thành hôn Tú Văn & Hường Nguyễn tại TP. Hồ Chí Minh",
+      "calendarLocation": "xã Bà Điểm, TP. Hồ Chí Minh",
+      "startDateIso": "2026-12-12T18:00:00+07:00",
+      "endDateIso": "2026-12-12T21:30:00+07:00"
+    }
+  ],
+  "timeline": [
+    {
+      "year": "2016",
+      "title": "Lần đầu gặp gỡ",
+      "subtitle": "Khởi đầu của một định mệnh ngọt ngào",
+      "description": "Khoảnh khắc ánh mắt chạm nhau giữa những ngày tháng thanh xuân rực rỡ nhất, nhen nhóm một tình cảm dịu dàng.",
+      "image": "/images/TOBI0500.webp"
+    },
+    {
+      "year": "2017",
+      "title": "Lời hẹn ước & Tỏ tình",
+      "subtitle": "Chính thức nắm tay nhau",
+      "description": "Lời tỏ tình mộc mạc nhưng chân thành đã mở ra hành trình đồng hành cùng nhau qua bao thăng trầm tuổi trẻ.",
+      "image": "/images/TOBI0527.webp"
+    },
+    {
+      "year": "2023",
+      "title": "Khoảnh khắc cầu hôn",
+      "subtitle": "Câu trả lời là 'Em đồng ý!'",
+      "description": "Dưới bầu trời lãng mạn, chiếc nhẫn được trao cùng lời hẹn ước sẽ cùng nhau đi hết chặng đường dài phía trước.",
+      "image": "/images/TOBI0656.webp"
+    },
+    {
+      "year": "2026",
+      "title": "Về chung một nhà",
+      "subtitle": "12 . 12 . 2026",
+      "description": "Sau 10 năm gắn bó, chúng mình chính thức nắm tay bước vào lễ đường thiêng liêng, viết tiếp chương mới của cuộc đời.",
+      "image": "/images/TOBI0466.webp"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "p1",
+      "src": "/images/TOBI0448.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Bên Em Là Bình Yên",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p2",
+      "src": "/images/TOBI0466.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Nụ Cười Hạnh Phúc",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p3",
+      "src": "/images/TOBI0510.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Nắm Tay Nhau Đi Khắp Thế Gian",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p4",
+      "src": "/images/TOBI0530.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Khoảnh Khắc Ngọt Ngào",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p5",
+      "src": "/images/TOBI0531.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Lời Thì Thầm Của Tình Yêu",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p6",
+      "src": "/images/TOBI0673.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Dưới Ánh Nắng Chiều",
+      "aspectRatio": "wide"
+    },
+    {
+      "id": "p7",
+      "src": "/images/TOBI0691.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Ánh Mắt Dành Riêng Cho Em",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p8",
+      "src": "/images/TOBI0706.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Nét Duyên",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p9",
+      "src": "/images/TOBI0889.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Tựa Vào Vai Anh",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p10",
+      "src": "/images/TOBI1029.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Chạm Vào Hạnh Phúc",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p11",
+      "src": "/images/TOBI1038.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Chuyện Chúng Mình",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p12",
+      "src": "/images/TOBI1052.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Mùa Yêu",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p13",
+      "src": "/images/TOBI1080.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Cùng Nhau Già Đi",
+      "aspectRatio": "wide"
+    },
+    {
+      "id": "p14",
+      "src": "/images/TOBI1179.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Vẹn Tròn",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p15",
+      "src": "/images/TOBI1263.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Hẹn Ước Trăm Năm",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p16",
+      "src": "/images/TOBI1281.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Ngày Chung Đôi",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p17",
+      "src": "/images/TOBI1291.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "Yêu Thương Đong Đầy",
+      "aspectRatio": "wide"
+    }
+  ],
+  "gift": {
+    "headline": "Hộp Mừng Cưới",
+    "subline": "Sự hiện diện của bạn là món quà quý giá nhất. Nếu bạn muốn gửi lời chúc mừng theo một cách đặc biệt hơn:",
+    "accounts": [
+      {
+        "role": "groom",
+        "title": "MỪNG CƯỚI CHÚ RỂ",
+        "ownerName": "VĂN CÔNG TÚ",
+        "bankName": "Ngân hàng TMCP Ngoại Thương (Vietcombank)",
+        "bankCode": "VCB",
+        "accountNumber": "999912122026",
+        "qrImage": "https://api.vietqr.io/image/VCB-999912122026-compact2.png?amount=0&accountName=VAN%20CONG%20TU"
+      },
+      {
+        "role": "bride",
+        "title": "MỪNG CƯỚI CÔ DÂU",
+        "ownerName": "NGUYỄN THỊ HƯỜNG",
+        "bankName": "Ngân hàng TMCP Kỹ Thương (Techcombank)",
+        "bankCode": "TCB",
+        "accountNumber": "888812122026",
+        "qrImage": "https://api.vietqr.io/image/TCB-888812122026-compact2.png?amount=0&accountName=NGUYEN%20THI%20HUONG"
+      }
+    ]
+  },
+  "music": {
+    "src": "/audio/bg-music.mp3",
+    "title": "Wedding Melody",
+    "artist": "Tú Văn & Hường Nguyễn",
+    "defaultVolume": 0.4
+  },
+  "appsheetWebhookUrl": ""
+}

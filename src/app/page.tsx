@@ -1,0 +1,152 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import weddingDataJson from "@/data/wedding.json";
+import { WeddingData } from "@/types/wedding";
+import { useGuestName } from "@/hooks/useGuestName";
+
+import { WeddingOpening } from "@/components/wedding/WeddingOpening";
+import { MusicController } from "@/components/wedding/MusicController";
+import { HeroSection } from "@/components/wedding/HeroSection";
+import { FamilySection } from "@/components/wedding/FamilySection";
+import { InvitationSection } from "@/components/wedding/InvitationSection";
+import { Countdown } from "@/components/wedding/Countdown";
+import { CoupleStory } from "@/components/wedding/CoupleStory";
+import { EventSection } from "@/components/wedding/EventSection";
+import { Gallery } from "@/components/wedding/Gallery";
+import { RSVPSection } from "@/components/wedding/RSVPSection";
+import { WishesSection } from "@/components/wedding/WishesSection";
+import { GiftSection } from "@/components/wedding/GiftSection";
+import { ThankYouSection } from "@/components/wedding/ThankYouSection";
+import { BottomNavigation } from "@/components/wedding/BottomNavigation";
+
+import { FloatingPetals } from "@/components/ui/FloatingPetals";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { BackToTop } from "@/components/ui/BackToTop";
+
+const weddingData = weddingDataJson as WeddingData;
+
+export default function WeddingPage() {
+  const { guestName, isPersonalized } = useGuestName();
+  const [hasOpenedInvitation, setHasOpenedInvitation] = useState<boolean>(false);
+
+  // Guarantee page is always at the absolute top on initial load
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
+  const handleOpenInvitation = () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+    }
+    setHasOpenedInvitation(true);
+  };
+
+  return (
+    <main className="relative min-h-screen bg-background text-textMain overflow-x-hidden">
+      {/* 1. Opening Envelope Modal Cover with Love Burst Effect */}
+      <WeddingOpening
+        couple={weddingData.couple}
+        guestName={guestName}
+        isPersonalized={isPersonalized}
+        onOpen={handleOpenInvitation}
+      />
+
+      {/* 2. Floating Ambient Rose Petals & Golden Sparkles */}
+      {hasOpenedInvitation && <FloatingPetals />}
+
+      {/* 3. Floating Background Music Controller (Visible after opening) */}
+      {hasOpenedInvitation && (
+        <MusicController
+          src={weddingData.music.src}
+          autoPlayTrigger={hasOpenedInvitation}
+        />
+      )}
+
+      {/* 4. Cinematic Hero Section */}
+      <HeroSection
+        couple={weddingData.couple}
+        heroPhoto={weddingData.hero.mainPhoto}
+        isRevealed={hasOpenedInvitation}
+      />
+
+      {/* 5. Family Section (Nhà Trai & Nhà Gái) */}
+      <ScrollReveal direction="up">
+        <FamilySection couple={weddingData.couple} />
+      </ScrollReveal>
+
+      {/* 6. Emotional Invitation Message */}
+      <ScrollReveal direction="up" delay={100}>
+        <InvitationSection
+          invitation={weddingData.invitation}
+          guestName={guestName}
+          isPersonalized={isPersonalized}
+        />
+      </ScrollReveal>
+
+      {/* 7. Live Countdown */}
+      <ScrollReveal direction="up" delay={150}>
+        <Countdown
+          targetDateIso={`${weddingData.couple.weddingDate}T08:00:00+07:00`}
+          weddingDateFormatted={weddingData.couple.weddingDateFormatted}
+        />
+      </ScrollReveal>
+
+      {/* 8. Love Story Timeline */}
+      <ScrollReveal direction="up" delay={100}>
+        <CoupleStory timeline={weddingData.timeline} />
+      </ScrollReveal>
+
+      {/* 9. Wedding Events & Google Maps & Calendar */}
+      <ScrollReveal direction="up" delay={100}>
+        <EventSection events={weddingData.events} />
+      </ScrollReveal>
+
+      {/* 10. Wedding Photo Gallery & Lightbox */}
+      <ScrollReveal direction="up" delay={100}>
+        <Gallery photos={weddingData.gallery} />
+      </ScrollReveal>
+
+      {/* 11. RSVP Confirmation Section */}
+      <ScrollReveal direction="up" delay={100}>
+        <RSVPSection
+          events={weddingData.events}
+          initialGuestName={guestName}
+          isPersonalized={isPersonalized}
+          webhookUrl={weddingData.appsheetWebhookUrl}
+        />
+      </ScrollReveal>
+
+      {/* 12. Guest Wishes Board */}
+      <ScrollReveal direction="up" delay={100}>
+        <WishesSection
+          initialGuestName={guestName}
+          isPersonalized={isPersonalized}
+          webhookUrl={weddingData.appsheetWebhookUrl}
+        />
+      </ScrollReveal>
+
+      {/* 13. Gift & QR Banking */}
+      <ScrollReveal direction="up" delay={100}>
+        <GiftSection gift={weddingData.gift} />
+      </ScrollReveal>
+
+      {/* 14. Closing Thank You Section */}
+      <ScrollReveal direction="up" delay={100}>
+        <ThankYouSection
+          couple={weddingData.couple}
+          closingPhoto={weddingData.gallery[weddingData.gallery.length - 1]?.src || "/images/TOBI1281.webp"}
+        />
+      </ScrollReveal>
+
+      {/* 15. Mobile Fixed Dock Navigation */}
+      {hasOpenedInvitation && <BottomNavigation />}
+
+      {/* 16. Floating Back To Top Button */}
+      {hasOpenedInvitation && <BackToTop />}
+    </main>
+  );
+}
