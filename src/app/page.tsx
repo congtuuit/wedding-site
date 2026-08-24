@@ -46,7 +46,7 @@ export default function WeddingPage() {
   };
 
   return (
-    <main className="relative w-full max-w-[460px] min-h-screen mx-auto bg-background text-textMain shadow-[0_0_90px_rgba(0,0,0,0.85)] border-x border-[#8C1425]/20 overflow-x-hidden">
+    <main className="relative w-full max-w-[480px] min-h-screen mx-auto bg-background text-textMain shadow-[0_0_90px_rgba(0,0,0,0.85)] border-x border-[#8C1425]/15 overflow-x-hidden">
       {/* 1. Opening Envelope Modal Cover with Love Burst Effect */}
       <WeddingOpening
         couple={weddingData.couple}

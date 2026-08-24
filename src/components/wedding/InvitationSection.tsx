@@ -15,54 +15,54 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({
   isPersonalized,
 }) => {
   return (
-    <section id="invitation" className="w-full py-20 px-4 bg-surface text-textMain relative overflow-hidden">
+    <section id="invitation" className="w-full py-16 px-4 bg-surface text-textMain relative overflow-hidden">
       {/* Delicate background ambient glows */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#8C1425]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-80 h-80 bg-[#8C1425]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-3xl mx-auto text-center relative z-10 space-y-8">
+      <div className="max-w-xl mx-auto text-center relative z-10 space-y-6">
         {/* Header */}
         <div>
-          <span className="text-xs uppercase font-sans tracking-[0.35em] text-accent font-semibold">
+          <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-semibold">
             Trân Trọng Kính Mời
           </span>
-          <h2 className="font-playfair text-3xl sm:text-5xl text-textMain font-normal tracking-wide mt-2">
+          <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-1.5">
             {invitation.headline}
           </h2>
-          <SectionDivider variant="botanical" />
+          <SectionDivider variant="botanical" className="my-4" />
         </div>
 
         {/* Personalized Guest Calling */}
-        <div className="inline-block py-2.5 px-7 rounded-full bg-background border border-borderLight shadow-sm">
-          <p className="font-playfair text-lg sm:text-xl text-[#8C1425] font-medium tracking-wide">
+        <div className="inline-block py-2 px-6 rounded-full bg-background border border-borderLight shadow-sm">
+          <p className="font-heading text-base sm:text-lg text-[#8C1425] font-semibold tracking-wide">
             {isPersonalized ? `Kính gửi: ${guestName}` : `Thân gửi: ${guestName}`}
           </p>
         </div>
 
         {/* Emotional Quote Block */}
-        <div className="relative py-7 px-6 sm:px-12 bg-background/80 backdrop-blur-sm rounded-3xl border border-borderLight shadow-[0_6px_30px_rgba(140,20,37,0.04)]">
-          <span className="font-serif text-5xl sm:text-6xl text-[#D4AF37]/40 absolute -top-4 left-6 select-none">
+        <div className="relative py-6 px-6 bg-background/90 backdrop-blur-sm rounded-3xl border border-borderLight shadow-[0_4px_20px_rgba(140,20,37,0.04)]">
+          <span className="font-serif text-4xl text-[#D4AF37]/50 absolute -top-3 left-4 select-none">
             “
           </span>
-          <p className="font-playfair italic text-lg sm:text-2xl text-textMain/90 leading-relaxed max-w-xl mx-auto">
+          <p className="font-sans italic text-sm sm:text-base text-textMain/90 leading-relaxed max-w-md mx-auto">
             {invitation.quote}
           </p>
-          <span className="font-serif text-5xl sm:text-6xl text-[#D4AF37]/40 absolute -bottom-8 right-6 select-none">
+          <span className="font-serif text-4xl text-[#D4AF37]/50 absolute -bottom-6 right-4 select-none">
             ”
           </span>
         </div>
 
         {/* Body Paragraphs */}
-        <div className="space-y-4 max-w-xl mx-auto text-sm sm:text-base text-textMuted font-sans leading-relaxed">
+        <div className="space-y-3 text-xs sm:text-sm text-textMuted font-sans leading-relaxed">
           {invitation.messageParagraphs.map((para, idx) => (
             <p key={idx}>{para}</p>
           ))}
         </div>
 
         {/* Closing */}
-        <div className="pt-4 flex flex-col items-center gap-2">
-          <Heart className="w-5 h-5 text-[#8C1425] fill-[#8C1425]/20 animate-pulse-slow" />
-          <p className="font-playfair text-xl sm:text-2xl text-textMain tracking-wide">
+        <div className="pt-2 flex flex-col items-center gap-1.5">
+          <Heart className="w-4 h-4 text-[#8C1425] fill-[#8C1425]/20 animate-pulse-slow" />
+          <p className="font-heading text-base sm:text-lg text-textMain font-medium tracking-wide">
             {invitation.closing}
           </p>
         </div>

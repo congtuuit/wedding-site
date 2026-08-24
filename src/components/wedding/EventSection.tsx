@@ -14,22 +14,22 @@ export const EventSection: React.FC<EventSectionProps> = ({ events }) => {
   const { filter, setFilter, filteredEvents } = useEventFilter(events);
 
   return (
-    <section id="events" className="w-full py-20 px-4 bg-background text-textMain">
+    <section id="events" className="w-full py-16 px-4 bg-background text-textMain">
       <div className="max-w-4xl mx-auto text-center">
-        <span className="text-xs uppercase font-sans tracking-[0.35em] text-accent font-semibold">
+        <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-semibold">
           Thông Tin Sự Kiện
         </span>
-        <h2 className="font-serif text-3xl sm:text-5xl text-textMain font-normal tracking-wide mt-2">
+        <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-2">
           Thời Gian & Địa Điểm
         </h2>
 
-        <SectionDivider variant="botanical" />
+        <SectionDivider variant="botanical" className="my-4" />
 
         {/* Filter Switcher */}
-        <div className="inline-flex items-center p-1.5 rounded-full bg-surface border border-borderLight mb-12 shadow-sm">
+        <div className="inline-flex flex-wrap justify-center gap-1 p-1 rounded-2xl bg-surface border border-borderLight mb-8 shadow-sm">
           <button
             onClick={() => setFilter("all")}
-            className={`px-4 sm:px-6 py-2 rounded-full text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[40px] ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[36px] ${
               filter === "all"
                 ? "bg-accent text-white font-medium shadow-sm"
                 : "text-textMuted hover:text-textMain"
@@ -39,28 +39,28 @@ export const EventSection: React.FC<EventSectionProps> = ({ events }) => {
           </button>
           <button
             onClick={() => setFilter("sg")}
-            className={`px-4 sm:px-6 py-2 rounded-full text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[40px] ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[36px] ${
               filter === "sg"
                 ? "bg-accent text-white font-medium shadow-sm"
                 : "text-textMuted hover:text-textMain"
             }`}
           >
-            Tiệc Nhà Trai (12.12)
+            Nhà Trai (12.12)
           </button>
           <button
             onClick={() => setFilter("que")}
-            className={`px-4 sm:px-6 py-2 rounded-full text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[40px] ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[36px] ${
               filter === "que"
                 ? "bg-accent text-white font-medium shadow-sm"
                 : "text-textMuted hover:text-textMain"
             }`}
           >
-            Lễ & Tiệc Nhà Gái (10.10)
+            Nhà Gái (10.10)
           </button>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Event Cards (Clean vertical full-width stack) */}
+        <div className="flex flex-col gap-6 text-left">
           {filteredEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}

@@ -26,7 +26,8 @@
     { "task": "Enlarged QR Code size (240px on card, 340px in modal) for effortless scanning", "status": "done" },
     { "task": "Arranged 'Sao Chép STK' and 'Tải Mã QR' buttons on 1 single line across all devices", "status": "done" },
     { "task": "Integrated `yet-another-react-lightbox` with smooth swipe gestures, thumbnail filmstrip, and pinch zoom", "status": "done" },
-    { "task": "Locked website max-width to Fixed Mobile Frame (max-w-[460px]) on tablets and desktop monitors", "status": "done" }
+    { "task": "Locked website max-width to Fixed Mobile Frame (max-w-[480px]) on tablets and desktop monitors", "status": "done" },
+    { "task": "Fine-tuned all sections (GiftSection, EventSection, Story, Typography) and bottom navigation dock for flawless mobile-frame desktop rendering", "status": "done" }
   ],
   "decisions_made": [
     {

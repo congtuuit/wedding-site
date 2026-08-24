@@ -13,7 +13,7 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
   closingPhoto,
 }) => {
   return (
-    <section className="w-full py-24 px-4 bg-surface text-textMain text-center relative overflow-hidden">
+    <section className="w-full pt-20 pb-32 px-4 bg-surface text-textMain text-center relative overflow-hidden">
       <div className="max-w-3xl mx-auto space-y-8">
         {/* Heart icon */}
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/10 text-accent mx-auto">
@@ -22,10 +22,10 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
 
         {/* Headline */}
         <div className="space-y-2">
-          <h2 className="font-serif text-3xl sm:text-5xl text-textMain font-normal tracking-wide">
+          <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide">
             Thank You!
           </h2>
-          <p className="font-serif text-xl sm:text-2xl text-accentGold font-light italic">
+          <p className="font-sans text-sm sm:text-base text-accentGold font-medium italic">
             Cảm ơn bạn đã luôn yêu thương & đồng hành cùng chúng mình
           </p>
         </div>

@@ -78,17 +78,17 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
     <section id="rsvp" className="w-full py-20 px-4 bg-background text-textMain relative overflow-hidden">
       <div className="max-w-2xl mx-auto text-center">
         {/* Header */}
-        <span className="text-xs uppercase font-sans tracking-[0.35em] text-accent font-semibold">
+        <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-semibold">
           Xác Nhận Tham Dự
         </span>
-        <h2 className="font-serif text-3xl sm:text-5xl text-textMain font-normal tracking-wide mt-2">
+        <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-1.5">
           Sổ Đăng Ký Khách Mời
         </h2>
-        <p className="text-xs sm:text-sm text-textMuted font-sans mt-2">
+        <p className="text-xs text-textMuted font-sans mt-1.5">
           Để chuẩn bị đón tiếp chu đáo nhất, xin vui lòng phản hồi trước ngày cưới
         </p>
 
-        <SectionDivider variant="botanical" />
+        <SectionDivider variant="botanical" className="my-4" />
 
         {/* Success State */}
         {isSubmitted ? (

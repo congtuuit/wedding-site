@@ -53,17 +53,17 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
     <section id="wishes" className="w-full py-20 px-4 bg-surface text-textMain relative overflow-hidden">
       <div className="max-w-4xl mx-auto text-center">
         {/* Header */}
-        <span className="text-xs uppercase font-sans tracking-[0.35em] text-accent font-semibold">
+        <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-semibold">
           Sổ Lưu Bút
         </span>
-        <h2 className="font-serif text-3xl sm:text-5xl text-textMain font-normal tracking-wide mt-2">
+        <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-1.5">
           Gửi Lời Chúc Phúc
         </h2>
-        <p className="text-xs sm:text-sm text-textMuted font-sans mt-2">
-          Những lời chúc ngọt ngào của bạn sẽ là kỷ niệm vô giá của chúng mình
+        <p className="text-xs text-textMuted font-sans max-w-md mx-auto mt-1.5">
+          Từng lời chúc của bạn là món quà ý nghĩa nhất cho ngày trọng đại
         </p>
 
-        <SectionDivider variant="botanical" />
+        <SectionDivider variant="botanical" className="my-4" />
 
         {/* Submit Wish Box */}
         <div className="max-w-xl mx-auto mt-10 p-6 sm:p-8 rounded-3xl bg-background border border-borderLight shadow-sm text-left">
