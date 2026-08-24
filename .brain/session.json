@@ -1,0 +1,49 @@
+{
+  "updated_at": "2026-08-24T23:25:00Z",
+  "working_on": {
+    "feature": "Wedding Website Full Optimization & Feature Set",
+    "status": "completed",
+    "current_state": "All requested features, UI polishes, typography updates, QR automation CLI, and mobile frame locking have been successfully completed and verified."
+  },
+  "completed_tasks": [
+    { "task": "Initial Next.js 15 App Router Wedding Site Setup", "status": "done" },
+    { "task": "EXIF Auto-Orientation & 95.4% WebP Sharp Image Optimization (20 photos)", "status": "done" },
+    { "task": "Editorial Masonry Gallery with Fullscreen Lightbox & 8-photo preview", "status": "done" },
+    { "task": "Cinematic Game Loading Bar & Top-Bottom Split Curtain Reveal Animation", "status": "done" },
+    { "task": "Royal Ruby Burgundy (#8C1425), Champagne Gold (#D4AF37) & Pearl Ivory (#FAF7F2) Color Palette", "status": "done" },
+    { "task": "Staggered Cinematic Typography Entrance Animations in HeroSection", "status": "done" },
+    { "task": "Artistic Fixed Sparkle Star Constellation (20 points) across card and background", "status": "done" },
+    { "task": "60fps/120fps GPU Hardware-Accelerated Scrolling & Preload Optimization", "status": "done" },
+    { "task": "Compact Mini Back-To-Top Button with Smooth Scroll", "status": "done" },
+    { "task": "Default Scroll Reset to Absolute Top (0, 0) upon opening invitation", "status": "done" },
+    { "task": "Modern Sans-Serif Typography (Plus Jakarta Sans & Be Vietnam Pro) for clean modern reading", "status": "done" },
+    { "task": "Romantic Graceful Cursive Script (Alex Brush) for Groom & Bride Names", "status": "done" },
+    { "task": "Refined & Compact Font Sizes for Family Information Section", "status": "done" },
+    { "task": "Updated Story Section title to 'Hành Trình Yêu Thương' with light delicate weight", "status": "done" },
+    { "task": "Generated Official VietQR Codes for Groom (VPBank: 38689999996) & Bride (Techcombank: 19039619769011)", "status": "done" },
+    { "task": "Created Automated CLI Script (`npm run update:qr`) for instant bank & QR updates with custom transfer memos", "status": "done" },
+    { "task": "Added QR Code Download Feature on cards and within enlarged lightbox popup", "status": "done" },
+    { "task": "Enlarged QR Code size (240px on card, 340px in modal) for effortless scanning", "status": "done" },
+    { "task": "Arranged 'Sao Chép STK' and 'Tải Mã QR' buttons on 1 single line across all devices", "status": "done" },
+    { "task": "Integrated `yet-another-react-lightbox` with smooth swipe gestures, thumbnail filmstrip, and pinch zoom", "status": "done" },
+    { "task": "Locked website max-width to Fixed Mobile Frame (max-w-[460px]) on tablets and desktop monitors", "status": "done" }
+  ],
+  "decisions_made": [
+    {
+      "decision": "Fixed Mobile Viewport on Desktop",
+      "reason": "Ensure wedding invitation retains the perfect gold-ratio proportions of a luxury smartphone app on large screens without stretching."
+    },
+    {
+      "decision": "Pure Sans-Serif + Romantic Script for Names",
+      "reason": "Provides pristine modern readability for Vietnamese body text (Be Vietnam Pro) while highlighting the couple's romance via Alex Brush handwriting."
+    },
+    {
+      "decision": "Offline-First Local QR Images with CLI Updater",
+      "reason": "Guarantee instant image loading without depending on external API uptime while providing an effortless `npm run update:qr` CLI for future changes."
+    }
+  ],
+  "next_recommended_steps": [
+    { "task": "Deploy production build to Vercel / Cloudflare / GitHub Pages (/deploy)", "priority": "high" },
+    { "task": "Configure AppSheet webhook URL if desired for Google Sheets RSVP syncing", "priority": "medium" }
+  ]
+}

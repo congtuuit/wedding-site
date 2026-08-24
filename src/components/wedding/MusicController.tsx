@@ -82,11 +82,11 @@ export const MusicController: React.FC<MusicControllerProps> = ({
       />
 
       {/* Floating Music Control Button */}
-      <div className="fixed top-5 right-5 z-40">
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 w-full max-w-[460px] px-4 z-40 pointer-events-none flex justify-end">
         <button
           onClick={toggleAudio}
           aria-label={isPlaying ? "Tắt nhạc nền" : "Bật nhạc nền"}
-          className={`relative flex items-center justify-center w-12 h-12 rounded-full backdrop-blur-xl transition-all duration-300 min-w-[48px] min-h-[48px] border-2 cursor-pointer active:scale-95 ${
+          className={`pointer-events-auto relative flex items-center justify-center w-11 h-11 rounded-full backdrop-blur-xl transition-all duration-300 min-w-[44px] min-h-[44px] border-2 cursor-pointer active:scale-95 ${
             isPlaying
               ? "bg-white/95 border-accent text-accent shadow-[0_0_20px_rgba(108,127,93,0.45),_0_8px_25px_rgba(0,0,0,0.12)] hover:scale-105"
               : "bg-white/90 border-borderLight text-textMuted shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:text-textMain hover:scale-105"

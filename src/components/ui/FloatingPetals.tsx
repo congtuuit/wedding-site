@@ -31,7 +31,7 @@ export const FloatingPetals: React.FC = () => {
   if (petals.length === 0) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden select-none gpu-layer">
+    <div className="fixed inset-0 left-1/2 -translate-x-1/2 w-full max-w-[460px] pointer-events-none z-30 overflow-hidden select-none gpu-layer">
       {petals.map((petal) => (
         <div
           key={petal.id}

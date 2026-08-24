@@ -87,7 +87,7 @@ export default function RootLayout({
       lang="vi"
       className={`${plusJakarta.variable} ${beVietnam.variable} ${montserrat.variable} ${alexBrush.variable} ${greatVibes.variable}`}
     >
-      <body className="font-sans bg-background text-textMain min-h-screen antialiased">
+      <body className="font-sans bg-[#0E0204] text-textMain min-h-screen antialiased flex justify-center">
         {children}
       </body>
     </html>

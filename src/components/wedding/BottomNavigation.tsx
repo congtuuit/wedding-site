@@ -33,9 +33,9 @@ export const BottomNavigation: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="md:hidden fixed bottom-4 left-3 right-3 z-40 animate-fade-up">
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-[460px] px-3 z-40 animate-fade-up">
       {/* Outer Neon Glow Wrapper */}
-      <div className="p-[1.5px] rounded-full bg-gradient-to-r from-[#801424] via-accentGold to-[#801424] shadow-[0_0_20px_rgba(128,20,36,0.35),_0_0_35px_rgba(212,175,55,0.25),_0_10px_30px_rgba(0,0,0,0.15)] max-w-md mx-auto">
+      <div className="p-[1.5px] rounded-full bg-gradient-to-r from-[#801424] via-accentGold to-[#801424] shadow-[0_0_20px_rgba(128,20,36,0.35),_0_0_35px_rgba(212,175,55,0.25),_0_10px_30px_rgba(0,0,0,0.15)] w-full">
         <div className="flex items-center justify-around py-2.5 px-3 rounded-full bg-white/95 backdrop-blur-2xl text-textMain">
           <button
             onClick={() => scrollToSection("invitation")}
