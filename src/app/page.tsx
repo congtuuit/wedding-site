@@ -117,6 +117,7 @@ export default function WeddingPage() {
           initialGuestName={guestName}
           isPersonalized={isPersonalized}
           webhookUrl={weddingData.appsheetWebhookUrl}
+          showEventSelection={weddingData.rsvp?.showEventSelection}
         />
       </ScrollReveal>
 

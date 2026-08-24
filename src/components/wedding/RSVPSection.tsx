@@ -12,6 +12,7 @@ interface RSVPSectionProps {
   initialGuestName: string;
   isPersonalized: boolean;
   webhookUrl?: string;
+  showEventSelection?: boolean;
 }
 
 export const RSVPSection: React.FC<RSVPSectionProps> = ({
@@ -19,6 +20,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
   initialGuestName,
   isPersonalized,
   webhookUrl,
+  showEventSelection = false,
 }) => {
   const [guestName, setGuestName] = useState<string>("");
   const [attending, setAttending] = useState<"yes" | "no">("yes");
@@ -138,24 +140,24 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
               <label className="block text-xs uppercase tracking-wider font-sans font-semibold text-textMain">
                 Bạn Sẽ Tham Dự Chứ? <span className="text-red-500">*</span>
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <button
                   type="button"
                   onClick={() => setAttending("yes")}
-                  className={`flex items-center justify-center gap-2 p-3.5 rounded-xl border text-sm font-sans transition-all min-h-[48px] cursor-pointer ${
+                  className={`flex items-center justify-center gap-1.5 px-2 py-3 rounded-xl border text-[12.5px] sm:text-sm font-sans font-medium transition-all min-h-[46px] cursor-pointer whitespace-nowrap ${
                     attending === "yes"
                       ? "bg-accent text-white border-accent shadow-sm"
                       : "bg-background border-borderLight text-textMuted hover:text-textMain"
                   }`}
                 >
-                  <Heart className="w-4 h-4" />
+                  <Heart className="w-3.5 h-3.5 shrink-0" />
                   <span>Có, tôi sẽ tham dự</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setAttending("no")}
-                  className={`flex items-center justify-center gap-2 p-3.5 rounded-xl border text-sm font-sans transition-all min-h-[48px] cursor-pointer ${
+                  className={`flex items-center justify-center gap-1.5 px-2 py-3 rounded-xl border text-[12.5px] sm:text-sm font-sans font-medium transition-all min-h-[46px] cursor-pointer whitespace-nowrap ${
                     attending === "no"
                       ? "bg-surfaceDark text-textMain border-accent/40 shadow-sm"
                       : "bg-background border-borderLight text-textMuted hover:text-textMain"
@@ -169,20 +171,32 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
             {/* If Attending: Select Event & Number of guests */}
             {attending === "yes" && (
               <>
-                <div className="space-y-2">
-                  <label className="block text-xs uppercase tracking-wider font-sans font-semibold text-textMain">
-                    Sự Kiện Bạn Sẽ Tham Gia
-                  </label>
-                  <select
-                    value={selectedEvent}
-                    onChange={(e) => setSelectedEvent(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-xl bg-background border border-borderLight focus:border-accent focus:ring-1 focus:ring-accent outline-none text-sm text-textMain font-sans transition-all min-h-[48px]"
-                  >
-                    <option value="all">Tham dự toàn bộ sự kiện</option>
-                    <option value="sg">Tiệc Cưới Tại Sài Gòn</option>
-                    <option value="que">Lễ & Tiệc Cưới Ở Quê</option>
-                  </select>
-                </div>
+                {showEventSelection && (
+                  <div className="space-y-2">
+                    <label className="block text-xs uppercase tracking-wider font-sans font-semibold text-textMain">
+                      Sự Kiện Bạn Sẽ Tham Gia
+                    </label>
+                    <select
+                      value={selectedEvent}
+                      onChange={(e) => setSelectedEvent(e.target.value)}
+                      className="w-full px-4 py-3.5 rounded-xl bg-background border border-borderLight focus:border-accent focus:ring-1 focus:ring-accent outline-none text-sm text-textMain font-sans transition-all min-h-[48px]"
+                    >
+                      <option value="all">Tham dự toàn bộ sự kiện</option>
+                      {events && events.length > 0 ? (
+                        events.map((ev) => (
+                          <option key={ev.id} value={ev.id}>
+                            {ev.title}
+                          </option>
+                        ))
+                      ) : (
+                        <>
+                          <option value="sg">Tiệc Cưới Tại Sài Gòn</option>
+                          <option value="que">Lễ & Tiệc Cưới Ở Quê</option>
+                        </>
+                      )}
+                    </select>
+                  </div>
+                )}
 
                 <div className="space-y-2">
                   <label className="block text-xs uppercase tracking-wider font-sans font-semibold text-textMain">

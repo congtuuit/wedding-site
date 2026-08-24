@@ -6,6 +6,7 @@ export interface CoupleInfo {
     motherName: string;
     role: string;
     hometown: string;
+    photo?: string;
   };
   bride: {
     name: string;
@@ -14,6 +15,7 @@ export interface CoupleInfo {
     motherName: string;
     role: string;
     hometown: string;
+    photo?: string;
   };
   initials: string;
   weddingDate: string; // YYYY-MM-DD
@@ -89,6 +91,9 @@ export interface WeddingData {
     title: string;
     artist: string;
     defaultVolume: number;
+  };
+  rsvp?: {
+    showEventSelection?: boolean;
   };
   appsheetWebhookUrl?: string;
 }

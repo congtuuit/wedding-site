@@ -6,7 +6,8 @@
       "fatherName": "Ông: Văn Công Pha",
       "motherName": "Bà: Trần Thị Thanh Lan",
       "role": "Trưởng Nam",
-      "hometown": "xã Bà Điểm, TP. Hồ Chí Minh"
+      "hometown": "xã Bà Điểm, TP. Hồ Chí Minh",
+      "photo": "/images/groom.webp"
     },
     "bride": {
       "name": "Hường Nguyễn",
@@ -14,7 +15,8 @@
       "fatherName": "Ông: Nguyễn Văn Dương",
       "motherName": "Bà: Vũ Thị Chinh",
       "role": "Út Nữ",
-      "hometown": "Cát Tiên 3, Lâm Đồng"
+      "hometown": "Cát Tiên 3, Lâm Đồng",
+      "photo": "/images/bride.webp"
     },
     "initials": "T & H",
     "weddingDate": "2026-12-12",
@@ -250,6 +252,9 @@
     "title": "Wedding Melody",
     "artist": "Tú Văn & Hường Nguyễn",
     "defaultVolume": 0.4
+  },
+  "rsvp": {
+    "showEventSelection": false
   },
   "appsheetWebhookUrl": ""
 }

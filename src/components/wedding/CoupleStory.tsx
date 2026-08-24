@@ -40,14 +40,14 @@ export const CoupleStory: React.FC<CoupleStoryProps> = ({ timeline }) => {
 
                   {/* Image Block */}
                   {item.image && (
-                    <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden shadow-sm border border-borderLight group">
+                    <div className="relative w-full aspect-[16/11] rounded-2xl overflow-hidden shadow-sm border border-borderLight group">
                       <Image
                         src={item.image}
                         alt={item.title}
                         fill
                         sizes="(max-width: 640px) 100vw, 480px"
                         loading="lazy"
-                        className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                        className="object-cover object-[center_38%] group-hover:scale-105 transition-transform duration-700"
                       />
                     </div>
                   )}
