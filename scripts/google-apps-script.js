@@ -49,9 +49,48 @@ function doPost(e) {
 }
 
 function doGet(e) {
-  return ContentService
-    .createTextOutput(JSON.stringify({ status: "online", message: "Wedding API đang hoạt động bình thường!" }))
-    .setMimeType(ContentService.MimeType.JSON);
+  try {
+    var doc = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = doc.getSheetByName("So_Luu_But");
+
+    if (!sheet) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: "success", data: [] }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    var values = sheet.getDataRange().getValues();
+    var wishes = [];
+
+    // Bỏ qua dòng tiêu đề (i = 0), đọc từ dòng 1 đến hết
+    for (var i = 1; i < values.length; i++) {
+      var row = values[i];
+      var timeStr = row[0] ? row[0].toString() : "";
+      var sender = row[1] ? row[1].toString().trim() : "";
+      var wishText = row[2] ? row[2].toString().trim() : "";
+
+      if (sender && wishText) {
+        wishes.push({
+          id: "sheet-wish-" + i,
+          createdAt: timeStr,
+          senderName: sender,
+          content: wishText
+        });
+      }
+    }
+
+    // Đảo ngược để lời chúc mới nhất hiển thị đầu tiên
+    wishes.reverse();
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "success", data: wishes }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "error", message: error.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
 /**

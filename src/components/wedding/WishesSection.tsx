@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { WishData, getWishes, addWish } from "@/lib/rsvp";
+import { WishData, getWishes, fetchLiveWishes, addWish } from "@/lib/rsvp";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { Heart, MessageSquarePlus, Send, Sparkles } from "lucide-react";
 
@@ -24,10 +24,19 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
 
   useEffect(() => {
     setWishes(getWishes());
+
+    if (webhookUrl) {
+      fetchLiveWishes(webhookUrl).then((live) => {
+        if (live && live.length > 0) {
+          setWishes(live);
+        }
+      });
+    }
+
     if (isPersonalized && initialGuestName) {
       setSenderName(initialGuestName);
     }
-  }, [initialGuestName, isPersonalized]);
+  }, [initialGuestName, isPersonalized, webhookUrl]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

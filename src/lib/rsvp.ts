@@ -24,15 +24,9 @@ const DEFAULT_WISHES: WishData[] = [
   {
     id: "wish-2",
     senderName: "Hội bạn thân Đại Học",
-    content: "Chúc mừng 10 năm tình yêu đơm hoa kết trái! Mãi mãi mặn nồng và ngọt ngào như ngày đầu nhé!",
+    content: "Chúc mừng tình yêu đơm hoa kết trái! Mãi mãi mặn nồng và ngọt ngào như ngày đầu nhé!",
     createdAt: "2026-08-21T14:30:00.000Z",
-  },
-  {
-    id: "wish-3",
-    senderName: "Anh Rin & Chị Mai",
-    content: "Mừng ngày chung đôi của hai em. Chúc hai vợ chồng luôn đồng lòng, yêu thương và thấu hiểu nhau.",
-    createdAt: "2026-08-22T09:15:00.000Z",
-  },
+  }
 ];
 
 const STORAGE_KEY_RSVP = "wedding_user_rsvp";
@@ -108,6 +102,29 @@ export function getWishes(): WishData[] {
 }
 
 /**
+ * Fetch live wishes from Google Sheet API (falls back to local + defaults)
+ */
+export async function fetchLiveWishes(webhookUrl?: string): Promise<WishData[]> {
+  const localWishes = getWishes();
+  if (!webhookUrl || !webhookUrl.startsWith("http")) {
+    return localWishes;
+  }
+
+  try {
+    const res = await fetch(webhookUrl, { method: "GET" });
+    const json = await res.json();
+    if (json && json.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
+      const sheetWishes: WishData[] = json.data;
+      return sheetWishes.length < 3 ? [...sheetWishes, ...DEFAULT_WISHES] : sheetWishes;
+    }
+  } catch (err) {
+    console.warn("Could not fetch live wishes from Google Sheet:", err);
+  }
+
+  return localWishes;
+}
+
+/**
  * Add a new wish
  */
 export async function addWish(
@@ -142,8 +159,8 @@ export async function addWish(
           type: "WISH",
           ...newWish,
         }),
-      }).catch(() => {});
-    } catch {}
+      }).catch(() => { });
+    } catch { }
   }
 
   return newWish;
