@@ -58,14 +58,18 @@ export async function submitRSVP(data: RSVPData, webhookUrl?: string): Promise<{
 
     // If webhookUrl is configured, send payload
     if (webhookUrl && webhookUrl.startsWith("http")) {
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "RSVP",
-          ...data,
-        }),
-      });
+      try {
+        await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            type: "RSVP",
+            ...data,
+          }),
+        });
+      } catch (err) {
+        console.warn("Webhook fetch warning (non-blocking):", err);
+      }
     }
 
     return { success: true, message: "Xác nhận tham dự thành công!" };
@@ -133,7 +137,7 @@ export async function addWish(
     try {
       fetch(webhookUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
           type: "WISH",
           ...newWish,

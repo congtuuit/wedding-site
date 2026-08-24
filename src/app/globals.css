@@ -52,3 +52,26 @@ body {
   background-color: #FCECEE;
   color: #8C1425;
 }
+
+/* Continuous Horizontal Marquee Carousel for Wishes */
+@keyframes marqueeLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marqueeLeft 35s linear infinite;
+}
+
+.animate-marquee-infinite:hover,
+.animate-marquee-infinite:active {
+  animation-play-state: paused;
+}
+

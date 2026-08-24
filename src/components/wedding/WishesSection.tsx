@@ -119,25 +119,39 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
           </form>
         </div>
 
-        {/* Wishes Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12 max-h-[500px] overflow-y-auto pr-1">
-          {wishes.map((item) => (
-            <div
-              key={item.id}
-              className="p-6 rounded-2xl bg-background border border-borderLight/80 text-left shadow-sm hover:shadow-md transition-shadow relative space-y-3"
-            >
-              <div className="flex items-center justify-between">
-                <p className="font-serif text-lg text-textMain font-medium">
-                  {item.senderName}
-                </p>
-                <Heart className="w-4 h-4 text-accentGold fill-accentGold/20 flex-shrink-0" />
-              </div>
-              <p className="font-sans text-xs sm:text-sm text-textMuted leading-relaxed">
-                {item.content}
-              </p>
+        {/* Horizontal Auto-Running Carousel */}
+        {wishes.length > 0 && (
+          <div className="relative mt-12 w-full overflow-hidden">
+            {/* Gradient Edge Fades */}
+            <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-surface via-surface/90 to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-surface via-surface/90 to-transparent z-10 pointer-events-none" />
+
+            {/* Scrolling Track */}
+            <div className="animate-marquee-infinite gap-4 py-2">
+              {(wishes.length < 5 ? [...wishes, ...wishes, ...wishes, ...wishes] : [...wishes, ...wishes]).map((item, idx) => (
+                <div
+                  key={`${item.id}-${idx}`}
+                  className="w-[270px] sm:w-[310px] p-5 rounded-2xl bg-background border border-borderLight/80 text-left shadow-sm hover:shadow-md transition-all duration-300 relative space-y-2.5 shrink-0 select-none group cursor-pointer hover:border-accent/40"
+                >
+                  <div className="flex items-center justify-between">
+                    <p className="font-heading text-sm sm:text-base text-textMain font-semibold tracking-wide truncate pr-2">
+                      {item.senderName}
+                    </p>
+                    <Heart className="w-4 h-4 text-accent fill-accent/20 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  </div>
+                  <p className="font-sans text-xs sm:text-[13px] text-textMuted leading-relaxed line-clamp-3">
+                    "{item.content}"
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+
+            {/* Hint */}
+            <p className="text-[10px] text-textMuted/70 font-sans tracking-wide mt-3 text-center">
+              ✦ Chạm hoặc giữ vào lời chúc để tạm dừng đọc ✦
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

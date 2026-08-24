@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import weddingDataJson from "@/data/wedding.json";
 import { WeddingData } from "@/types/wedding";
 import { useGuestName } from "@/hooks/useGuestName";
+import { useAutoScroll } from "@/hooks/useAutoScroll";
 
 import { WeddingOpening } from "@/components/wedding/WeddingOpening";
 import { MusicController } from "@/components/wedding/MusicController";
@@ -44,6 +45,17 @@ export default function WeddingPage() {
     }
     setHasOpenedInvitation(true);
   };
+
+  // Smart Cinema Auto-Scroll Behavior:
+  // - Starts 1.5s after envelope content is revealed
+  // - Pauses immediately when user interacts (touch/scroll/click/key)
+  // - Resumes smoothly after 10s of inactivity
+  useAutoScroll({
+    enabled: hasOpenedInvitation,
+    speed: 55,
+    initialDelay: 3800,
+    resumeDelay: 10000,
+  });
 
   return (
     <main className="relative w-full max-w-[480px] min-h-screen mx-auto bg-background text-textMain shadow-[0_0_90px_rgba(0,0,0,0.85)] border-x border-[#8C1425]/15 overflow-x-hidden">

@@ -46,7 +46,7 @@
       "time": "09:00 Sáng (Lễ Gia Tiên) - 11:30 Trưa (Khai Tiệc)",
       "venue": "Tư Gia Nhà Gái",
       "address": "Cát Tiên 3, Lâm Đồng",
-      "mapUrl": "https://maps.google.com/?q=C%C3%A1t+Ti%C3%AAn+L%C3%A2m+%C4%90%E1%BB%93ng",
+      "mapUrl": "https://maps.app.goo.gl/brA9HFBX28HNHjdGA",
       "calendarTitle": "Lễ Gia Tiên & Tiệc Cưới Nhà Gái - Tú Văn & Hường Nguyễn",
       "calendarDescription": "Lễ Gia Tiên và Tiệc Cưới tại tư gia Nhà Gái (Cát Tiên 3, Lâm Đồng)",
       "calendarLocation": "Cát Tiên 3, Lâm Đồng",
@@ -60,12 +60,12 @@
       "subtitle": "TP. Hồ Chí Minh",
       "date": "Thứ Bảy, 12 Tháng 12 Năm 2026",
       "time": "18:00 Tối (Đón khách) - 19:00 Khai tiệc",
-      "venue": "Trung Tâm Hội Nghị & Tiệc Cưới",
-      "address": "xã Bà Điểm, TP. Hồ Chí Minh",
-      "mapUrl": "https://maps.google.com/?q=B%C3%A0+%C4%90i%E1%BB%83m+H%E1%BB%93+Ch%C3%AD+Minh",
+      "venue": "The ADORA Center",
+      "address": "431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh",
+      "mapUrl": "https://maps.app.goo.gl/FRs6bSaK1khXCZBL8",
       "calendarTitle": "Tiệc Cưới Nhà Trai - Tú Văn & Hường Nguyễn",
-      "calendarDescription": "Tiệc cưới mừng thành hôn Tú Văn & Hường Nguyễn tại TP. Hồ Chí Minh",
-      "calendarLocation": "xã Bà Điểm, TP. Hồ Chí Minh",
+      "calendarDescription": "Tiệc cưới mừng thành hôn Tú Văn & Hường Nguyễn tại The ADORA Center, TP. Hồ Chí Minh",
+      "calendarLocation": "The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh",
       "startDateIso": "2026-12-12T18:00:00+07:00",
       "endDateIso": "2026-12-12T21:30:00+07:00"
     }
@@ -256,5 +256,5 @@
   "rsvp": {
     "showEventSelection": false
   },
-  "appsheetWebhookUrl": ""
+  "appsheetWebhookUrl": "https://script.google.com/macros/s/AKfycbxunAD04AYtLnkZfYE_vp8cPU_651WUL_8Kueg_wW7EbOLT5LzAMVFxy6Dwi-SAnFHy/exec"
 }
