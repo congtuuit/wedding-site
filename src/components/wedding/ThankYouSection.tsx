@@ -44,7 +44,7 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
 
         {/* Signature */}
         <div className="space-y-1 pt-4">
-          <p className="font-serif text-2xl sm:text-3xl text-textMain">
+          <p className="font-couple text-3xl sm:text-4xl text-[#8C1425]">
             {couple.groom.name} & {couple.bride.name}
           </p>
           <p className="font-sans text-xs text-textMuted uppercase tracking-[0.3em]">

@@ -1,18 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Cormorant_Garamond, Inter, Montserrat, Great_Vibes } from "next/font/google";
+import { Plus_Jakarta_Sans, Be_Vietnam_Pro, Montserrat, Alex_Brush, Great_Vibes } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+// Modern Luxury Sans-Serif for Headings & Titles (Font Không Chân Sang Trọng)
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-playfair",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-heading",
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
+// Modern Clean Sans-Serif for Body & Reading (Font Không Chân Dễ Đọc)
+const beVietnam = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
   weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-cormorant",
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -23,15 +25,16 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-const inter = Inter({
+// Romantic, flowing, graceful cursive script for Groom & Bride names
+const alexBrush = Alex_Brush({
   subsets: ["latin", "vietnamese"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-inter",
+  weight: ["400"],
+  variable: "--font-couple",
   display: "swap",
 });
 
 const greatVibes = Great_Vibes({
-  subsets: ["latin"],
+  subsets: ["latin", "vietnamese"],
   weight: ["400"],
   variable: "--font-cursive",
   display: "swap",
@@ -68,7 +71,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FDFCFA",
+  themeColor: "#FAF7F2",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -82,9 +85,9 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${inter.variable} ${greatVibes.variable}`}
+      className={`${plusJakarta.variable} ${beVietnam.variable} ${montserrat.variable} ${alexBrush.variable} ${greatVibes.variable}`}
     >
-      <body className="font-sans bg-background text-textMain min-h-screen">
+      <body className="font-sans bg-background text-textMain min-h-screen antialiased">
         {children}
       </body>
     </html>

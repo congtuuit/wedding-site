@@ -226,20 +226,22 @@
       {
         "role": "groom",
         "title": "MỪNG CƯỚI CHÚ RỂ",
-        "ownerName": "VĂN CÔNG TÚ",
-        "bankName": "Ngân hàng TMCP Ngoại Thương (Vietcombank)",
-        "bankCode": "VCB",
-        "accountNumber": "999912122026",
-        "qrImage": "https://api.vietqr.io/image/VCB-999912122026-compact2.png?amount=0&accountName=VAN%20CONG%20TU"
+        "ownerName": "VAN CONG TU",
+        "bankName": "Ngân hàng TMCP Việt Nam Thịnh Vượng (VPBank)",
+        "bankCode": "VPBank",
+        "accountNumber": "38689999996",
+        "memo": "Mung cuoi Tu Van",
+        "qrImage": "/images/qr-groom.png"
       },
       {
         "role": "bride",
         "title": "MỪNG CƯỚI CÔ DÂU",
-        "ownerName": "NGUYỄN THỊ HƯỜNG",
-        "bankName": "Ngân hàng TMCP Kỹ Thương (Techcombank)",
-        "bankCode": "TCB",
-        "accountNumber": "888812122026",
-        "qrImage": "https://api.vietqr.io/image/TCB-888812122026-compact2.png?amount=0&accountName=NGUYEN%20THI%20HUONG"
+        "ownerName": "NGUYEN THI HUONG",
+        "bankName": "Ngân hàng TMCP Kỹ Thương Việt Nam (Techcombank)",
+        "bankCode": "Techcombank",
+        "accountNumber": "19039619769011",
+        "memo": "Mung cuoi Huong Nguyen",
+        "qrImage": "/images/qr-bride.png"
       }
     ]
   },

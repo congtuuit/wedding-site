@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { WeddingData } from "@/types/wedding";
 import { SectionDivider } from "@/components/ui/SectionDivider";
-import { Copy, Check, QrCode, Gift } from "lucide-react";
+import { Copy, Check, QrCode, Gift, Download, X } from "lucide-react";
 
 interface GiftSectionProps {
   gift: WeddingData["gift"];
@@ -12,7 +12,8 @@ interface GiftSectionProps {
 
 export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-  const [selectedQr, setSelectedQr] = useState<string | null>(null);
+  const [downloadingIndex, setDownloadingIndex] = useState<number | null>(null);
+  const [selectedAccount, setSelectedAccount] = useState<WeddingData["gift"]["accounts"][0] | null>(null);
 
   const handleCopy = (accountNumber: string, index: number) => {
     navigator.clipboard.writeText(accountNumber);
@@ -22,6 +23,35 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
     }, 3000);
   };
 
+  const handleDownloadQr = async (qrUrl: string, fileName: string, index?: number) => {
+    if (typeof index === "number") {
+      setDownloadingIndex(index);
+    }
+    try {
+      const response = await fetch(qrUrl);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch {
+      // Fallback direct download
+      const link = document.createElement("a");
+      link.href = qrUrl;
+      link.download = fileName;
+      link.target = "_blank";
+      link.click();
+    } finally {
+      setTimeout(() => {
+        setDownloadingIndex(null);
+      }, 1500);
+    }
+  };
+
   return (
     <section id="gift" className="w-full py-20 px-4 bg-background text-textMain relative">
       <div className="max-w-4xl mx-auto text-center">
@@ -29,24 +59,27 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#8C1425]/10 text-[#8C1425] mb-4">
           <Gift className="w-6 h-6" />
         </div>
-        <h2 className="font-playfair text-3xl sm:text-5xl text-textMain font-normal tracking-wide">
+        <h2 className="font-heading text-3xl sm:text-4xl text-textMain font-normal tracking-wide">
           {gift.headline}
         </h2>
-        <p className="text-xs sm:text-sm text-textMuted font-sans max-w-md mx-auto mt-3 leading-relaxed">
+        <p className="text-xs sm:text-sm text-textMuted font-sans max-w-md mx-auto mt-2.5 leading-relaxed">
           {gift.subline}
         </p>
 
-        <SectionDivider variant="botanical" />
+        <SectionDivider variant="botanical" className="my-5" />
 
         {/* Banking Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mt-10">
           {gift.accounts.map((account, index) => {
             const isGroom = account.role === "groom";
+            const downloadFileName = isGroom
+              ? "QR-Mung-Cuoi-Chu-Re-Tu-Van.png"
+              : "QR-Mung-Cuoi-Co-Dau-Huong-Nguyen.png";
 
             return (
               <div
                 key={index}
-                className="p-8 rounded-3xl bg-surface border border-borderLight shadow-[0_6px_30px_rgba(140,20,37,0.05)] hover:shadow-xl transition-all duration-300 relative text-center space-y-6"
+                className="p-6 sm:p-8 rounded-3xl bg-surface border border-borderLight shadow-[0_6px_30px_rgba(140,20,37,0.05)] hover:shadow-xl transition-all duration-300 relative text-center space-y-5"
               >
                 {/* Title */}
                 <span
@@ -59,19 +92,19 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
                   {account.title}
                 </span>
 
-                {/* QR Code Container */}
+                {/* QR Code Container (Click to enlarge) */}
                 <div
-                  onClick={() => setSelectedQr(account.qrImage)}
-                  className="relative w-44 h-44 mx-auto p-2.5 rounded-2xl bg-white border border-borderLight shadow-sm cursor-pointer group hover:scale-105 transition-transform"
+                  onClick={() => setSelectedAccount(account)}
+                  className="relative w-56 h-56 sm:w-60 sm:h-60 mx-auto p-3 rounded-2xl bg-white border border-borderLight shadow-sm cursor-pointer group hover:scale-[1.03] transition-transform"
                 >
                   <Image
                     src={account.qrImage}
                     alt={`QR ${account.ownerName}`}
                     fill
-                    sizes="176px"
+                    sizes="240px"
                     className="object-contain p-1"
                   />
-                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center text-white text-xs font-sans">
+                  <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center text-white text-xs font-sans">
                     <span className="flex items-center gap-1.5 bg-black/60 px-3.5 py-1.5 rounded-full backdrop-blur-sm">
                       <QrCode className="w-3.5 h-3.5" />
                       Phóng to
@@ -80,11 +113,11 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
                 </div>
 
                 {/* Bank Details */}
-                <div className="space-y-1.5 text-sm font-sans">
+                <div className="space-y-1 text-sm font-sans">
                   <p className="text-xs text-textMuted uppercase tracking-wider font-medium">
                     {account.bankName}
                   </p>
-                  <p className="font-playfair text-2xl font-semibold text-[#8C1425] tracking-wide">
+                  <p className="font-heading text-2xl font-bold text-[#8C1425] tracking-wider">
                     {account.accountNumber}
                   </p>
                   <p className="text-xs uppercase font-medium text-textMain tracking-wider">
@@ -92,12 +125,13 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
                   </p>
                 </div>
 
-                {/* Copy Button */}
-                <div>
+                {/* Action Buttons: Copy STK & Download QR (Always on 1 single line) */}
+                <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-2">
+                  {/* Copy Button */}
                   <button
                     type="button"
                     onClick={() => handleCopy(account.accountNumber, index)}
-                    className={`w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full font-sans text-xs font-semibold tracking-wider uppercase transition-all duration-300 min-h-[44px] cursor-pointer ${
+                    className={`inline-flex items-center justify-center gap-1 sm:gap-1.5 py-2.5 px-2 sm:px-4 rounded-full font-sans text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-all duration-300 min-h-[40px] cursor-pointer whitespace-nowrap overflow-hidden ${
                       copiedIndex === index
                         ? "bg-[#8C1425] text-white shadow-md"
                         : "bg-white text-[#8C1425] border border-[#8C1425]/30 hover:bg-[#8C1425]/5 active:scale-95"
@@ -105,15 +139,25 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
                   >
                     {copiedIndex === index ? (
                       <>
-                        <Check className="w-4 h-4" />
-                        <span>Đã Sao Chép Số Tài Khoản</span>
+                        <Check className="w-3.5 h-3.5 flex-shrink-0" />
+                        <span>Đã Sao Chép</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-4 h-4 text-[#8C1425]" />
-                        <span>Sao Chép Số Tài Khoản</span>
+                        <Copy className="w-3.5 h-3.5 text-[#8C1425] flex-shrink-0" />
+                        <span>Sao Chép STK</span>
                       </>
                     )}
+                  </button>
+
+                  {/* Download QR Button */}
+                  <button
+                    type="button"
+                    onClick={() => handleDownloadQr(account.qrImage, downloadFileName, index)}
+                    className="inline-flex items-center justify-center gap-1 sm:gap-1.5 py-2.5 px-2 sm:px-4 rounded-full bg-[#8C1425] hover:bg-[#700F1D] text-white font-sans text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-all shadow-sm hover:shadow-md active:scale-95 min-h-[40px] cursor-pointer whitespace-nowrap overflow-hidden"
+                  >
+                    <Download className={`w-3.5 h-3.5 flex-shrink-0 ${downloadingIndex === index ? "animate-bounce" : ""}`} />
+                    <span>{downloadingIndex === index ? "Đang Tải..." : "Tải Mã QR"}</span>
                   </button>
                 </div>
               </div>
@@ -123,27 +167,63 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
       </div>
 
       {/* QR Modal Lightbox */}
-      {selectedQr && (
+      {selectedAccount && (
         <div
-          onClick={() => setSelectedQr(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 cursor-pointer animate-fade-in"
+          onClick={() => setSelectedAccount(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 cursor-pointer animate-fade-in"
         >
-          <div className="relative max-w-sm w-full bg-white p-6 rounded-3xl shadow-2xl text-center space-y-4">
-            <p className="font-playfair text-xl text-[#280E12] font-medium">
-              Quét Mã QR Ngân Hàng
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-md w-full bg-white p-6 sm:p-8 rounded-3xl shadow-2xl text-center space-y-4"
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setSelectedAccount(null)}
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors cursor-pointer"
+              aria-label="Đóng"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <p className="font-heading text-lg text-[#280E12] font-semibold">
+              {selectedAccount.title}
             </p>
-            <div className="relative w-full aspect-square">
+
+            <div className="relative w-full aspect-square max-w-[320px] sm:max-w-[340px] mx-auto p-3 bg-white rounded-2xl border border-borderLight shadow-sm">
               <Image
-                src={selectedQr}
+                src={selectedAccount.qrImage}
                 alt="QR Code Phóng To"
                 fill
-                sizes="350px"
+                sizes="340px"
                 className="object-contain"
               />
             </div>
-            <p className="text-xs text-textMuted font-sans">
-              Chạm vào bất kỳ đâu để đóng
-            </p>
+
+            <div className="space-y-1 text-xs text-textMuted font-sans">
+              <p className="font-semibold text-textMain text-sm">{selectedAccount.bankName}</p>
+              <p className="font-mono text-base font-bold text-[#8C1425]">{selectedAccount.accountNumber}</p>
+              <p className="uppercase">{selectedAccount.ownerName}</p>
+            </div>
+
+            {/* Download Button in Modal */}
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() =>
+                  handleDownloadQr(
+                    selectedAccount.qrImage,
+                    selectedAccount.role === "groom"
+                      ? "QR-Mung-Cuoi-Chu-Re-Tu-Van.png"
+                      : "QR-Mung-Cuoi-Co-Dau-Huong-Nguyen.png"
+                  )
+                }
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-[#8C1425] hover:bg-[#700F1D] text-white font-sans text-xs font-semibold tracking-wider uppercase transition-all shadow-md active:scale-95 cursor-pointer"
+              >
+                <Download className="w-4 h-4" />
+                <span>Tải Mã QR Về Điện Thoại / Máy Tính</span>
+              </button>
+            </div>
           </div>
         </div>
       )}

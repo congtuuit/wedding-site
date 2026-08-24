@@ -214,21 +214,21 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
             <div className="h-[1px] w-6 bg-gradient-to-l from-transparent to-amber-300/60" />
           </div>
 
-          {/* Couple Names in Clean, Elegant Serif */}
-          <div className="space-y-1 my-4 relative z-10">
-            <h1 className="font-playfair text-3xl sm:text-4xl text-white font-normal tracking-wide drop-shadow-md">
+          {/* Couple Names in Romantic, Graceful Script */}
+          <div className="space-y-0.5 my-3 relative z-10">
+            <h1 className="font-couple text-4xl sm:text-5xl text-[#FFFDF9] font-normal tracking-wide drop-shadow-md">
               {couple.groom.name}
             </h1>
             
-            <div className="flex items-center justify-center gap-3 my-0.5">
+            <div className="flex items-center justify-center gap-3 my-0">
               <div className="h-[1px] w-8 bg-gradient-to-r from-transparent via-amber-300/60 to-transparent" />
-              <span className="font-cursive text-3xl text-amber-300 leading-none">
+              <span className="font-couple text-3xl text-amber-300 leading-none">
                 &
               </span>
               <div className="h-[1px] w-8 bg-gradient-to-r from-transparent via-amber-300/60 to-transparent" />
             </div>
 
-            <h1 className="font-playfair text-3xl sm:text-4xl text-white font-normal tracking-wide drop-shadow-md">
+            <h1 className="font-couple text-4xl sm:text-5xl text-[#FFFDF9] font-normal tracking-wide drop-shadow-md">
               {couple.bride.name}
             </h1>
           </div>

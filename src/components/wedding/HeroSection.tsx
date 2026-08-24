@@ -90,14 +90,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             }`}
             style={{ transitionDelay: "1000ms" }}
           >
-            <h1 className="font-playfair text-4xl sm:text-6xl md:text-7xl font-normal tracking-wide text-[#FFFDF9] drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
+            <h1 className="font-couple text-5xl sm:text-7xl md:text-8xl font-normal tracking-wide text-[#FFFDF9] drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
               {couple.groom.name}
             </h1>
           </div>
 
           {/* Ampersand separator */}
           <div
-            className={`flex items-center justify-center gap-4 my-2 transition-all duration-1000 ease-out ${
+            className={`flex items-center justify-center gap-4 my-1 transition-all duration-1000 ease-out ${
               isRevealed
                 ? "opacity-100 scale-100"
                 : "opacity-0 scale-50"
@@ -105,7 +105,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             style={{ transitionDelay: "1300ms" }}
           >
             <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-amber-300/60 to-transparent" />
-            <span className="font-cursive text-3xl sm:text-5xl text-amber-300 drop-shadow-[0_0_12px_rgba(212,175,55,0.6)] animate-pulse-slow">
+            <span className="font-couple text-4xl sm:text-5xl text-amber-300 drop-shadow-[0_0_12px_rgba(212,175,55,0.6)] animate-pulse-slow">
               &
             </span>
             <div className="h-[1px] w-12 bg-gradient-to-l from-transparent via-amber-300/60 to-transparent" />
@@ -120,7 +120,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             }`}
             style={{ transitionDelay: "1600ms" }}
           >
-            <h1 className="font-playfair text-4xl sm:text-6xl md:text-7xl font-normal tracking-wide text-[#FFFDF9] drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
+            <h1 className="font-couple text-5xl sm:text-7xl md:text-8xl font-normal tracking-wide text-[#FFFDF9] drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
               {couple.bride.name}
             </h1>
           </div>

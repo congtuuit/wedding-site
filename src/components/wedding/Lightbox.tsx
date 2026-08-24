@@ -1,9 +1,17 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
-import Image from "next/image";
+import React from "react";
+import YARLightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Counter from "yet-another-react-lightbox/plugins/counter";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+import "yet-another-react-lightbox/plugins/counter.css";
+
 import { GalleryPhoto } from "@/types/wedding";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface LightboxProps {
   photos: GalleryPhoto[];
@@ -20,128 +28,108 @@ export const Lightbox: React.FC<LightboxProps> = ({
   onClose,
   onNavigate,
 }) => {
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  // Keyboard navigation
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") handlePrev();
-      if (e.key === "ArrowRight") handleNext();
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    // Lock scroll
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen, currentIndex]);
-
-  if (!isOpen || !photos[currentIndex]) return null;
-
-  const currentPhoto = photos[currentIndex];
-
-  const handlePrev = () => {
-    const nextIdx = (currentIndex - 1 + photos.length) % photos.length;
-    onNavigate(nextIdx);
-  };
-
-  const handleNext = () => {
-    const nextIdx = (currentIndex + 1) % photos.length;
-    onNavigate(nextIdx);
-  };
-
-  // Touch handlers for mobile swipe
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      handleNext();
-    }
-    if (isRightSwipe) {
-      handlePrev();
-    }
-  };
+  const slides = photos.map((photo) => ({
+    src: photo.src,
+    alt: photo.alt || "Ảnh cưới Tú Văn & Hường Nguyễn",
+    title: photo.title,
+    description: photo.title ? photo.title : undefined,
+  }));
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md select-none animate-fade-in"
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-    >
-      {/* Top Bar: Counter & Close */}
-      <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-50 text-white">
-        <span className="text-xs sm:text-sm font-sans tracking-widest font-light text-white/80 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
-          {currentIndex + 1} / {photos.length}
-        </span>
+    <div className="wedding-lightbox-root">
+      <YARLightbox
+        open={isOpen}
+        close={onClose}
+        index={currentIndex}
+        slides={slides}
+        plugins={[Zoom, Thumbnails, Counter, Fullscreen]}
+        on={{
+          view: ({ index }) => onNavigate(index),
+        }}
+        carousel={{
+          finite: false,
+          preload: 2,
+          padding: "16px",
+          spacing: "30%",
+        }}
+        animation={{
+          fade: 250,
+          swipe: 350,
+          navigation: 300,
+          easing: {
+            fade: "cubic-bezier(0.16, 1, 0.3, 1)",
+            swipe: "cubic-bezier(0.16, 1, 0.3, 1)",
+            navigation: "cubic-bezier(0.16, 1, 0.3, 1)",
+          },
+        }}
+        thumbnails={{
+          position: "bottom",
+          width: 70,
+          height: 90,
+          border: 2,
+          borderRadius: 8,
+          padding: 4,
+          gap: 10,
+          showToggle: true,
+        }}
+        zoom={{
+          maxZoomPixelRatio: 3,
+          zoomInMultiplier: 2,
+          doubleTapDelay: 300,
+          doubleClickDelay: 300,
+          doubleClickMaxStops: 2,
+        }}
+        counter={{
+          container: {
+            style: {
+              top: "16px",
+              left: "16px",
+              fontFamily: "var(--font-sans), sans-serif",
+              fontSize: "13px",
+              letterSpacing: "0.15em",
+              color: "#FFFDF9",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+              backdropFilter: "blur(8px)",
+              padding: "6px 14px",
+              borderRadius: "9999px",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+            },
+          },
+        }}
+        styles={{
+          container: {
+            backgroundColor: "rgba(10, 2, 4, 0.95)",
+            backdropFilter: "blur(16px)",
+          },
+          button: {
+            filter: "drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5))",
+            color: "#FFFDF9",
+          },
+          thumbnail: {
+            borderColor: "rgba(255, 255, 255, 0.2)",
+          },
+          thumbnailsContainer: {
+            backgroundColor: "rgba(15, 3, 6, 0.8)",
+            backdropFilter: "blur(12px)",
+            paddingBottom: "12px",
+          },
+        }}
+      />
 
-        <button
-          onClick={onClose}
-          aria-label="Đóng"
-          className="flex items-center justify-center w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors min-h-[44px] min-w-[44px]"
-        >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* Main Image Container */}
-      <div className="relative w-full h-[80vh] max-w-5xl px-4 flex items-center justify-center">
-        <div className="relative w-full h-full">
-          <Image
-            src={currentPhoto.src}
-            alt={currentPhoto.alt || "Ảnh cưới"}
-            fill
-            sizes="100vw"
-            priority
-            className="object-contain"
-          />
-        </div>
-      </div>
-
-      {/* Photo Caption */}
-      {currentPhoto.title && (
-        <div className="absolute bottom-6 left-4 right-4 text-center z-50 pointer-events-none">
-          <p className="font-serif text-sm sm:text-base text-white/90 tracking-wider">
-            {currentPhoto.title}
-          </p>
-        </div>
-      )}
-
-      {/* Prev / Next Buttons */}
-      <button
-        onClick={handlePrev}
-        aria-label="Ảnh trước"
-        className="hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2 items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all min-w-[44px] min-h-[44px]"
-      >
-        <ChevronLeft className="w-6 h-6" />
-      </button>
-
-      <button
-        onClick={handleNext}
-        aria-label="Ảnh kế tiếp"
-        className="hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2 items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white transition-all min-w-[44px] min-h-[44px]"
-      >
-        <ChevronRight className="w-6 h-6" />
-      </button>
+      <style jsx global>{`
+        .yarl__thumbnails_thumbnail_active {
+          border-color: #D4AF37 !important;
+          box-shadow: 0 0 12px rgba(212, 175, 55, 0.6) !important;
+          transform: scale(1.06);
+        }
+        .yarl__slide_title {
+          font-family: var(--font-heading), sans-serif !important;
+          font-weight: 500 !important;
+          letter-spacing: 0.05em !important;
+          color: #FFFDF9 !important;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+      `}</style>
     </div>
   );
 };

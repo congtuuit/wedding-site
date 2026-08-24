@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "update:qr": "node scripts/update-qr.mjs"
   },
   "dependencies": {
     "@types/canvas-confetti": "^1.9.0",
@@ -16,7 +17,8 @@
     "next": "^15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.0.1"
+    "tailwind-merge": "^3.0.1",
+    "yet-another-react-lightbox": "^3.32.2"
   },
   "devDependencies": {
     "@types/node": "^22.13.4",

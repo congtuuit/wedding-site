@@ -31,11 +31,11 @@ export const Gallery: React.FC<GalleryProps> = ({ photos }) => {
         <span className="text-xs uppercase font-sans tracking-[0.35em] text-accent font-semibold">
           Khoảnh Khắc Đẹp
         </span>
-        <h2 className="font-playfair text-3xl sm:text-5xl text-textMain font-normal tracking-wide mt-2">
+        <h2 className="font-heading text-3xl sm:text-4xl text-textMain font-normal tracking-wide mt-2">
           Album Ảnh Cưới
         </h2>
         <p className="text-xs sm:text-sm text-textMuted font-sans mt-2">
-          Từng khoảnh khắc ghi lại tình yêu 10 năm của chúng mình
+          Từng khoảnh khắc ghi lại tình yêu của chúng mình
         </p>
 
         <SectionDivider variant="botanical" />
