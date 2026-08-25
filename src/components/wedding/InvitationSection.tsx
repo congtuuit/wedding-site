@@ -35,7 +35,7 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({
         {/* Personalized Guest Calling */}
         <div className="inline-block py-2 px-6 rounded-full bg-background border border-borderLight shadow-sm">
           <p className="font-heading text-base sm:text-lg text-[#8C1425] font-semibold tracking-wide">
-            {isPersonalized ? `Kính gửi: ${guestName}` : `Thân gửi: ${guestName}`}
+            Thân gửi: {guestName}
           </p>
         </div>
 

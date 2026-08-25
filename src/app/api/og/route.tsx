@@ -135,14 +135,15 @@ export async function GET(req: NextRequest) {
           >
             <div
               style={{
-                fontSize: "17px",
-                color: "rgba(255, 245, 235, 0.8)",
-                letterSpacing: "2px",
+                fontSize: "18px",
+                color: "#F3E5AB",
+                letterSpacing: "3px",
                 textTransform: "uppercase",
+                fontWeight: 600,
                 marginBottom: "6px",
               }}
             >
-              Trân trọng kính mời
+              Thân gửi
             </div>
             <div
               style={{

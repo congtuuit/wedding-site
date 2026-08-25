@@ -23,9 +23,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const guestName = decodeGuestName(rawGuestStr);
 
   if (guestName) {
-    const title = `💌 Kính gửi: ${guestName} — Thư Mời Thành Hôn Tú Văn & Hường Nguyễn`;
+    const title = `💌 Thân gửi: ${guestName} — Thư Mời Thành Hôn Tú Văn & Hường Nguyễn`;
     const description = `Trân trọng kính mời ${guestName} đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày 12.12.2026.`;
-    const ogTitle = `💌 Kính gửi: ${guestName} | Thư Mời Thành Hôn Tú Văn & Hường Nguyễn`;
+    const ogTitle = `💌 Thân gửi: ${guestName} | Thư Mời Thành Hôn Tú Văn & Hường Nguyễn`;
     const ogImage = `/api/og?to=${encodeURIComponent(rawGuestStr)}`;
     const pageUrl = `/?to=${encodeURIComponent(rawGuestStr)}`;
 

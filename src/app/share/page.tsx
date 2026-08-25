@@ -569,7 +569,7 @@ export default function SharePage() {
                       tu-huong-wedding.vercel.app
                     </div>
                     <div className="text-xs font-bold text-[#280E12] line-clamp-1">
-                      💌 Kính gửi: {guestName.trim() || "Bạn & Người Thương"} — Thư Mời Thành Hôn Tú Văn & Hường Nguyễn
+                      💌 Thân gửi: {guestName.trim() || "Bạn & Người Thương"} — Thư Mời Thành Hôn Tú Văn & Hường Nguyễn
                     </div>
                     <div className="text-[11px] text-[#6B4E53] line-clamp-2 leading-relaxed">
                       Trân trọng kính mời {guestName.trim() || "bạn"} đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày 12.12.2026.
