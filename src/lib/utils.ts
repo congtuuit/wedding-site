@@ -6,30 +6,39 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
- * UTF-8 safe Base64 decoder for Vietnamese names
- * Example: 'R2lhIMSRw6xuaCBBbmggUmlu' -> 'Gia đình Anh Rin'
+ * UTF-8 safe Decoder for Vietnamese guest names (supports both Base64 and plain URL encoded text)
+ * Examples:
+ * - 'QW5oIEhvw6BuZw==' -> 'Anh Hoàng'
+ * - 'Anh%20Ho%C3%A0ng' -> 'Anh Hoàng'
+ * - 'Anh+Ho%C3%A0ng' -> 'Anh Hoàng'
  */
-export function decodeGuestName(base64Str: string | null | undefined): string {
-  if (!base64Str || typeof base64Str !== "string") return "";
-  try {
-    const cleanStr = decodeURIComponent(base64Str.trim());
-    // Convert base64 to binary string
-    const binaryString = atob(cleanStr);
-    // Convert binary string to bytes
-    const bytes = Uint8Array.from(binaryString, (c) => c.charCodeAt(0));
-    // Decode UTF-8 bytes to text
-    return new TextDecoder().decode(bytes);
-  } catch (error) {
-    // If it is not a base64 string, check if it's already a plain text name
+export function decodeGuestName(rawStr: string | null | undefined): string {
+  if (!rawStr || typeof rawStr !== "string") return "";
+  const trimmed = rawStr.trim();
+  if (!trimmed) return "";
+
+  // 1. If it contains spaces or percent encoding or plus, decode standard URI
+  const withSpaces = trimmed.replace(/\+/g, " ");
+
+  // 2. Try Base64 decoding if it matches base64 pattern
+  if (/^[A-Za-z0-9+/=]+$/.test(trimmed) && trimmed.length >= 4) {
     try {
-      const decoded = decodeURIComponent(base64Str);
-      if (decoded && !/^[A-Za-z0-9+/=]+$/.test(decoded)) {
-        return decoded;
+      const binaryString = atob(trimmed);
+      const bytes = Uint8Array.from(binaryString, (c) => c.charCodeAt(0));
+      const decoded = new TextDecoder().decode(bytes);
+      if (decoded && !/[\x00-\x08\x0E-\x1F]/.test(decoded)) {
+        return decoded.trim();
       }
     } catch {
-      // Fallback
+      // Not valid base64, continue to URL decode
     }
-    return "";
+  }
+
+  // 3. Fallback to standard URL decode
+  try {
+    return decodeURIComponent(withSpaces).trim();
+  } catch {
+    return withSpaces.trim();
   }
 }
 
