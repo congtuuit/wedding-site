@@ -539,6 +539,44 @@ export default function SharePage() {
                   (Khi khách mở link, tên này sẽ xuất hiện trang trọng trên phong bì thiệp cưới và tự động điền vào form)
                 </p>
               </div>
+
+              {/* Social Media Share Preview Mockup (Zalo / Facebook / Messenger) */}
+              <div className="p-5 rounded-2xl bg-white border border-[#E8DCDD] shadow-sm space-y-3 text-left">
+                <div className="flex items-center justify-between flex-wrap gap-1">
+                  <span className="text-[11px] uppercase font-sans tracking-wider font-semibold text-[#8C1425] flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span>Mô phỏng hiển thị khi dán link qua Zalo / Facebook / iMessage</span>
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FCECEE] text-[#8C1425] font-medium border border-[#8C1425]/20">
+                    Dynamic SEO & OG Image
+                  </span>
+                </div>
+
+                <div className="rounded-xl overflow-hidden border border-[#E2D4D6] bg-white shadow-sm max-w-lg mx-auto">
+                  <div className="relative aspect-[1200/630] w-full bg-[#150204] flex items-center justify-center overflow-hidden border-b border-[#E8DCDD]">
+                    <img
+                      src={`/api/og?to=${encodeURIComponent(
+                        linkType === "base64"
+                          ? encodeGuestName(guestName.trim())
+                          : guestName.trim()
+                      )}`}
+                      alt="Open Graph Preview Card"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-3.5 space-y-1">
+                    <div className="text-[10px] uppercase font-semibold text-[#8C1425] tracking-wider">
+                      tu-huong-wedding.vercel.app
+                    </div>
+                    <div className="text-xs font-bold text-[#280E12] line-clamp-1">
+                      💌 Kính gửi: {guestName.trim() || "Bạn & Người Thương"} — Thư Mời Thành Hôn Tú Văn & Hường Nguyễn
+                    </div>
+                    <div className="text-[11px] text-[#6B4E53] line-clamp-2 leading-relaxed">
+                      Trân trọng kính mời {guestName.trim() || "bạn"} đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày 12.12.2026.
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Message Templates Section */}

@@ -41,7 +41,12 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tuvan-huong.wedding"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : "https://tu-huong-wedding.vercel.app")
+  ),
   title: "Tú Văn & Hường Nguyễn — Thư Mời Thành Hôn 12.12.2026",
   description:
     "Trân trọng kính mời bạn đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày 12 . 12 . 2026.",
@@ -49,7 +54,7 @@ export const metadata: Metadata = {
     title: "Tú Văn & Hường Nguyễn — Thư Mời Thành Hôn (12.12.2026)",
     description:
       "Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày trọng đại!",
-    url: "https://tuvan-huong.wedding",
+    url: "https://tu-huong-wedding.vercel.app",
     siteName: "Thiệp Cưới Tú Văn & Hường Nguyễn",
     images: [
       {
