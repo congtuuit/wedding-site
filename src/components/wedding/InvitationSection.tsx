@@ -7,13 +7,17 @@ interface InvitationSectionProps {
   invitation: WeddingData["invitation"];
   guestName: string;
   isPersonalized: boolean;
+  headline?: string;
 }
 
 export const InvitationSection: React.FC<InvitationSectionProps> = ({
   invitation,
   guestName,
   isPersonalized,
+  headline,
 }) => {
+  const displayHeadline = headline || invitation.headline;
+
   return (
     <section id="invitation" className="w-full py-16 px-4 bg-surface text-textMain relative overflow-hidden">
       {/* Delicate background ambient glows */}
@@ -27,7 +31,7 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({
             Trân Trọng Kính Mời
           </span>
           <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-1.5">
-            {invitation.headline}
+            {displayHeadline}
           </h2>
           <SectionDivider variant="botanical" className="my-4" />
         </div>

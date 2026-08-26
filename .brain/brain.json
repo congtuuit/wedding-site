@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.1.0",
     "awf_version": "4.0.2",
-    "last_updated": "2026-08-24T23:25:00Z"
+    "last_updated": "2026-08-25T07:15:00Z"
   },
   "project": {
     "name": "wedding-site",
@@ -20,22 +20,23 @@
       "city_reception": {
         "title": "Tiệc Cưới Nhà Trai (TP.HCM)",
         "date": "12.12.2026",
-        "venue": "Trung tâm Tiệc cưới Grand Palace",
-        "address": "TP. Hồ Chí Minh"
+        "venue": "The ADORA Center",
+        "address": "431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh"
       }
     }
   },
   "tech_stack": {
-    "framework": "Next.js 15.1.7 (App Router, Static Prerendering)",
+    "framework": "Next.js 15.1.7 (App Router, Server-Side Dynamic Metadata)",
     "ui_library": "React 19, TailwindCSS v3",
     "icons": "lucide-react",
     "effects": "canvas-confetti, custom CSS GPU-composited animations",
     "lightbox": "yet-another-react-lightbox (Zoom, Thumbnails, Counter, Fullscreen)",
     "image_processing": "Sharp 0.34.5 (EXIF auto-orientation, WebP conversion)",
+    "og_generation": "next/og (Edge runtime dynamic ImageResponse 1200x630)",
     "typography": "Google Fonts (Plus Jakarta Sans, Be Vietnam Pro, Alex Brush, Great Vibes)"
   },
   "design_system": {
-    "viewport": "Fixed Mobile App Frame (max-w-[460px] centered on Desktop/Tablet with luxury shadow & dark velvet outer backdrop #0E0204)",
+    "viewport": "Fixed Mobile App Frame (max-w-[480px] centered on Desktop/Tablet with luxury shadow & dark velvet outer backdrop #0E0204)",
     "colors": {
       "background": "#FAF7F2 (Warm Pearl Ivory)",
       "surface": "#FFFFFF (Crisp Card Surface)",
@@ -54,7 +55,21 @@
       "ampersand": "Great Vibes (Calligraphy mềm mại)"
     }
   },
+  "api_endpoints": [
+    {
+      "path": "/api/og",
+      "method": "GET",
+      "params": ["to", "guest", "k"],
+      "description": "Tạo ảnh đại diện thiệp cưới động (1200x630) có in tên khách mời phục vụ xem trước mạng xã hội (Open Graph Image)."
+    }
+  ],
   "features": [
+    {
+      "id": "dynamic_seo_og",
+      "name": "Dynamic SEO & Social Share Preview",
+      "component": "src/app/page.tsx & src/app/api/og/route.tsx",
+      "description": "Tự động trích xuất ?to=... (Base64 hoặc text tiếng Việt), tạo dynamic Open Graph tags và sinh ảnh OG 1200x630 mang tên khách mời khi gửi qua Zalo/Facebook/Telegram."
+    },
     {
       "id": "opening_cover",
       "name": "Bìa Mở Thiệp Điện Ảnh (Wedding Opening Curtain)",
@@ -77,7 +92,7 @@
       "id": "invitation_countdown",
       "name": "Lời Ngỏ & Đếm Ngược Ngày Cưới (Live Countdown)",
       "component": "src/components/wedding/InvitationSection.tsx & Countdown.tsx",
-      "description": "Lời ngỏ cá nhân hóa theo URL ?to=GuestName, bộ đếm ngược Ngày/Giờ/Phút/Giây chính xác."
+      "description": "Lời ngỏ thân gửi cá nhân hóa theo URL ?to=GuestName, bộ đếm ngược Ngày/Giờ/Phút/Giây chính xác."
     },
     {
       "id": "story_timeline",
@@ -110,6 +125,12 @@
       "description": "Mã VietQR tự động điền số tài khoản, tên và nội dung chuyển khoản, nút 'Sao Chép STK' & 'Tải Mã QR' cùng 1 dòng, modal phóng to sắc nét."
     },
     {
+      "id": "share_admin",
+      "name": "Trang Quản Lý Tạo Link & Giả Lập Mạng Xã Hội (/share)",
+      "component": "src/app/share/page.tsx",
+      "description": "Tạo link từng người, tạo hàng loạt, đồng bộ Google Sheets, xem trước phong bì thiệp và khung giả lập Zalo/Facebook preview."
+    },
+    {
       "id": "audio_player",
       "name": "Nhạc Nền Tự Động Phát & Nút Đĩa Quay",
       "component": "src/components/wedding/MusicController.tsx",
@@ -124,14 +145,16 @@
   ],
   "scripts": {
     "dev": "npm run dev — Chạy dev server localhost:3000",
-    "build": "npm run build — Biên dịch static export production",
+    "build": "npm run build — Biên dịch Next.js production build",
+    "start": "next start — Khởi chạy production server",
     "update:qr": "npm run update:qr — CLI tự động tải VietQR và cập nhật wedding.json",
     "optimize:images": "node scripts/optimize-images.mjs — Nén ảnh và xoay EXIF bằng Sharp"
   },
   "knowledge_items": {
+    "dynamic_metadata_nextjs": "Khi cần dynamic Open Graph SEO cho page, page.tsx phải là Server Component để export generateMetadata({ searchParams }), còn toàn bộ logic tương tác UI được tách vào Client Component riêng.",
+    "next_image_response": "next/og ImageResponse chạy trên Edge runtime cho phép sinh ảnh 1200x630 pixel động tức thì với styling JSX và flexbox mà không cần headless browser.",
     "exif_rotation": "Luôn dùng .rotate() trong sharp khi chuyển đổi ảnh chụp từ máy ảnh/RAW sang WebP để ảnh dọc không bị xoay ngang.",
     "vietqr_memo": "VietQR API hỗ trợ tham số addInfo=<nội dung> để app ngân hàng tự động điền memo khi quét.",
-    "mobile_frame_lock": "Để website luôn hiển thị dạng mobile trên tablet/desktop, container chính đặt max-w-[460px] mx-auto và các element fixed neo bằng left-1/2 -translate-x-1/2 w-full max-w-[460px].",
-    "staggered_typography": "Sử dụng isRevealed prop kích hoạt transitionDelay 0.4s - 2.2s sau khi mở rèm tạo cảm giác điện ảnh đẳng cấp."
+    "mobile_frame_lock": "Để website luôn hiển thị dạng mobile trên tablet/desktop, container chính đặt max-w-[480px] mx-auto và các element fixed neo bằng left-1/2 -translate-x-1/2 w-full max-w-[480px]."
   }
 }

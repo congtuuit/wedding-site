@@ -4,6 +4,17 @@ Toàn bộ lịch sử các tính năng, nâng cấp giao diện và tối ưu h
 
 ---
 
+## [v1.1.0] - 2026-08-25
+
+### ✨ Dynamic SEO & Social Media Share Preview (Added)
+- **Server-Side Dynamic Metadata (Next.js 15):** Tách `src/app/page.tsx` thành Server Component và xuất `generateMetadata({ searchParams })` để trích xuất tham số `?to=...`, `?guest=...`, `?k=...` (hỗ trợ cả Base64 Unicode và Plain text có dấu tiếng Việt).
+- **Dynamic Open Graph Meta Tags:** Tự động tạo thẻ `<meta property="og:title">`, `<meta property="og:description">`, `<meta property="og:image">` tương ứng với từng khách mời khi dán link qua Facebook, Zalo, Telegram, Messenger, iMessage.
+- **Tiêu Đề & Lời Nhắn Thân Mật:** Đổi chuẩn danh xưng sang *"Thân gửi: [Tên khách mời]"* trang trọng, ấm cúng.
+- **Dynamic OG Image Generator (`/api/og`):** Sử dụng `ImageResponse` từ `next/og` để tự động render ảnh xem trước kích thước chuẩn 1200x630 phong cách hoàng gia, in nổi bật tên khách mời và thông tin ngày cưới.
+- **Giả Lập Xem Trước Trên Mạng Xã Hội:** Bổ sung khung mô phỏng trực quan giao diện tin nhắn Zalo / Facebook / Messenger ngay trong trang quản lý tạo link `/share`.
+
+---
+
 ## [v1.0.0] - 2026-08-24
 
 ### ✨ Tính Năng Mới Thêm Vào (Added)

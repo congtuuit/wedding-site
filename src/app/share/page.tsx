@@ -21,6 +21,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { encodeGuestName } from "@/lib/utils";
+import { getActiveWeddingStage } from "@/lib/wedding-timeline";
 import weddingDataJson from "@/data/wedding.json";
 
 interface GeneratedItem {
@@ -36,6 +37,9 @@ const WEBHOOK_URL = weddingDataJson.appsheetWebhookUrl || "";
 export default function SharePage() {
   const [activeTab, setActiveTab] = useState<"single" | "bulk" | "history">("single");
   const [baseUrl, setBaseUrl] = useState<string>("");
+
+  // Event targeting state
+  const [eventTarget, setEventTarget] = useState<"auto" | "que" | "sg">("auto");
 
   // Single mode state
   const [guestName, setGuestName] = useState<string>("");
@@ -129,25 +133,53 @@ export default function SharePage() {
     }
   };
 
+  // Get active stage for preview & message templates
+  const previewStage = useMemo(() => {
+    return getActiveWeddingStage(eventTarget !== "auto" ? eventTarget : undefined);
+  }, [eventTarget]);
+
   // Generate single link
   const currentLink = useMemo(() => {
     if (!baseUrl) return "";
     const trimmed = guestName.trim();
-    if (!trimmed) return baseUrl;
+    const eventQueryParam = eventTarget !== "auto" ? `&event=${eventTarget}` : "";
+
+    if (!trimmed) {
+      return eventTarget !== "auto" ? `${baseUrl}/?event=${eventTarget}` : baseUrl;
+    }
 
     if (linkType === "base64") {
-      return `${baseUrl}/?to=${encodeGuestName(trimmed)}`;
+      return `${baseUrl}/?to=${encodeGuestName(trimmed)}${eventQueryParam}`;
     }
-    return `${baseUrl}/?to=${encodeURIComponent(trimmed)}`;
-  }, [baseUrl, guestName, linkType]);
+    return `${baseUrl}/?to=${encodeURIComponent(trimmed)}${eventQueryParam}`;
+  }, [baseUrl, guestName, linkType, eventTarget]);
 
   // Message templates
   const messageTemplates = useMemo(() => {
     const name = guestName.trim() || "Bạn";
+    const isNhaGai = previewStage.stageKey === "que";
+
+    if (isNhaGai) {
+      return [
+        {
+          title: "Mẫu Thân Mật (Lễ Vu Quy — Nhà Gái)",
+          body: `Thân gửi ${name},\n\nTú & Hường rất vui mừng được trân trọng gửi lời mời đến ${name} tới chung vui trong buổi Lễ Vu Quy & Tiệc Cưới tại nhà gái vào ngày ${previewStage.weddingDateFormatted}.\n\nThời gian: Thứ Bảy, 10 Tháng 10 Năm 2026 (09:00 Lễ Gia Tiên - 11:30 Khai Tiệc)\nĐịa điểm: Tư Gia Nhà Gái, Cát Tiên 3, Lâm Đồng.\n\nSự hiện diện của ${name} là niềm hạnh phúc to lớn đối với chúng mình!\n\nXem thiệp mời chi tiết tại đây:\n${currentLink}\n\nTrân trọng & Yêu thương!`,
+        },
+        {
+          title: "Mẫu Trang Trọng (Người lớn, gia đình, họ hàng)",
+          body: `Kính gửi ${name},\n\nGia đình chúng tôi trân trọng kính mời ${name} cùng gia đình tới dự buổi tiệc mừng Lễ Vu Quy của hai cháu Tú Văn & Hường Nguyễn.\n\nThời gian: Thứ Bảy, 10 Tháng 10 Năm 2026\nĐịa điểm: Tư Gia Nhà Gái, Cát Tiên 3, Lâm Đồng.\n\nKính mời xem thiệp cưới trực tuyến tại:\n${currentLink}\n\nRất hân hạnh được đón tiếp!`,
+        },
+        {
+          title: "Mẫu Ngắn Gọn (Gửi Zalo / Messenger)",
+          body: `Mời ${name} cùng người thương tới chung vui Lễ Vu Quy của Tú Văn & Hường Nguyễn ngày 10.10.2026 tại Lâm Đồng nhé!\nXem thiệp cưới tại: ${currentLink}`,
+        },
+      ];
+    }
+
     return [
       {
-        title: "Mẫu Thân Mật (Bạn bè, đồng nghiệp)",
-        body: `Thân gửi ${name},\n\nTú & Hường rất vui mừng được trân trọng gửi lời mời đến ${name} tới chung vui trong ngày trọng đại của chúng mình vào ngày 12.12.2026.\n\nSự hiện diện của ${name} là niềm hạnh phúc to lớn đối với chúng mình!\n\nXem thiệp mời chi tiết tại đây:\n${currentLink}\n\nTrân trọng & Yêu thương!`,
+        title: "Mẫu Thân Mật (Lễ Thành Hôn — Nhà Trai)",
+        body: `Thân gửi ${name},\n\nTú & Hường rất vui mừng được trân trọng gửi lời mời đến ${name} tới chung vui trong ngày trọng đại Lễ Thành Hôn của chúng mình vào ngày ${previewStage.weddingDateFormatted}.\n\nThời gian: Thứ Bảy, 12 Tháng 12 Năm 2026 (18:00 Đón Khách - 19:00 Khai Tiệc)\nĐịa điểm: The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP.HCM.\n\nSự hiện diện của ${name} là niềm hạnh phúc to lớn đối với chúng mình!\n\nXem thiệp mời chi tiết tại đây:\n${currentLink}\n\nTrân trọng & Yêu thương!`,
       },
       {
         title: "Mẫu Trang Trọng (Người lớn, gia đình, đối tác)",
@@ -155,10 +187,10 @@ export default function SharePage() {
       },
       {
         title: "Mẫu Ngắn Gọn (Gửi Zalo / Messenger)",
-        body: `Mời ${name} cùng người thương tới chung vui đám cưới Tú Văn & Hường Nguyễn ngày 12.12.2026 nhé!\nXem thiệp cưới tại: ${currentLink}`,
+        body: `Mời ${name} cùng người thương tới chung vui Lễ Thành Hôn của Tú Văn & Hường Nguyễn ngày 12.12.2026 tại TP.HCM nhé!\nXem thiệp cưới tại: ${currentLink}`,
       },
     ];
-  }, [guestName, currentLink]);
+  }, [guestName, currentLink, previewStage]);
 
   // Handlers
   const handleCopyLink = async (linkToCopy = currentLink) => {
@@ -206,11 +238,13 @@ export default function SharePage() {
       .map((l) => l.trim())
       .filter((l) => l.length > 0);
 
+    const eventQueryParam = eventTarget !== "auto" ? `&event=${eventTarget}` : "";
+
     const generated: GeneratedItem[] = lines.map((name, idx) => {
       const link =
         linkType === "base64"
-          ? `${baseUrl}/?to=${encodeGuestName(name)}`
-          : `${baseUrl}/?to=${encodeURIComponent(name)}`;
+          ? `${baseUrl}/?to=${encodeGuestName(name)}${eventQueryParam}`
+          : `${baseUrl}/?to=${encodeURIComponent(name)}${eventQueryParam}`;
       return {
         id: `bulk-${Date.now()}-${idx}`,
         name,
@@ -413,6 +447,68 @@ export default function SharePage() {
                 </div>
               </div>
 
+              {/* Event Target Selector Option */}
+              <div className="pt-2 space-y-2 border-t border-[#E8DCDD]/60 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-[#6B4E53] uppercase tracking-wider text-[11px]">
+                    2. Chọn Sự Kiện Mời Cho Khách
+                  </span>
+                  <span className="text-[11px] text-[#8C1425] font-medium">
+                    {eventTarget === "auto"
+                      ? `Tự động theo ngày (Hiện tại: ${previewStage.ceremonyName})`
+                      : eventTarget === "que"
+                      ? "Chỉ định: Lễ Vu Quy (Nhà Gái)"
+                      : "Chỉ định: Lễ Thành Hôn (Nhà Trai)"}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setEventTarget("auto")}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      eventTarget === "auto"
+                        ? "bg-[#8C1425]/10 border-[#8C1425] text-[#8C1425] font-semibold shadow-xs"
+                        : "bg-[#FAF7F2] border-[#E8DCDD] text-[#6B4E53] hover:border-[#8C1425]/40"
+                    }`}
+                  >
+                    <div className="font-semibold">⏱️ Tự Động (Thông minh)</div>
+                    <div className="text-[10px] text-[#6B4E53] mt-0.5">
+                      Trước 10.10 là Vu Quy, sau 10.10 là Thành Hôn
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setEventTarget("que")}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      eventTarget === "que"
+                        ? "bg-[#8C1425]/10 border-[#8C1425] text-[#8C1425] font-semibold shadow-xs"
+                        : "bg-[#FAF7F2] border-[#E8DCDD] text-[#6B4E53] hover:border-[#8C1425]/40"
+                    }`}
+                  >
+                    <div className="font-semibold">🌸 Nhà Gái (10.10.2026)</div>
+                    <div className="text-[10px] text-[#6B4E53] mt-0.5">
+                      Lễ Vu Quy & Tiệc Cưới Lâm Đồng
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setEventTarget("sg")}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      eventTarget === "sg"
+                        ? "bg-[#8C1425]/10 border-[#8C1425] text-[#8C1425] font-semibold shadow-xs"
+                        : "bg-[#FAF7F2] border-[#E8DCDD] text-[#6B4E53] hover:border-[#8C1425]/40"
+                    }`}
+                  >
+                    <div className="font-semibold">🏰 Nhà Trai (12.12.2026)</div>
+                    <div className="text-[10px] text-[#6B4E53] mt-0.5">
+                      Lễ Thành Hôn The ADORA TP.HCM
+                    </div>
+                  </button>
+                </div>
+              </div>
+
               {/* Link Type Option */}
               <div className="pt-2 flex flex-wrap items-center justify-between gap-3 text-xs border-t border-[#E8DCDD]/60">
                 <span className="font-medium text-[#6B4E53]">Kiểu hiển thị đường link:</span>
@@ -530,7 +626,13 @@ export default function SharePage() {
                   Xem trước dòng chữ trên phong bì thiệp
                 </span>
                 <div className="py-2">
-                  <p className="text-xs font-sans text-[#6B4E53]">Thân gửi đến:</p>
+                  <p className="text-xs font-sans text-[#6B4E53]">
+                    {eventTarget === "que"
+                      ? "Lễ Vu Quy (10.10.2026) — Thân gửi đến:"
+                      : eventTarget === "sg"
+                      ? "Lễ Thành Hôn (12.12.2026) — Thân gửi đến:"
+                      : "Thân gửi đến:"}
+                  </p>
                   <p className="font-couple text-2xl sm:text-3xl text-[#8C1425] pt-0.5">
                     {guestName.trim() || "Bạn & Người Thương"}
                   </p>
@@ -559,7 +661,7 @@ export default function SharePage() {
                         linkType === "base64"
                           ? encodeGuestName(guestName.trim())
                           : guestName.trim()
-                      )}`}
+                      )}${eventTarget !== "auto" ? `&event=${eventTarget}` : ""}`}
                       alt="Open Graph Preview Card"
                       className="w-full h-full object-cover"
                     />
@@ -569,10 +671,10 @@ export default function SharePage() {
                       tu-huong-wedding.vercel.app
                     </div>
                     <div className="text-xs font-bold text-[#280E12] line-clamp-1">
-                      💌 Thân gửi: {guestName.trim() || "Bạn & Người Thương"} — Thư Mời Thành Hôn Tú Văn & Hường Nguyễn
+                      💌 Thân gửi: {guestName.trim() || "Bạn & Người Thương"} — {previewStage.invitationHeadline} Tú Văn & Hường Nguyễn
                     </div>
                     <div className="text-[11px] text-[#6B4E53] line-clamp-2 leading-relaxed">
-                      Trân trọng kính mời {guestName.trim() || "bạn"} đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày 12.12.2026.
+                      Trân trọng kính mời {guestName.trim() || "bạn"} đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày {previewStage.weddingDateFormatted} ({previewStage.ceremonyName} tại {previewStage.location}).
                     </div>
                   </div>
                 </div>
@@ -649,6 +751,53 @@ export default function SharePage() {
                   placeholder={`Anh Hoàng\nChị Mai\nGia đình Bác Thành\nBạn Thân Cấp 3\nEm Linh...`}
                   className="w-full px-4 py-3.5 rounded-2xl bg-[#FAF7F2] border border-[#E8DCDD] focus:border-[#8C1425] focus:ring-2 focus:ring-[#8C1425]/20 outline-none text-sm text-[#280E12] font-mono leading-relaxed"
                 />
+              </div>
+
+              {/* Event Target Selector for Bulk */}
+              <div className="space-y-2 text-xs">
+                <span className="font-semibold text-[#6B4E53] uppercase tracking-wider text-[11px]">
+                  Chọn sự kiện cho danh sách này:
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setEventTarget("auto")}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      eventTarget === "auto"
+                        ? "bg-[#8C1425]/10 border-[#8C1425] text-[#8C1425] font-semibold shadow-xs"
+                        : "bg-[#FAF7F2] border-[#E8DCDD] text-[#6B4E53] hover:border-[#8C1425]/40"
+                    }`}
+                  >
+                    <div className="font-semibold">⏱️ Tự Động</div>
+                    <div className="text-[10px] text-[#6B4E53]">Theo ngày thực tế</div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setEventTarget("que")}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      eventTarget === "que"
+                        ? "bg-[#8C1425]/10 border-[#8C1425] text-[#8C1425] font-semibold shadow-xs"
+                        : "bg-[#FAF7F2] border-[#E8DCDD] text-[#6B4E53] hover:border-[#8C1425]/40"
+                    }`}
+                  >
+                    <div className="font-semibold">🌸 Nhà Gái (10.10)</div>
+                    <div className="text-[10px] text-[#6B4E53]">Lễ Vu Quy Lâm Đồng</div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setEventTarget("sg")}
+                    className={`p-2.5 rounded-xl border text-left transition-all ${
+                      eventTarget === "sg"
+                        ? "bg-[#8C1425]/10 border-[#8C1425] text-[#8C1425] font-semibold shadow-xs"
+                        : "bg-[#FAF7F2] border-[#E8DCDD] text-[#6B4E53] hover:border-[#8C1425]/40"
+                    }`}
+                  >
+                    <div className="font-semibold">🏰 Nhà Trai (12.12)</div>
+                    <div className="text-[10px] text-[#6B4E53]">Lễ Thành Hôn TP.HCM</div>
+                  </button>
+                </div>
               </div>
 
               <div className="flex flex-wrap items-center justify-between gap-3 pt-2">

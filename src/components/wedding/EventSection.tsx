@@ -8,10 +8,18 @@ import { SectionDivider } from "@/components/ui/SectionDivider";
 
 interface EventSectionProps {
   events: WeddingEvent[];
+  defaultFilter?: "all" | "sg" | "que";
+  activeStageKey?: "sg" | "que";
 }
 
-export const EventSection: React.FC<EventSectionProps> = ({ events }) => {
-  const { filter, setFilter, filteredEvents } = useEventFilter(events);
+export const EventSection: React.FC<EventSectionProps> = ({
+  events,
+  defaultFilter = "all",
+  activeStageKey = "que",
+}) => {
+  const { filter, setFilter, filteredEvents } = useEventFilter(events, defaultFilter);
+
+  const isQueFirst = activeStageKey === "que";
 
   return (
     <section id="events" className="w-full py-16 px-4 bg-background text-textMain">
@@ -37,26 +45,54 @@ export const EventSection: React.FC<EventSectionProps> = ({ events }) => {
           >
             Tất Cả
           </button>
-          <button
-            onClick={() => setFilter("sg")}
-            className={`px-3 py-1.5 rounded-xl text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[36px] ${
-              filter === "sg"
-                ? "bg-accent text-white font-medium shadow-sm"
-                : "text-textMuted hover:text-textMain"
-            }`}
-          >
-            Nhà Trai (12.12)
-          </button>
-          <button
-            onClick={() => setFilter("que")}
-            className={`px-3 py-1.5 rounded-xl text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[36px] ${
-              filter === "que"
-                ? "bg-accent text-white font-medium shadow-sm"
-                : "text-textMuted hover:text-textMain"
-            }`}
-          >
-            Nhà Gái (10.10)
-          </button>
+
+          {isQueFirst ? (
+            <>
+              <button
+                onClick={() => setFilter("que")}
+                className={`px-3 py-1.5 rounded-xl text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[36px] ${
+                  filter === "que"
+                    ? "bg-accent text-white font-medium shadow-sm"
+                    : "text-textMuted hover:text-textMain"
+                }`}
+              >
+                Nhà Gái (10.10)
+              </button>
+              <button
+                onClick={() => setFilter("sg")}
+                className={`px-3 py-1.5 rounded-xl text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[36px] ${
+                  filter === "sg"
+                    ? "bg-accent text-white font-medium shadow-sm"
+                    : "text-textMuted hover:text-textMain"
+                }`}
+              >
+                Nhà Trai (12.12)
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => setFilter("sg")}
+                className={`px-3 py-1.5 rounded-xl text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[36px] ${
+                  filter === "sg"
+                    ? "bg-accent text-white font-medium shadow-sm"
+                    : "text-textMuted hover:text-textMain"
+                }`}
+              >
+                Nhà Trai (12.12)
+              </button>
+              <button
+                onClick={() => setFilter("que")}
+                className={`px-3 py-1.5 rounded-xl text-xs font-sans tracking-wider uppercase transition-all duration-300 min-h-[36px] ${
+                  filter === "que"
+                    ? "bg-accent text-white font-medium shadow-sm"
+                    : "text-textMuted hover:text-textMain"
+                }`}
+              >
+                Nhà Gái (10.10)
+              </button>
+            </>
+          )}
         </div>
 
         {/* Event Cards (Clean vertical full-width stack) */}

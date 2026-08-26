@@ -9,13 +9,19 @@ interface HeroSectionProps {
   couple: CoupleInfo;
   heroPhoto: string;
   isRevealed?: boolean;
+  weddingDateFormatted?: string;
+  ceremonyName?: string;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   couple,
   heroPhoto,
   isRevealed = true,
+  weddingDateFormatted,
+  ceremonyName,
 }) => {
+  const displayDate = weddingDateFormatted || couple.weddingDateFormatted;
+  const displayCeremony = ceremonyName || "Lễ Thành Hôn";
   const scrollToRsvp = () => {
     const el = document.getElementById("rsvp");
     if (el) {
@@ -75,7 +81,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         >
           <Calendar className="w-4 h-4 text-amber-300" />
           <p className="font-serif text-base sm:text-lg tracking-[0.35em] uppercase font-light drop-shadow">
-            {couple.weddingDateFormatted}
+            {displayDate}
           </p>
         </div>
 
@@ -135,7 +141,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           }`}
           style={{ transitionDelay: "1900ms" }}
         >
-          Lễ Thành Hôn
+          {displayCeremony}
         </p>
 
         {/* RSVP Quick Action */}

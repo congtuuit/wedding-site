@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-08-24T23:25:00Z",
+  "updated_at": "2026-08-25T07:15:00Z",
   "working_on": {
-    "feature": "Wedding Website Full Optimization & Feature Set",
+    "feature": "Dynamic SEO & Social Share Preview for Guest Links",
     "status": "completed",
-    "current_state": "All requested features, UI polishes, typography updates, QR automation CLI, and mobile frame locking have been successfully completed and verified."
+    "current_state": "Dynamic Open Graph metadata and next/og ImageResponse cards for personalized guest links (?to=...) are fully implemented, verified, and tested with clean production build."
   },
   "completed_tasks": [
     { "task": "Initial Next.js 15 App Router Wedding Site Setup", "status": "done" },
@@ -27,24 +27,28 @@
     { "task": "Arranged 'Sao Chép STK' and 'Tải Mã QR' buttons on 1 single line across all devices", "status": "done" },
     { "task": "Integrated `yet-another-react-lightbox` with smooth swipe gestures, thumbnail filmstrip, and pinch zoom", "status": "done" },
     { "task": "Locked website max-width to Fixed Mobile Frame (max-w-[480px]) on tablets and desktop monitors", "status": "done" },
-    { "task": "Fine-tuned all sections (GiftSection, EventSection, Story, Typography) and bottom navigation dock for flawless mobile-frame desktop rendering", "status": "done" }
+    { "task": "Separated page.tsx into Server Component + WeddingPageClient.tsx for Server-Side Dynamic Metadata", "status": "done" },
+    { "task": "Implemented dynamic generateMetadata for ?to=, ?guest=, ?k= query parameters with UTF-8 base64 decoding", "status": "done" },
+    { "task": "Built Edge-runtime Dynamic Open Graph Image generator /api/og with customized guest name rendering", "status": "done" },
+    { "task": "Updated guest invitation salutation to 'Thân gửi' across InvitationSection, metadata, and /api/og card", "status": "done" },
+    { "task": "Added Social Media Share Simulation (Zalo / Facebook preview card) in /share admin page", "status": "done" }
   ],
   "decisions_made": [
     {
-      "decision": "Fixed Mobile Viewport on Desktop",
-      "reason": "Ensure wedding invitation retains the perfect gold-ratio proportions of a luxury smartphone app on large screens without stretching."
+      "decision": "Server Component Architecture for Next.js App Router",
+      "reason": "Social media web crawlers (Facebook External Hit, ZaloBot, TelegramBot) do not execute client-side JavaScript. Separating page.tsx into a Server Component allows generating real HTML <meta property='og:*'> tags."
     },
     {
-      "decision": "Pure Sans-Serif + Romantic Script for Names",
-      "reason": "Provides pristine modern readability for Vietnamese body text (Be Vietnam Pro) while highlighting the couple's romance via Alex Brush handwriting."
+      "decision": "Dynamic Image Generation via next/og Edge Runtime",
+      "reason": "Allows rendering ultra-crisp 1200x630 pixel Open Graph preview images with the recipient's name dynamically without needing third-party image generation APIs."
     },
     {
-      "decision": "Offline-First Local QR Images with CLI Updater",
-      "reason": "Guarantee instant image loading without depending on external API uptime while providing an effortless `npm run update:qr` CLI for future changes."
+      "decision": "Standardized Salutation 'Thân gửi'",
+      "reason": "Ensures a warm, elegant, and personal tone across both direct view and social media link previews."
     }
   ],
   "next_recommended_steps": [
-    { "task": "Deploy production build to Vercel / Cloudflare / GitHub Pages (/deploy)", "priority": "high" },
-    { "task": "Configure AppSheet webhook URL if desired for Google Sheets RSVP syncing", "priority": "medium" }
+    { "task": "Deploy production build to Vercel / Cloudflare (/deploy)", "priority": "high" },
+    { "task": "Test links using Facebook Sharing Debugger & Zalo Debugger", "priority": "medium" }
   ]
 }

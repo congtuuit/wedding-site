@@ -9,6 +9,8 @@ interface WeddingOpeningProps {
   guestName: string;
   isPersonalized: boolean;
   onOpen: () => void;
+  weddingDateFormatted?: string;
+  ceremonyBadge?: string;
 }
 
 // 1. Outer ambient constellation around the card (~12 glowing star points)
@@ -44,9 +46,14 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
   guestName,
   isPersonalized,
   onOpen,
+  weddingDateFormatted,
+  ceremonyBadge,
 }) => {
   const [phase, setPhase] = useState<"idle" | "loading" | "splitting" | "dismissed">("idle");
   const [progress, setProgress] = useState<number>(0);
+
+  const displayDate = weddingDateFormatted || couple.weddingDateFormatted;
+  const displayBadge = ceremonyBadge || "Wedding Invitation";
 
   // Lock body scroll and guarantee top scroll position while opening screen is active
   useEffect(() => {
@@ -201,7 +208,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
             
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-black/25 backdrop-blur-sm border border-amber-300/45 text-amber-200 text-[10px] uppercase tracking-[0.25em] font-sans shadow-sm">
               <Sparkles className="w-3 h-3 text-amber-300 animate-spin-slow" />
-              <span>Wedding Invitation</span>
+              <span>{displayBadge}</span>
             </div>
           </div>
 
@@ -209,7 +216,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
           <div className="flex items-center justify-center gap-2 text-amber-200/90 mb-4 relative z-10">
             <div className="h-[1px] w-6 bg-gradient-to-r from-transparent to-amber-300/60" />
             <p className="font-sans text-[11px] sm:text-xs tracking-[0.3em] uppercase font-medium">
-              {couple.weddingDateFormatted}
+              {displayDate}
             </p>
             <div className="h-[1px] w-6 bg-gradient-to-l from-transparent to-amber-300/60" />
           </div>

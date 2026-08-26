@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import { decodeGuestName } from "@/lib/utils";
+import { getActiveWeddingStage } from "@/lib/wedding-timeline";
 
 export const runtime = "edge";
 
@@ -8,7 +9,10 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const rawTo = searchParams.get("to") || searchParams.get("guest") || searchParams.get("k");
+    const rawEvent = searchParams.get("event") || searchParams.get("type");
+    
     const guestName = decodeGuestName(rawTo);
+    const stage = getActiveWeddingStage(rawEvent);
 
     return new ImageResponse(
       (
@@ -96,7 +100,7 @@ export async function GET(req: NextRequest) {
               marginBottom: "12px",
             }}
           >
-            ✨ THƯ MỜI THÀNH HÔN ✨
+            {stage.ceremonyBadge}
           </div>
 
           {/* Couple Names */}
@@ -182,9 +186,9 @@ export async function GET(req: NextRequest) {
               letterSpacing: "1px",
             }}
           >
-            <span>📅 12 . 12 . 2026</span>
+            <span>📅 {stage.weddingDateFormatted}</span>
             <span style={{ color: "#D4AF37", opacity: 0.6 }}>•</span>
-            <span>The ADORA Center, TP. Hồ Chí Minh</span>
+            <span>{stage.venueShort.split(",")[0]}, {stage.location}</span>
           </div>
         </div>
       ),
@@ -200,3 +204,4 @@ export async function GET(req: NextRequest) {
     });
   }
 }
+

@@ -1,8 +1,8 @@
 # 📋 HANDOVER DOCUMENT — THIỆP CƯỚI TÚ VĂN & HƯỜNG NGUYỄN
 
-**Ngày lưu:** 24.08.2026 (Phiên bản v4.0.2 - Full Features)  
-**Trạng thái dự án:** ✅ **Production Ready (100% Hoàn Thiện & Đã Kiểm Thử)**  
-**Dev Server:** `http://localhost:3000` | **Build:** Next.js 15 App Router (Static Prerender)
+**Ngày lưu:** 25.08.2026 (Phiên bản v1.1.0 - Dynamic SEO & Full Production)  
+**Trạng thái dự án:** ✅ **Production Ready (100% Hoàn Thiện & Đã Build Thành Công)**  
+**Dev Server:** `http://localhost:3000` | **Build:** Next.js 15 App Router (Server-Rendered Dynamic Metadata + Static Chunks)
 
 ---
 
@@ -11,49 +11,46 @@
 - **Chú Rể:** Văn Công Tú (Tú Văn), Trưởng Nam. Cha: Ông Văn Công Pha, Mẹ: Bà Trần Thị Thanh Lan. Quê quán: Bà Điểm, TP. HCM.
 - **Cô Dâu:** Nguyễn Thị Hường (Hường Nguyễn), Út Nữ. Cha: Ông Nguyễn Văn Dương, Mẹ: Bà Vũ Thị Chinh. Quê quán: Cát Tiên 3, Lâm Đồng.
 - **Lễ Gia Tiên & Tiệc Nhà Gái:** 10.10.2026 (Cát Tiên 3, Lâm Đồng).
-- **Tiệc Cưới Nhà Trai:** 12.12.2026 (TP. Hồ Chí Minh).
+- **Tiệc Cưới Nhà Trai:** 12.12.2026 (The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP. HCM).
 - **Tài Khoản Chú Rể:** VPBank `38689999996` — `VAN CONG TU` (Memo: `Mung cuoi Tu Van`).
 - **Tài Khoản Cô Dâu:** Techcombank `19039619769011` — `NGUYEN THI HUONG` (Memo: `Mung cuoi Huong Nguyen`).
 
 ---
 
-## ✅ CÁC TÍNH NĂNG ĐÃ HOÀN THIỆN XUẤT SẮC
+## 🚀 TÍNH NĂNG MỚI VỪA HOÀN THIỆN: DYNAMIC SEO & SOCIAL SHARE PREVIEW
 
-1. **Giao Diện Chuẩn Mobile Viewport (`max-w-[460px]`):**
-   - Trên desktop/tablet: Đặt chính giữa màn hình với đổ bóng sang trọng và viền nền nhung tối `#0E0204`.
-   - Trên mobile: Tràn viền 100% mượt mà tự nhiên.
-2. **Màn Mở Thiệp Điện Ảnh:**
-   - Thanh tiến trình loading dát vàng ~2.0s và rèm mở tách đôi trên-dưới (Top-Bottom Split 2.2s).
-   - 20 điểm sao vàng lấp lánh nghệ thuật và ánh lụa vàng continuous card shimmer.
-3. **Typography Không Chân & Thư Pháp Nghệ Thuật:**
-   - Tiêu đề & Nội dung: `Plus Jakarta Sans` & `Be Vietnam Pro` (Font Không Chân hiện đại, chuẩn 100% dấu tiếng Việt).
-   - Tên Cô Dâu Chú Rể: `Alex Brush` thư pháp lãng mạn, uyển chuyển.
-4. **Hiệu Ứng Chữ Mở Đầu (Hero Staggered Text Reveal):**
-   - Xuất hiện lần lượt từ 0.4s đến 2.2s sau khi mở thiệp (Save The Date → Ngày cưới → Chú rể → & → Cô dâu → Lễ Thành Hôn → Xác Nhận Tham Dự).
-5. **Album Ảnh Cưới Tạp Chí & Fullscreen Lightbox:**
-   - 20 ảnh WebP nén 95.4% giữ trọn độ nét cao và auto-rotate EXIF.
-   - Thư viện `yet-another-react-lightbox` hỗ trợ vuốt mượt, thanh thumbnail filmstrip dưới đáy, phóng to 2 ngón (Pinch Zoom) và bộ đếm số ảnh.
-6. **Hộp Mừng Cưới & Tải Mã VietQR Chuẩn NAPAS 24/7:**
-   - Tự động điền số tài khoản, tên và nội dung chuyển khoản khi quét mã.
-   - 2 nút "Sao Chép STK" và "Tải Mã QR" nằm cùng 1 dòng tiện lợi.
-   - Popup phóng to kích thước lớn 340px kèm nút tải ảnh về máy.
-7. **Script CLI Tự Động Hóa:**
-   - Lệnh `npm run update:qr` để cập nhật ngân hàng, số tài khoản, tên chủ tài khoản và nội dung chuyển khoản bất kỳ lúc nào.
-8. **Hiệu Suất & Điều Hướng:**
-   - 60/120fps GPU acceleration, thanh Menu Dock định vị nhanh, nút Back to Top mini 36px trượt êm về đỉnh trang.
+1. **Hiển Thị Tên Khách & Lời Mời Trên Mạng Xã Hội (Facebook, Zalo, Telegram, Messenger):**
+   - Khi gửi đường link ví dụ `https://tu-huong-wedding.vercel.app/?to=RW0gRHV5w6puICsgTlQ=`:
+     - **Tiêu đề (OG Title):** `💌 Thân gửi: Em Duyên + NT | Thư Mời Thành Hôn Tú Văn & Hường Nguyễn`
+     - **Mô tả (OG Description):** `Trân trọng kính mời Em Duyên + NT đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày 12.12.2026.`
+     - **Ảnh đại diện thiệp (OG Image 1200x630):** Render tự động từ endpoint `/api/og?to=...` với viền vàng dát kim, in hoa chữ **TÚ VĂN & HƯỜNG NGUYỄN** cùng dòng chữ nổi bật **"Thân gửi: Em Duyên + NT"**.
+2. **Chuẩn Danh Xưng "Thân gửi":**
+   - Đã đồng bộ chữ xưng hô sang `"Thân gửi: [Tên khách]"` trên phong bì, phần lời ngỏ trong thiệp, thẻ metadata và ảnh chia sẻ.
+3. **Khung Giả Lập Mạng Xã Hội Trong `/share`:**
+   - Trang tạo link đã có khung mô phỏng trực tiếp xem trước hiển thị khi dán link vào Zalo/Messenger/Facebook.
 
 ---
 
-## 📁 CÁC FILE QUAN TRỌNG CẦN NHỚ
+## 🧪 HƯỚNG DẪN KIỂM TRA LINK SAU KHI DEPLOY
 
-- `src/data/wedding.json`: Trung tâm lưu trữ toàn bộ dữ liệu (Ngày cưới, tên, lời ngỏ, sự kiện, album ảnh, tài khoản ngân hàng).
-- `scripts/update-qr.mjs`: Script CLI cập nhật tài khoản và tải mã VietQR.
-- `scripts/optimize-images.mjs`: Script tối ưu hóa nén ảnh WebP bằng Sharp.
-- `src/components/wedding/`: Chứa toàn bộ các component giao diện thiệp cưới.
-- `.brain/`: Thư mục lưu trữ tri thức dự án vĩnh viễn của Antigravity AWF.
+1. **Facebook Debugger:**
+   - Truy cập: `https://developers.facebook.com/tools/debug/`
+   - Dán link: `https://tu-huong-wedding.vercel.app/?to=RW0gRHV5w6puICsgTlQ=`
+   - Bấm **Scrape Again** để Facebook cập nhật bản preview mới nhất.
+2. **Zalo Debugger:**
+   - Truy cập: `https://developers.zalo.me/tools/debug-sharing`
+   - Dán link và bấm **Kiểm tra** để xem bản hiển thị trên Zalo.
+3. **Gửi tin nhắn trực tiếp:**
+   - Dán link vào khung chat Zalo / Messenger, thẻ xem trước sẽ tự động xuất hiện.
 
 ---
 
-## 🚀 GỢI Ý BƯỚC TIẾP THEO
-- Deploy dự án lên production (Vercel / Cloudflare Pages / GitHub Pages) bằng lệnh `/deploy`.
-- Để khôi phục toàn bộ ngữ cảnh trong session mới: Gõ `/recap`.
+## 📁 CÁC FILE QUAN TRỌNG
+
+- `src/app/page.tsx`: Server Component trích xuất `searchParams` và tạo `generateMetadata`.
+- `src/app/api/og/route.tsx`: Edge runtime endpoint sinh ảnh Open Graph 1200x630px.
+- `src/components/wedding/WeddingPageClient.tsx`: Toàn bộ tương tác client-side của thiệp cưới.
+- `src/components/wedding/InvitationSection.tsx`: Lời ngỏ và danh xưng "Thân gửi".
+- `src/app/share/page.tsx`: Trang quản lý tạo link & giả lập chia sẻ.
+- `src/data/wedding.json`: Dữ liệu ngày cưới, địa điểm, STK ngân hàng.
+- `.brain/`: Eternal context system của Antigravity AWF.

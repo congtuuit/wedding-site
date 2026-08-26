@@ -8,11 +8,15 @@ import { Clock } from "lucide-react";
 interface CountdownProps {
   targetDateIso: string;
   weddingDateFormatted: string;
+  ceremonyName?: string;
+  location?: string;
 }
 
 export const Countdown: React.FC<CountdownProps> = ({
   targetDateIso,
   weddingDateFormatted,
+  ceremonyName,
+  location,
 }) => {
   const { days, hours, minutes, seconds, isExpired, isHydrated } =
     useCountdown(targetDateIso);
@@ -24,6 +28,8 @@ export const Countdown: React.FC<CountdownProps> = ({
     { label: "Giây", value: seconds },
   ];
 
+  const ceremonyLabel = ceremonyName || "Ngày Trọng Đại";
+
   return (
     <section id="countdown" className="w-full py-16 px-4 bg-background text-textMain text-center">
       <div className="max-w-xl mx-auto space-y-5">
@@ -33,10 +39,10 @@ export const Countdown: React.FC<CountdownProps> = ({
         </div>
 
         <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide">
-          Chờ Đón Ngày Hạnh Phúc
+          Chờ Đón {ceremonyLabel}
         </h2>
         <p className="text-xs text-textMuted font-sans tracking-widest uppercase">
-          {weddingDateFormatted}
+          {weddingDateFormatted} {location ? `• ${location}` : ""}
         </p>
 
         <SectionDivider variant="diamond" className="my-4" />
@@ -44,7 +50,9 @@ export const Countdown: React.FC<CountdownProps> = ({
         {isExpired ? (
           <div className="py-6 px-4 rounded-2xl bg-[#8C1425]/10 border border-[#8C1425]/20">
             <p className="font-heading text-lg text-[#8C1425] font-medium">
-              Hôm nay là ngày chúng mình chính thức về chung một nhà! 💐
+              {ceremonyName === "Lễ Vu Quy"
+                ? "Lễ Vu Quy tại nhà gái đã diễn ra thật trọn vẹn và ấm áp! 💐"
+                : "Hôm nay là ngày chúng mình chính thức về chung một nhà! 💐"}
             </p>
           </div>
         ) : (
@@ -68,7 +76,7 @@ export const Countdown: React.FC<CountdownProps> = ({
         )}
 
         <p className="text-xs text-textMuted font-sans tracking-wide pt-2">
-          Từng giây từng phút trôi qua đều hướng về ngày đặc biệt của chúng mình.
+          Từng giây từng phút trôi qua đều hướng về {ceremonyLabel.toLowerCase()} của chúng mình.
         </p>
       </div>
     </section>

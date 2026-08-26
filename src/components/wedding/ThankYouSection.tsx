@@ -6,12 +6,15 @@ import { Heart } from "lucide-react";
 interface ThankYouSectionProps {
   couple: CoupleInfo;
   closingPhoto: string;
+  weddingDateFormatted?: string;
 }
 
 export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
   couple,
   closingPhoto,
+  weddingDateFormatted,
 }) => {
+  const displayDate = weddingDateFormatted || couple.weddingDateFormatted;
   return (
     <section className="w-full pt-20 pb-32 px-4 bg-surface text-textMain text-center relative overflow-hidden">
       <div className="max-w-3xl mx-auto space-y-8">
@@ -48,7 +51,7 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
             {couple.groom.name} & {couple.bride.name}
           </p>
           <p className="font-sans text-xs text-textMuted uppercase tracking-[0.3em]">
-            {couple.weddingDateFormatted}
+            {displayDate}
           </p>
         </div>
 

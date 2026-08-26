@@ -5,6 +5,8 @@ import weddingDataJson from "@/data/wedding.json";
 import { WeddingData } from "@/types/wedding";
 import { useGuestName } from "@/hooks/useGuestName";
 import { useAutoScroll } from "@/hooks/useAutoScroll";
+import { useActiveWeddingStage } from "@/hooks/useActiveWeddingStage";
+import { ActiveWeddingStage } from "@/lib/wedding-timeline";
 
 import { WeddingOpening } from "@/components/wedding/WeddingOpening";
 import { MusicController } from "@/components/wedding/MusicController";
@@ -30,11 +32,13 @@ const weddingData = weddingDataJson as WeddingData;
 interface WeddingPageClientProps {
   initialGuestName?: string;
   initialIsPersonalized?: boolean;
+  initialStage?: ActiveWeddingStage;
 }
 
 export function WeddingPageClient({
   initialGuestName,
   initialIsPersonalized,
+  initialStage,
 }: WeddingPageClientProps) {
   const { guestName: clientGuestName, isPersonalized: clientIsPersonalized } =
     useGuestName();
@@ -46,6 +50,8 @@ export function WeddingPageClient({
 
   const isPersonalized =
     clientIsPersonalized || Boolean(initialIsPersonalized);
+
+  const stage = useActiveWeddingStage(initialStage);
 
   const [hasOpenedInvitation, setHasOpenedInvitation] = useState<boolean>(false);
 
@@ -83,6 +89,8 @@ export function WeddingPageClient({
         guestName={guestName}
         isPersonalized={isPersonalized}
         onOpen={handleOpenInvitation}
+        weddingDateFormatted={stage.weddingDateFormatted}
+        ceremonyBadge={stage.ceremonyName}
       />
 
       {/* 2. Floating Ambient Rose Petals & Golden Sparkles */}
@@ -101,17 +109,23 @@ export function WeddingPageClient({
         couple={weddingData.couple}
         heroPhoto={weddingData.hero.mainPhoto}
         isRevealed={hasOpenedInvitation}
+        weddingDateFormatted={stage.weddingDateFormatted}
+        ceremonyName={stage.ceremonyName}
       />
 
       {/* 5. Family Section (Nhà Trai & Nhà Gái) */}
       <ScrollReveal direction="up">
-        <FamilySection couple={weddingData.couple} />
+        <FamilySection
+          couple={weddingData.couple}
+          priority={stage.stageKey}
+        />
       </ScrollReveal>
 
       {/* 6. Emotional Invitation Message */}
       <ScrollReveal direction="up" delay={100}>
         <InvitationSection
           invitation={weddingData.invitation}
+          headline={stage.invitationHeadline}
           guestName={guestName}
           isPersonalized={isPersonalized}
         />
@@ -120,8 +134,10 @@ export function WeddingPageClient({
       {/* 7. Live Countdown */}
       <ScrollReveal direction="up" delay={150}>
         <Countdown
-          targetDateIso={`${weddingData.couple.weddingDate}T08:00:00+07:00`}
-          weddingDateFormatted={weddingData.couple.weddingDateFormatted}
+          targetDateIso={stage.targetCountdownIso}
+          weddingDateFormatted={stage.weddingDateFormatted}
+          ceremonyName={stage.ceremonyName}
+          location={stage.location}
         />
       </ScrollReveal>
 
@@ -132,7 +148,11 @@ export function WeddingPageClient({
 
       {/* 9. Wedding Events & Google Maps & Calendar */}
       <ScrollReveal direction="up" delay={100}>
-        <EventSection events={weddingData.events} />
+        <EventSection
+          events={stage.orderedEvents}
+          defaultFilter={stage.defaultFilter}
+          activeStageKey={stage.stageKey}
+        />
       </ScrollReveal>
 
       {/* 10. Wedding Photo Gallery & Lightbox */}
@@ -143,7 +163,7 @@ export function WeddingPageClient({
       {/* 11. RSVP Confirmation Section */}
       <ScrollReveal direction="up" delay={100}>
         <RSVPSection
-          events={weddingData.events}
+          events={stage.orderedEvents}
           initialGuestName={guestName}
           isPersonalized={isPersonalized}
           webhookUrl={weddingData.appsheetWebhookUrl}
@@ -169,6 +189,7 @@ export function WeddingPageClient({
       <ScrollReveal direction="up" delay={100}>
         <ThankYouSection
           couple={weddingData.couple}
+          weddingDateFormatted={stage.weddingDateFormatted}
           closingPhoto={
             weddingData.gallery[weddingData.gallery.length - 1]?.src ||
             "/images/TOBI1281.webp"
@@ -184,3 +205,4 @@ export function WeddingPageClient({
     </main>
   );
 }
+
