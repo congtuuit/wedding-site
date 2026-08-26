@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import weddingDataJson from "@/data/wedding.json";
 import { WeddingData } from "@/types/wedding";
 import { useGuestName } from "@/hooks/useGuestName";
@@ -9,7 +9,7 @@ import { useActiveWeddingStage } from "@/hooks/useActiveWeddingStage";
 import { ActiveWeddingStage } from "@/lib/wedding-timeline";
 
 import { WeddingOpening } from "@/components/wedding/WeddingOpening";
-import { MusicController } from "@/components/wedding/MusicController";
+import { MusicController, MusicControllerHandle } from "@/components/wedding/MusicController";
 import { AutoScrollController } from "@/components/wedding/AutoScrollController";
 import { HeroSection } from "@/components/wedding/HeroSection";
 import { FamilySection } from "@/components/wedding/FamilySection";
@@ -55,6 +55,7 @@ export function WeddingPageClient({
   const stage = useActiveWeddingStage(initialStage);
 
   const [hasOpenedInvitation, setHasOpenedInvitation] = useState<boolean>(false);
+  const musicRef = useRef<MusicControllerHandle | null>(null);
 
   // Guarantee page is always at the absolute top on initial load
   useEffect(() => {
@@ -63,6 +64,12 @@ export function WeddingPageClient({
       window.scrollTo(0, 0);
     }
   }, []);
+
+  const handleStartAudio = () => {
+    if (musicRef.current) {
+      musicRef.current.play();
+    }
+  };
 
   const handleOpenInvitation = () => {
     if (typeof window !== "undefined") {
@@ -95,6 +102,7 @@ export function WeddingPageClient({
         guestName={guestName}
         isPersonalized={isPersonalized}
         onOpen={handleOpenInvitation}
+        onStartAudio={handleStartAudio}
         weddingDateFormatted={stage.weddingDateFormatted}
         ceremonyBadge={stage.ceremonyName}
       />
@@ -103,24 +111,26 @@ export function WeddingPageClient({
       {hasOpenedInvitation && <FloatingPetals />}
 
       {/* 3. Floating Top-Right Vertical Media Cluster (Music Controller on Top, Auto-Scroll Below) */}
-      {hasOpenedInvitation && (
-        <div className="fixed top-4 inset-x-0 z-40 pointer-events-none flex justify-center px-3 sm:px-4">
-          <div className="w-full max-w-[480px] flex items-start justify-end">
-            <div className="flex flex-col items-center gap-2">
-              <MusicController
-                src={weddingData.music.src}
-                autoPlayTrigger={hasOpenedInvitation}
-                standalone={false}
-              />
+      <div className="fixed top-4 inset-x-0 z-40 pointer-events-none flex justify-center px-3 sm:px-4">
+        <div className="w-full max-w-[480px] flex items-start justify-end">
+          <div className="flex flex-col items-center gap-2">
+            <MusicController
+              ref={musicRef}
+              src={weddingData.music.src}
+              autoPlayTrigger={hasOpenedInvitation}
+              standalone={false}
+              visible={hasOpenedInvitation}
+            />
+            {hasOpenedInvitation && (
               <AutoScrollController
                 isAutoScrolling={isAutoScrolling}
                 isPausedByUser={isPausedByUser}
                 onToggle={toggleAutoScroll}
               />
-            </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
 
       {/* 4. Cinematic Hero Section */}
       <HeroSection

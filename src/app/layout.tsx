@@ -73,6 +73,11 @@ export const metadata: Metadata = {
     description: "Trân trọng kính mời bạn đến chung vui cùng chúng mình!",
     images: ["/images/TOBI0448.webp"],
   },
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export const viewport: Viewport = {

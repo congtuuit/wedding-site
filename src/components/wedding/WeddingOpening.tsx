@@ -9,6 +9,7 @@ interface WeddingOpeningProps {
   guestName: string;
   isPersonalized: boolean;
   onOpen: () => void;
+  onStartAudio?: () => void;
   weddingDateFormatted?: string;
   ceremonyBadge?: string;
 }
@@ -46,6 +47,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
   guestName,
   isPersonalized,
   onOpen,
+  onStartAudio,
   weddingDateFormatted,
   ceremonyBadge,
 }) => {
@@ -80,6 +82,11 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
 
     if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
+    }
+
+    // Trigger audio synchronously on user gesture to bypass iOS Safari autoplay restrictions
+    if (onStartAudio) {
+      onStartAudio();
     }
 
     setPhase("loading");
