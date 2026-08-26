@@ -1,8 +1,8 @@
 # 📋 HANDOVER DOCUMENT — THIỆP CƯỚI TÚ VĂN & HƯỜNG NGUYỄN
 
-**Ngày lưu:** 25.08.2026 (Phiên bản v1.1.0 - Dynamic SEO & Full Production)  
+**Ngày lưu:** 26.08.2026 (Phiên bản v1.2.0 - Smart Timeline & Dynamic Event Switching)  
 **Trạng thái dự án:** ✅ **Production Ready (100% Hoàn Thiện & Đã Build Thành Công)**  
-**Dev Server:** `http://localhost:3000` | **Build:** Next.js 15 App Router (Server-Rendered Dynamic Metadata + Static Chunks)
+**Dev Server:** `http://localhost:3000` | **Build:** Next.js 15 App Router
 
 ---
 
@@ -10,14 +10,20 @@
 
 - **Chú Rể:** Văn Công Tú (Tú Văn), Trưởng Nam. Cha: Ông Văn Công Pha, Mẹ: Bà Trần Thị Thanh Lan. Quê quán: Bà Điểm, TP. HCM.
 - **Cô Dâu:** Nguyễn Thị Hường (Hường Nguyễn), Út Nữ. Cha: Ông Nguyễn Văn Dương, Mẹ: Bà Vũ Thị Chinh. Quê quán: Cát Tiên 3, Lâm Đồng.
-- **Lễ Gia Tiên & Tiệc Nhà Gái:** 10.10.2026 (Cát Tiên 3, Lâm Đồng).
-- **Tiệc Cưới Nhà Trai:** 12.12.2026 (The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP. HCM).
-- **Tài Khoản Chú Rể:** VPBank `38689999996` — `VAN CONG TU` (Memo: `Mung cuoi Tu Van`).
-- **Tài Khoản Cô Dâu:** Techcombank `19039619769011` — `NGUYEN THI HUONG` (Memo: `Mung cuoi Huong Nguyen`).
+- **Tiệc 1 (Nhà Gái - Lễ Vu Quy):** 10.10.2026 (Cát Tiên 3, Lâm Đồng).
+- **Tiệc 2 (Nhà Trai - Lễ Thành Hôn):** 12.12.2026 (The ADORA Center, Tân Bình, TP. HCM).
 
 ---
 
-## 🚀 TÍNH NĂNG MỚI VỪA HOÀN THIỆN: DYNAMIC SEO & SOCIAL SHARE PREVIEW
+## 🚀 TÍNH NĂNG MỚI VỪA HOÀN THIỆN: LOGIC NGÀY GIỜ & SỰ KIỆN THÔNG MINH (v1.2.0)
+
+1. **Tự Động Chuyển Đổi Tiến Trình Theo Thời Gian Thực:**
+   - **Giai đoạn 1 (Hiện tại -> Hết 10.10.2026):** Tự động hiển thị ngày `10 . 10 . 2026`, tiêu đề `Lễ Vu Quy`, đếm ngược tới `10.10.2026 09:00`, ưu tiên cột Nhà Gái và tab Nhà Gái lên đầu.
+   - **Giai đoạn 2 (Từ 11.10.2026 -> Hết 12.12.2026):** Tự động chuyển sang ngày `12 . 12 . 2026`, tiêu đề `Lễ Thành Hôn`, đếm ngược tới `12.12.2026 18:00`, ưu tiên Nhà Trai.
+   - **Giai đoạn 3 (Sau 12.12.2026):** Giữ nguyên thông tin sau cùng và thông báo ngày vui trọn vẹn.
+2. **Hỗ Trợ Chỉ Định Riêng Trong `/share`:**
+   - Tạo link có thể chọn `Tự động`, `Nhà Gái (?event=que)` hoặc `Nhà Trai (?event=sg)`.
+   - Cập nhật mẫu tin nhắn và ảnh Open Graph Preview tương ứng.
 
 1. **Hiển Thị Tên Khách & Lời Mời Trên Mạng Xã Hội (Facebook, Zalo, Telegram, Messenger):**
    - Khi gửi đường link ví dụ `https://tu-huong-wedding.vercel.app/?to=RW0gRHV5w6puICsgTlQ=`:

@@ -10,6 +10,7 @@ import { ActiveWeddingStage } from "@/lib/wedding-timeline";
 
 import { WeddingOpening } from "@/components/wedding/WeddingOpening";
 import { MusicController } from "@/components/wedding/MusicController";
+import { AutoScrollController } from "@/components/wedding/AutoScrollController";
 import { HeroSection } from "@/components/wedding/HeroSection";
 import { FamilySection } from "@/components/wedding/FamilySection";
 import { InvitationSection } from "@/components/wedding/InvitationSection";
@@ -70,15 +71,20 @@ export function WeddingPageClient({
     setHasOpenedInvitation(true);
   };
 
-  // Smart Cinema Auto-Scroll Behavior:
-  // - Starts 1.5s after envelope content is revealed
-  // - Pauses immediately when user interacts (touch/scroll/click/key)
-  // - Resumes smoothly after 10s of inactivity
-  useAutoScroll({
+  // Smart Cinema Auto-Scroll Hook:
+  // - 60fps/120fps Subpixel floating point accumulator (Optimized for iPhone ProMotion & iOS Safari)
+  // - Immediate pause on touch / momentum scroll
+  // - Auto-resume after 8s of inactivity
+  // - Pause on form focus / modal dialogs / tab hidden
+  const {
+    isAutoScrolling,
+    isPausedByUser,
+    toggleAutoScroll,
+  } = useAutoScroll({
     enabled: hasOpenedInvitation,
-    speed: 55,
-    initialDelay: 3800,
-    resumeDelay: 10000,
+    speed: 48,
+    initialDelay: 3600,
+    resumeDelay: 8000,
   });
 
   return (
@@ -96,12 +102,24 @@ export function WeddingPageClient({
       {/* 2. Floating Ambient Rose Petals & Golden Sparkles */}
       {hasOpenedInvitation && <FloatingPetals />}
 
-      {/* 3. Floating Background Music Controller (Visible after opening) */}
+      {/* 3. Floating Top-Right Vertical Media Cluster (Music Controller on Top, Auto-Scroll Below) */}
       {hasOpenedInvitation && (
-        <MusicController
-          src={weddingData.music.src}
-          autoPlayTrigger={hasOpenedInvitation}
-        />
+        <div className="fixed top-4 inset-x-0 z-40 pointer-events-none flex justify-center px-3 sm:px-4">
+          <div className="w-full max-w-[480px] flex items-start justify-end">
+            <div className="flex flex-col items-center gap-2">
+              <MusicController
+                src={weddingData.music.src}
+                autoPlayTrigger={hasOpenedInvitation}
+                standalone={false}
+              />
+              <AutoScrollController
+                isAutoScrolling={isAutoScrolling}
+                isPausedByUser={isPausedByUser}
+                onToggle={toggleAutoScroll}
+              />
+            </div>
+          </div>
+        </div>
       )}
 
       {/* 4. Cinematic Hero Section */}

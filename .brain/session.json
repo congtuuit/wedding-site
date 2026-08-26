@@ -1,11 +1,16 @@
 {
-  "updated_at": "2026-08-25T07:15:00Z",
+  "updated_at": "2026-08-26T15:50:00Z",
   "working_on": {
-    "feature": "Dynamic SEO & Social Share Preview for Guest Links",
+    "feature": "Smart Timeline & Dynamic Event Switching for Multi-Event Wedding",
     "status": "completed",
-    "current_state": "Dynamic Open Graph metadata and next/og ImageResponse cards for personalized guest links (?to=...) are fully implemented, verified, and tested with clean production build."
+    "current_state": "Smart time-based switching between Nhà Gái (10.10.2026 - Lễ Vu Quy) and Nhà Trai (12.12.2026 - Lễ Thành Hôn) has been fully built, integrated across all sections, Open Graph metadata, share portal, and verified with clean production build."
   },
   "completed_tasks": [
+    { "task": "Smart Timeline Stage Resolver (src/lib/wedding-timeline.ts)", "status": "done" },
+    { "task": "Client Hook for Active Stage (src/hooks/useActiveWeddingStage.ts)", "status": "done" },
+    { "task": "Dynamic Envelope, Hero, Family, Invitation, Countdown, Event, ThankYou Sections", "status": "done" },
+    { "task": "Dynamic Server Metadata & Edge Open Graph preview according to active event stage", "status": "done" },
+    { "task": "Multi-event Link Targeting & Message Templates in /share portal", "status": "done" },
     { "task": "Initial Next.js 15 App Router Wedding Site Setup", "status": "done" },
     { "task": "EXIF Auto-Orientation & 95.4% WebP Sharp Image Optimization (20 photos)", "status": "done" },
     { "task": "Editorial Masonry Gallery with Fullscreen Lightbox & 8-photo preview", "status": "done" },
