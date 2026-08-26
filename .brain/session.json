@@ -1,59 +1,43 @@
 {
-  "updated_at": "2026-08-26T15:50:00Z",
+  "updated_at": "2026-08-26T16:22:00Z",
   "working_on": {
-    "feature": "Smart Timeline & Dynamic Event Switching for Multi-Event Wedding",
+    "feature": "Cinema Wishes Carousel, iOS Safari Audio Autoplay & Smart Wedding Timeline",
     "status": "completed",
-    "current_state": "Smart time-based switching between Nhà Gái (10.10.2026 - Lễ Vu Quy) and Nhà Trai (12.12.2026 - Lễ Thành Hôn) has been fully built, integrated across all sections, Open Graph metadata, share portal, and verified with clean production build."
+    "current_state": "All user requirements have been fully implemented, optimized for mobile (iPhone iOS Safari & Android), and verified with a clean production build (0 errors)."
   },
   "completed_tasks": [
-    { "task": "Smart Timeline Stage Resolver (src/lib/wedding-timeline.ts)", "status": "done" },
-    { "task": "Client Hook for Active Stage (src/hooks/useActiveWeddingStage.ts)", "status": "done" },
+    { "task": "Cinema Auto-Scroll Engine for Wishes Carousel (Subpixel Coordinate Tracker, 40px/s, infinite seamless loop, touch pause/resume)", "status": "done" },
+    { "task": "iOS Safari WebKit Audio Autoplay Fix (Synchronous trigger on 'Mở Thiệp' click + DOM preloading)", "status": "done" },
+    { "task": "Vertical Top-Right Media Cluster (Music Controller on Top, Auto-Scroll Controller Below with 40-44px touch targets)", "status": "done" },
+    { "task": "Favicon SVG & Dynamic Multi-Platform Icons (src/app/icon.tsx, src/app/apple-icon.tsx)", "status": "done" },
+    { "task": "Smart Multi-Event Timeline Stage Resolver (src/lib/wedding-timeline.ts & useActiveWeddingStage.ts for 10.10.2026 Vu Quy vs 12.12.2026 Thành Hôn)", "status": "done" },
     { "task": "Dynamic Envelope, Hero, Family, Invitation, Countdown, Event, ThankYou Sections", "status": "done" },
     { "task": "Dynamic Server Metadata & Edge Open Graph preview according to active event stage", "status": "done" },
     { "task": "Multi-event Link Targeting & Message Templates in /share portal", "status": "done" },
-    { "task": "Initial Next.js 15 App Router Wedding Site Setup", "status": "done" },
     { "task": "EXIF Auto-Orientation & 95.4% WebP Sharp Image Optimization (20 photos)", "status": "done" },
     { "task": "Editorial Masonry Gallery with Fullscreen Lightbox & 8-photo preview", "status": "done" },
     { "task": "Cinematic Game Loading Bar & Top-Bottom Split Curtain Reveal Animation", "status": "done" },
-    { "task": "Royal Ruby Burgundy (#8C1425), Champagne Gold (#D4AF37) & Pearl Ivory (#FAF7F2) Color Palette", "status": "done" },
-    { "task": "Staggered Cinematic Typography Entrance Animations in HeroSection", "status": "done" },
-    { "task": "Artistic Fixed Sparkle Star Constellation (20 points) across card and background", "status": "done" },
-    { "task": "60fps/120fps GPU Hardware-Accelerated Scrolling & Preload Optimization", "status": "done" },
-    { "task": "Compact Mini Back-To-Top Button with Smooth Scroll", "status": "done" },
-    { "task": "Default Scroll Reset to Absolute Top (0, 0) upon opening invitation", "status": "done" },
-    { "task": "Modern Sans-Serif Typography (Plus Jakarta Sans & Be Vietnam Pro) for clean modern reading", "status": "done" },
-    { "task": "Romantic Graceful Cursive Script (Alex Brush) for Groom & Bride Names", "status": "done" },
-    { "task": "Refined & Compact Font Sizes for Family Information Section", "status": "done" },
-    { "task": "Updated Story Section title to 'Hành Trình Yêu Thương' with light delicate weight", "status": "done" },
     { "task": "Generated Official VietQR Codes for Groom (VPBank: 38689999996) & Bride (Techcombank: 19039619769011)", "status": "done" },
-    { "task": "Created Automated CLI Script (`npm run update:qr`) for instant bank & QR updates with custom transfer memos", "status": "done" },
-    { "task": "Added QR Code Download Feature on cards and within enlarged lightbox popup", "status": "done" },
-    { "task": "Enlarged QR Code size (240px on card, 340px in modal) for effortless scanning", "status": "done" },
-    { "task": "Arranged 'Sao Chép STK' and 'Tải Mã QR' buttons on 1 single line across all devices", "status": "done" },
-    { "task": "Integrated `yet-another-react-lightbox` with smooth swipe gestures, thumbnail filmstrip, and pinch zoom", "status": "done" },
-    { "task": "Locked website max-width to Fixed Mobile Frame (max-w-[480px]) on tablets and desktop monitors", "status": "done" },
-    { "task": "Separated page.tsx into Server Component + WeddingPageClient.tsx for Server-Side Dynamic Metadata", "status": "done" },
-    { "task": "Implemented dynamic generateMetadata for ?to=, ?guest=, ?k= query parameters with UTF-8 base64 decoding", "status": "done" },
-    { "task": "Built Edge-runtime Dynamic Open Graph Image generator /api/og with customized guest name rendering", "status": "done" },
-    { "task": "Updated guest invitation salutation to 'Thân gửi' across InvitationSection, metadata, and /api/og card", "status": "done" },
-    { "task": "Added Social Media Share Simulation (Zalo / Facebook preview card) in /share admin page", "status": "done" }
+    { "task": "Created Automated CLI Script (`npm run update:qr`) for instant bank & QR updates", "status": "done" },
+    { "task": "QR Code Download Feature on cards and within enlarged lightbox popup", "status": "done" },
+    { "task": "Locked website max-width to Fixed Mobile Frame (max-w-[480px]) on tablets and desktop monitors", "status": "done" }
   ],
   "decisions_made": [
     {
-      "decision": "Server Component Architecture for Next.js App Router",
-      "reason": "Social media web crawlers (Facebook External Hit, ZaloBot, TelegramBot) do not execute client-side JavaScript. Separating page.tsx into a Server Component allows generating real HTML <meta property='og:*'> tags."
+      "decision": "Cinema Subpixel Auto-Scroll Engine for Carousel",
+      "reason": "Eliminates jumpy stepped transitions and integer truncation stutter on 120Hz ProMotion screens, providing an ultra-smooth, continuous reading drift that pauses naturally upon touch."
     },
     {
-      "decision": "Dynamic Image Generation via next/og Edge Runtime",
-      "reason": "Allows rendering ultra-crisp 1200x630 pixel Open Graph preview images with the recipient's name dynamically without needing third-party image generation APIs."
+      "decision": "Synchronous Audio Trigger on User Gesture",
+      "reason": "iOS Safari WebKit requires audio.play() to be invoked directly inside the click event call stack rather than inside asynchronous setTimeout callbacks."
     },
     {
-      "decision": "Standardized Salutation 'Thân gửi'",
-      "reason": "Ensures a warm, elegant, and personal tone across both direct view and social media link previews."
+      "decision": "Vertical Top-Right Media Cluster Layout",
+      "reason": "Compact 40-44px translucent buttons with subtle opacity (75%) keep media controls easily accessible for thumb reach without obscuring card content."
     }
   ],
   "next_recommended_steps": [
     { "task": "Deploy production build to Vercel / Cloudflare (/deploy)", "priority": "high" },
-    { "task": "Test links using Facebook Sharing Debugger & Zalo Debugger", "priority": "medium" }
+    { "task": "Test personalized links with Facebook Sharing Debugger & Zalo Debugger", "priority": "medium" }
   ]
 }

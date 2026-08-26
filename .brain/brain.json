@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.1.0",
     "awf_version": "4.0.2",
-    "last_updated": "2026-08-25T07:15:00Z"
+    "last_updated": "2026-08-26T16:22:00Z"
   },
   "project": {
     "name": "wedding-site",
@@ -26,17 +26,17 @@
     }
   },
   "tech_stack": {
-    "framework": "Next.js 15.1.7 (App Router, Server-Side Dynamic Metadata)",
+    "framework": "Next.js 15.5.23 (App Router, Server-Side Dynamic Metadata, Edge Runtime)",
     "ui_library": "React 19, TailwindCSS v3",
-    "icons": "lucide-react",
-    "effects": "canvas-confetti, custom CSS GPU-composited animations",
+    "icons": "lucide-react, public/favicon.svg, Dynamic Apple Touch Icons (src/app/apple-icon.tsx)",
+    "effects": "canvas-confetti, custom CSS GPU-composited animations, Cinema 60/120fps Subpixel Accumulator",
     "lightbox": "yet-another-react-lightbox (Zoom, Thumbnails, Counter, Fullscreen)",
     "image_processing": "Sharp 0.34.5 (EXIF auto-orientation, WebP conversion)",
     "og_generation": "next/og (Edge runtime dynamic ImageResponse 1200x630)",
-    "typography": "Google Fonts (Plus Jakarta Sans, Be Vietnam Pro, Alex Brush, Great Vibes)"
+    "typography": "Google Fonts (Plus Jakarta Sans, Be Vietnam Pro, Alex Brush, Great Vibes, Montserrat)"
   },
   "design_system": {
-    "viewport": "Fixed Mobile App Frame (max-w-[480px] centered on Desktop/Tablet with luxury shadow & dark velvet outer backdrop #0E0204)",
+    "viewport": "Fixed Mobile App Frame (max-w-[480px] centered on Desktop/Tablet with luxury shadow & dark velvet outer backdrop #120406)",
     "colors": {
       "background": "#FAF7F2 (Warm Pearl Ivory)",
       "surface": "#FFFFFF (Crisp Card Surface)",
@@ -59,11 +59,51 @@
     {
       "path": "/api/og",
       "method": "GET",
-      "params": ["to", "guest", "k"],
-      "description": "Tạo ảnh đại diện thiệp cưới động (1200x630) có in tên khách mời phục vụ xem trước mạng xã hội (Open Graph Image)."
+      "params": ["to", "guest", "k", "event", "type"],
+      "description": "Tạo ảnh đại diện thiệp cưới động (1200x630) có in tên khách mời và tên sự kiện tương ứng (Vu Quy vs Thành Hôn) phục vụ xem trước mạng xã hội (Open Graph Image)."
+    },
+    {
+      "path": "/icon",
+      "method": "GET",
+      "description": "Dynamic 32x32 Favicon icon generator (Edge runtime)."
+    },
+    {
+      "path": "/apple-icon",
+      "method": "GET",
+      "description": "Dynamic 180x180 Apple Touch Icon generator (Edge runtime)."
     }
   ],
   "features": [
+    {
+      "id": "smart_wedding_timeline",
+      "name": "Bộ Điều Phối Lịch Trình Đa Sự Kiện Thông Minh (Timeline Stage Resolver)",
+      "component": "src/lib/wedding-timeline.ts & src/hooks/useActiveWeddingStage.ts",
+      "description": "Tự động phát hiện ngày hiện tại so với 10.10.2026 (Nhà Gái - Lễ Vu Quy) và 12.12.2026 (Nhà Trai - Lễ Thành Hôn). Tự động cập nhật tiêu đề thiệp, bộ đếm ngược, ảnh đại diện Open Graph, cổng tạo link /share và nội dung tương ứng."
+    },
+    {
+      "id": "cinema_auto_scroll",
+      "name": "Bộ Động Cơ Tự Động Cuộn Trang Cinema (Cinema Auto-Scroll Engine)",
+      "component": "src/hooks/useAutoScroll.ts & src/components/wedding/AutoScrollController.tsx",
+      "description": "Bộ tích lũy tọa độ ảo số thực (Subpixel Floating Point Accumulator) loại bỏ hoàn toàn lỗi khựng hình WebKit trên màn hình ProMotion 120Hz của iPhone. Tự động tạm dừng khi nhập form, mở ảnh, chạm tay và tiếp tục sau 8 giây."
+    },
+    {
+      "id": "cinema_wishes_carousel",
+      "name": "Carousel Lời Chúc Tự Động Cuộn Siêu Mượt (Continuous Wishes Glide)",
+      "component": "src/components/wedding/WishesSection.tsx",
+      "description": "Dải lời chúc cuộn đều 40px/s với vòng lặp vô tận đối xứng 3 chiều (Triple-Set Loop), tạm dừng 0ms khi chạm tay/kéo chuột và tự động chạy lại sau 2.5s."
+    },
+    {
+      "id": "ios_safari_autoplay",
+      "name": "Cơ Chế Kích Hoạt Âm Thanh Đồng Bộ Cho iOS Safari WebKit",
+      "component": "src/components/wedding/MusicController.tsx & WeddingOpening.tsx",
+      "description": "Gọi audio.play() trực tiếp trong call stack sự kiện bấm nút 'Mở Thiệp', vượt qua 100% chính sách chặn autoplay của Apple Safari."
+    },
+    {
+      "id": "vertical_media_cluster",
+      "name": "Cụm Nút Điều Khiển Media Nổi Dọc Góc Phải (Vertical Media Controls)",
+      "component": "src/components/wedding/WeddingPageClient.tsx",
+      "description": "Bố cục dọc tinh tế ở góc trên bên phải (Nút Bật/Tắt Nhạc trên, Nút Tự Động Cuộn Trang dưới) chuẩn kích thước 40-44px touch target với hiệu ứng thủy tinh mờ sang trọng."
+    },
     {
       "id": "dynamic_seo_og",
       "name": "Dynamic SEO & Social Share Preview",
@@ -71,52 +111,10 @@
       "description": "Tự động trích xuất ?to=... (Base64 hoặc text tiếng Việt), tạo dynamic Open Graph tags và sinh ảnh OG 1200x630 mang tên khách mời khi gửi qua Zalo/Facebook/Telegram."
     },
     {
-      "id": "opening_cover",
-      "name": "Bìa Mở Thiệp Điện Ảnh (Wedding Opening Curtain)",
-      "component": "src/components/wedding/WeddingOpening.tsx",
-      "description": "Thanh game loading dát vàng ~2.0s kết hợp rèm mở tách đôi trên-dưới (top-bottom split 2.2s), 20 điểm sao vàng lấp lánh nghệ thuật và hiệu ứng ánh lụa card shimmer."
-    },
-    {
-      "id": "hero_staggered",
-      "name": "Hero Section & Staggered Typography Reveal",
-      "component": "src/components/wedding/HeroSection.tsx",
-      "description": "Hiệu ứng chữ xuất hiện theo nhịp 0.4s - 2.2s sau khi mở rèm (Save the Date -> Date -> Tú Văn -> & -> Hường Nguyễn -> Lễ Thành Hôn -> Xác Nhận Tham Dự)."
-    },
-    {
-      "id": "family_section",
-      "name": "Thông Tin Hai Bên Gia Đình (Side-by-Side)",
-      "component": "src/components/wedding/FamilySection.tsx",
-      "description": "2 cột Nhà Trai & Nhà Gái gọn gàng, font chữ cân đối, phân định huy hiệu Đỏ Ruby và Vàng Kim."
-    },
-    {
-      "id": "invitation_countdown",
-      "name": "Lời Ngỏ & Đếm Ngược Ngày Cưới (Live Countdown)",
-      "component": "src/components/wedding/InvitationSection.tsx & Countdown.tsx",
-      "description": "Lời ngỏ thân gửi cá nhân hóa theo URL ?to=GuestName, bộ đếm ngược Ngày/Giờ/Phút/Giây chính xác."
-    },
-    {
-      "id": "story_timeline",
-      "name": "Hành Trình Yêu Thương (Love Story Timeline)",
-      "component": "src/components/wedding/CoupleStory.tsx",
-      "description": "Dòng thời gian 4 cột mốc với font chữ thanh mảnh, nhẹ nhàng, sâu lắng."
-    },
-    {
-      "id": "events_maps",
-      "name": "Sự Kiện Cưới, Google Maps & Thêm Vào Lịch",
-      "component": "src/components/wedding/EventSection.tsx & EventCard.tsx",
-      "description": "Chỉ đường Google Maps + Xuất file sự kiện .ics cho Apple/Google Calendar."
-    },
-    {
       "id": "editorial_gallery",
       "name": "Album Ảnh Cưới Tạp Chí & Fullscreen Lightbox",
       "component": "src/components/wedding/Gallery.tsx & Lightbox.tsx",
       "description": "20 ảnh WebP tối ưu 95.4% dung lượng, CSS masonry không cắt ảnh, xem trước 8 ảnh + nút mở rộng, Lightbox vuốt mượt mà với thanh thumbnail filmstrip và pinch-to-zoom."
-    },
-    {
-      "id": "rsvp_wishes",
-      "name": "Xác Nhận Tham Dự (RSVP) & Sổ Lưu Bút Lời Chúc",
-      "component": "src/components/wedding/RSVPSection.tsx & WishesSection.tsx",
-      "description": "Form phản hồi và gửi lời chúc lưu trữ local/webhook kèm pháo hoa chúc mừng."
     },
     {
       "id": "gift_vietqr",
@@ -129,18 +127,6 @@
       "name": "Trang Quản Lý Tạo Link & Giả Lập Mạng Xã Hội (/share)",
       "component": "src/app/share/page.tsx",
       "description": "Tạo link từng người, tạo hàng loạt, đồng bộ Google Sheets, xem trước phong bì thiệp và khung giả lập Zalo/Facebook preview."
-    },
-    {
-      "id": "audio_player",
-      "name": "Nhạc Nền Tự Động Phát & Nút Đĩa Quay",
-      "component": "src/components/wedding/MusicController.tsx",
-      "description": "Tự động phát bài hát sau khi bấm mở thiệp, nút đĩa nhạc xoay tròn êm ái góc trên."
-    },
-    {
-      "id": "dock_and_top",
-      "name": "Menu Dock Điều Hướng Nổi & Nút Back To Top Compact",
-      "component": "src/components/wedding/BottomNavigation.tsx & BackToTop.tsx",
-      "description": "Thanh dock định vị các mục nhanh + Nút Back To Top mini 36px trượt êm về đỉnh trang."
     }
   ],
   "scripts": {
@@ -151,10 +137,10 @@
     "optimize:images": "node scripts/optimize-images.mjs — Nén ảnh và xoay EXIF bằng Sharp"
   },
   "knowledge_items": {
+    "ios_webkit_audio_policy": "Trên iOS Safari, HTMLAudioElement.play() PHẢI được gọi đồng bộ (synchronous) ngay trong handler sự kiện touch/click của user. Nếu bọc trong setTimeout hoặc animation transition >1s, trình duyệt sẽ thu hồi quyền kích hoạt dẫn đến lỗi NotAllowedError.",
+    "subpixel_raf_scrolling": "Trên các thiết bị ProMotion 120Hz (như iPhone 13 Pro trở lên), việc làm tròn vị trí cuộn sang số nguyên (integer) sẽ gây giật micro-stutter. Phải tích lũy vị trí bằng biến float ảo và gán scrollTo với behavior: instant.",
+    "triple_set_loop": "Để tạo carousel trôi vô tận mà không có điểm nối đứt đoạn, nhân 3 mảng dữ liệu [...items, ...items, ...items] và reset tọa độ khi scrollLeft vượt quá 1/3 tổng scrollWidth.",
     "dynamic_metadata_nextjs": "Khi cần dynamic Open Graph SEO cho page, page.tsx phải là Server Component để export generateMetadata({ searchParams }), còn toàn bộ logic tương tác UI được tách vào Client Component riêng.",
-    "next_image_response": "next/og ImageResponse chạy trên Edge runtime cho phép sinh ảnh 1200x630 pixel động tức thì với styling JSX và flexbox mà không cần headless browser.",
-    "exif_rotation": "Luôn dùng .rotate() trong sharp khi chuyển đổi ảnh chụp từ máy ảnh/RAW sang WebP để ảnh dọc không bị xoay ngang.",
-    "vietqr_memo": "VietQR API hỗ trợ tham số addInfo=<nội dung> để app ngân hàng tự động điền memo khi quét.",
     "mobile_frame_lock": "Để website luôn hiển thị dạng mobile trên tablet/desktop, container chính đặt max-w-[480px] mx-auto và các element fixed neo bằng left-1/2 -translate-x-1/2 w-full max-w-[480px]."
   }
 }

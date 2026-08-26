@@ -4,6 +4,28 @@ Toàn bộ lịch sử các tính năng, nâng cấp giao diện và tối ưu h
 
 ---
 
+## [v1.2.0] - 2026-08-26
+
+### 🔄 Điều Phối Lịch Trình Đa Sự Kiện Thông Minh (Added)
+- **Smart Timeline Stage Resolver:** Tự động phát hiện ngày hiện tại so với 10.10.2026 (Nhà Gái - Lễ Vu Quy tại Lâm Đồng) và 12.12.2026 (Nhà Trai - Lễ Thành Hôn tại TP.HCM).
+- Tự động cập nhật tiêu đề bìa thư, huy hiệu nghi lễ, thời gian đếm ngược, thông tin sự kiện, lời ngỏ và ảnh đại diện Open Graph theo sự kiện tới trước.
+- **Cổng Tạo Link Chia Sẻ (`/share`):** Hỗ trợ chuyển đổi chọn sự kiện (Vu Quy vs Thành Hôn) để sinh link cá nhân hóa và mẫu tin nhắn tương ứng.
+
+### 📱 Cinema Auto-Scroll Engine & Tối Ưu Mobile (Enhanced)
+- **Engine Cuộn Trang Tọa Độ Số Thực (Subpixel Floating Point Accumulator):** Triệt tiêu hoàn toàn hiện tượng khựng/giật giật trên màn hình 120Hz ProMotion của iPhone iOS Safari. Tự động tạm dừng khi nhập form, xem ảnh, chạm tay và tiếp tục sau 8s.
+- **Carousel Lời Chúc Tự Động Cuộn Siêu Mượt:** Áp dụng chuẩn Engine cuộn liên tục 40px/s với vòng lặp vô tận 3 chiều (*Triple-Set Loop*), tự dừng 0ms khi chạm tay và tiếp tục sau 2.5s.
+- **Cụm Media Controls Nổi Dọc Góc Trên Phải:** Bố cục dọc tinh tế gồm nút Bật/Tắt Nhạc phía trên và nút Bật/Tắt Cuộn Trang phía dưới, kích thước 40-44px touch target với hiệu ứng kính mờ và độ trong suốt 75%.
+
+### 🎵 iOS Safari WebKit Autoplay Fix (Fixed)
+- **Kích Hoạt Âm Thanh Đồng Bộ:** Gọi `musicRef.current.play()` trực tiếp trong call stack sự kiện bấm "Mở Thiệp" để vượt qua rào cản chính sách WebKit Autoplay Policy của Apple.
+- Thẻ `<audio>` luôn được tải trước và duy trì trong DOM (`preload="auto"`, `playsInline`).
+
+### 🎨 Favicon & Biểu Tượng Ứng Dụng (Added)
+- Tạo Vector SVG `public/favicon.svg` với chữ lồng **T ♡ H**, nhẫn vàng 24K và trái tim ruby.
+- Sinh động biểu tượng App Icon đa nền tảng qua `src/app/icon.tsx` (32x32) và `src/app/apple-icon.tsx` (180x180 Apple Touch Icon).
+
+---
+
 ## [v1.1.0] - 2026-08-25
 
 ### ✨ Dynamic SEO & Social Media Share Preview (Added)

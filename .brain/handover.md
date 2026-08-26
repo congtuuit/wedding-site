@@ -1,62 +1,32 @@
-# 📋 HANDOVER DOCUMENT — THIỆP CƯỚI TÚ VĂN & HƯỜNG NGUYỄN
+# 📋 HANDOVER DOCUMENT — WEDDING SITE TÚ VĂN & HƯỜNG NGUYỄN
 
-**Ngày lưu:** 26.08.2026 (Phiên bản v1.2.0 - Smart Timeline & Dynamic Event Switching)  
-**Trạng thái dự án:** ✅ **Production Ready (100% Hoàn Thiện & Đã Build Thành Công)**  
-**Dev Server:** `http://localhost:3000` | **Build:** Next.js 15 App Router
-
----
-
-## 📍 TỔNG QUAN DỰ ÁN
-
-- **Chú Rể:** Văn Công Tú (Tú Văn), Trưởng Nam. Cha: Ông Văn Công Pha, Mẹ: Bà Trần Thị Thanh Lan. Quê quán: Bà Điểm, TP. HCM.
-- **Cô Dâu:** Nguyễn Thị Hường (Hường Nguyễn), Út Nữ. Cha: Ông Nguyễn Văn Dương, Mẹ: Bà Vũ Thị Chinh. Quê quán: Cát Tiên 3, Lâm Đồng.
-- **Tiệc 1 (Nhà Gái - Lễ Vu Quy):** 10.10.2026 (Cát Tiên 3, Lâm Đồng).
-- **Tiệc 2 (Nhà Trai - Lễ Thành Hôn):** 12.12.2026 (The ADORA Center, Tân Bình, TP. HCM).
+**Thời gian lưu:** 2026-08-26 23:22 (AWF 4.0.2)  
+**Trạng thái dự án:** Sẵn sàng Production (0 Lỗi Build)
 
 ---
 
-## 🚀 TÍNH NĂNG MỚI VỪA HOÀN THIỆN: LOGIC NGÀY GIỜ & SỰ KIỆN THÔNG MINH (v1.2.0)
-
-1. **Tự Động Chuyển Đổi Tiến Trình Theo Thời Gian Thực:**
-   - **Giai đoạn 1 (Hiện tại -> Hết 10.10.2026):** Tự động hiển thị ngày `10 . 10 . 2026`, tiêu đề `Lễ Vu Quy`, đếm ngược tới `10.10.2026 09:00`, ưu tiên cột Nhà Gái và tab Nhà Gái lên đầu.
-   - **Giai đoạn 2 (Từ 11.10.2026 -> Hết 12.12.2026):** Tự động chuyển sang ngày `12 . 12 . 2026`, tiêu đề `Lễ Thành Hôn`, đếm ngược tới `12.12.2026 18:00`, ưu tiên Nhà Trai.
-   - **Giai đoạn 3 (Sau 12.12.2026):** Giữ nguyên thông tin sau cùng và thông báo ngày vui trọn vẹn.
-2. **Hỗ Trợ Chỉ Định Riêng Trong `/share`:**
-   - Tạo link có thể chọn `Tự động`, `Nhà Gái (?event=que)` hoặc `Nhà Trai (?event=sg)`.
-   - Cập nhật mẫu tin nhắn và ảnh Open Graph Preview tương ứng.
-
-1. **Hiển Thị Tên Khách & Lời Mời Trên Mạng Xã Hội (Facebook, Zalo, Telegram, Messenger):**
-   - Khi gửi đường link ví dụ `https://tu-huong-wedding.vercel.app/?to=RW0gRHV5w6puICsgTlQ=`:
-     - **Tiêu đề (OG Title):** `💌 Thân gửi: Em Duyên + NT | Thư Mời Thành Hôn Tú Văn & Hường Nguyễn`
-     - **Mô tả (OG Description):** `Trân trọng kính mời Em Duyên + NT đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày 12.12.2026.`
-     - **Ảnh đại diện thiệp (OG Image 1200x630):** Render tự động từ endpoint `/api/og?to=...` với viền vàng dát kim, in hoa chữ **TÚ VĂN & HƯỜNG NGUYỄN** cùng dòng chữ nổi bật **"Thân gửi: Em Duyên + NT"**.
-2. **Chuẩn Danh Xưng "Thân gửi":**
-   - Đã đồng bộ chữ xưng hô sang `"Thân gửi: [Tên khách]"` trên phong bì, phần lời ngỏ trong thiệp, thẻ metadata và ảnh chia sẻ.
-3. **Khung Giả Lập Mạng Xã Hội Trong `/share`:**
-   - Trang tạo link đã có khung mô phỏng trực tiếp xem trước hiển thị khi dán link vào Zalo/Messenger/Facebook.
+## 📍 Đang làm & Trạng thái:
+- **Tính năng hoàn thành mới nhất:**
+  1. **Carousel Lời Chúc (Wishes Section):** Tích hợp chuẩn **Cinema Auto-Scroll Engine (Subpixel Virtual Accumulator 40px/s)**, trôi đều liên tục không giật khựng, vòng lặp vô tận đối xứng 3 chiều (*Triple-Set Loop*), tự dừng 0ms khi chạm/kéo chuột và tự chạy lại sau 2.5s.
+  2. **Tự Động Phát Nhạc Trên iOS Safari (iPhone):** Kích hoạt phát nhạc đồng bộ ngay khi bấm nút "Mở Thiệp" trong cùng call stack của user gesture để vượt qua 100% WebKit Autoplay Policy.
+  3. **Cụm Media Controls Nổi Dọc Góc Trên Phải:** Nút Bật/Tắt Nhạc ở trên, Nút Bật/Tắt Cuộn Trang ở dưới (kích thước 40–44px touch target, độ mờ nhẹ 75%).
+  4. **Favicon & Multi-Platform Dynamic App Icons:** Vector SVG `public/favicon.svg` + `src/app/icon.tsx` (32x32) + `src/app/apple-icon.tsx` (180x180).
+  5. **Điều Phối Lịch Trình Đa Sự Kiện Thông Minh:** `src/lib/wedding-timeline.ts` và `src/hooks/useActiveWeddingStage.ts` tự động chuyển đổi thông tin theo ngày tới trước (Nhà Gái 10.10.2026 - Lễ Vu Quy vs Nhà Trai 12.12.2026 - Lễ Thành Hôn).
 
 ---
 
-## 🧪 HƯỚNG DẪN KIỂM TRA LINK SAU KHI DEPLOY
-
-1. **Facebook Debugger:**
-   - Truy cập: `https://developers.facebook.com/tools/debug/`
-   - Dán link: `https://tu-huong-wedding.vercel.app/?to=RW0gRHV5w6puICsgTlQ=`
-   - Bấm **Scrape Again** để Facebook cập nhật bản preview mới nhất.
-2. **Zalo Debugger:**
-   - Truy cập: `https://developers.zalo.me/tools/debug-sharing`
-   - Dán link và bấm **Kiểm tra** để xem bản hiển thị trên Zalo.
-3. **Gửi tin nhắn trực tiếp:**
-   - Dán link vào khung chat Zalo / Messenger, thẻ xem trước sẽ tự động xuất hiện.
+## 📁 Files Quan Trọng Cần Biết:
+- `src/components/wedding/WishesSection.tsx`: Sổ lưu bút & Carousel trôi liên tục 40px/s.
+- `src/components/wedding/MusicController.tsx`: Trình phát nhạc nền với `forwardRef` và cơ chế tương tác đồng bộ.
+- `src/components/wedding/AutoScrollController.tsx`: Nút bấm bật/tắt cuộn trang điện ảnh.
+- `src/hooks/useAutoScroll.ts`: Động cơ cuộn trang thông minh (Subpixel accumulator 60/120fps).
+- `src/lib/wedding-timeline.ts`: Bộ logic tính toán lịch trình thông minh 10.10 vs 12.12.
+- `src/app/share/page.tsx`: Cổng quản lý tạo link cá nhân hóa và giả lập Zalo/Facebook.
+- `.brain/brain.json`: Bộ nhớ tri thức vĩnh viễn của dự án.
+- `.brain/session.json`: Nhật ký phiên làm việc hiện tại.
 
 ---
 
-## 📁 CÁC FILE QUAN TRỌNG
-
-- `src/app/page.tsx`: Server Component trích xuất `searchParams` và tạo `generateMetadata`.
-- `src/app/api/og/route.tsx`: Edge runtime endpoint sinh ảnh Open Graph 1200x630px.
-- `src/components/wedding/WeddingPageClient.tsx`: Toàn bộ tương tác client-side của thiệp cưới.
-- `src/components/wedding/InvitationSection.tsx`: Lời ngỏ và danh xưng "Thân gửi".
-- `src/app/share/page.tsx`: Trang quản lý tạo link & giả lập chia sẻ.
-- `src/data/wedding.json`: Dữ liệu ngày cưới, địa điểm, STK ngân hàng.
-- `.brain/`: Eternal context system của Antigravity AWF.
+## 💡 Hướng Dẫn Session Tiếp Theo:
+- Để khôi phục nhanh ngữ cảnh làm việc: Gõ `/recap`
+- Để triển khai lên môi trường online: Gõ `/deploy`
