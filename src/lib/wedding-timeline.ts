@@ -8,6 +8,13 @@ export interface ActiveWeddingStage {
   ceremonyName: string; // e.g. "Lễ Vu Quy" or "Lễ Thành Hôn"
   ceremonyBadge: string; // e.g. "✨ LỄ VU QUY ✨" or "✨ LỄ THÀNH HÔN ✨"
   invitationHeadline: string; // e.g. "Thư Mời Lễ Vu Quy" or "Thư Mời Thành Hôn"
+  primaryCoupleName: string; // "Hường Nguyễn & Tú Văn" vs "Tú Văn & Hường Nguyễn"
+  shortCoupleName: string; // "Hường & Tú" vs "Tú & Hường"
+  uppercaseCoupleName: string; // "HƯỜNG NGUYỄN & TÚ VĂN" vs "TÚ VĂN & HƯỜNG NGUYỄN"
+  initials: string; // "H & T" vs "T & H"
+  firstName: string; // First displayed person's name
+  secondName: string; // Second displayed person's name
+  showGroomAccount: boolean; // false for Vu Quy, true for Thành Hôn
   weddingDate: string; // "2026-10-10" or "2026-12-12"
   weddingDateFormatted: string; // "10 . 10 . 2026" or "12 . 12 . 2026"
   targetCountdownIso: string;
@@ -35,7 +42,11 @@ const nhaTraiEvent = allEvents.find((e) => e.category === "sg") || allEvents[1] 
  * 1. If overrideParam is provided ('que' or 'sg'), force that specific event.
  * 2. Otherwise compare current time (referenceDate, default = now):
  *    - now <= 10.10.2026 23:59:59 (GMT+7) -> Nhà Gái (Lễ Vu Quy - 10.10.2026)
+ *      - Tên: Cô Dâu & Chú Rể (Hường Nguyễn & Tú Văn)
+ *      - Ẩn thông tin chuyển khoản Chú Rể
  *    - 11.10.2026 <= now <= 12.12.2026 23:59:59 (GMT+7) -> Nhà Trai (Lễ Thành Hôn - 12.12.2026)
+ *      - Tên: Chú Rể & Cô Dâu (Tú Văn & Hường Nguyễn)
+ *      - Hiện cả 2 thông tin chuyển khoản (Chú Rể & Cô Dâu)
  *    - now > 12.12.2026 -> Retains Nhà Trai (12.12.2026, with isPast = true)
  */
 export function getActiveWeddingStage(
@@ -51,6 +62,13 @@ export function getActiveWeddingStage(
       ceremonyName: "Lễ Vu Quy",
       ceremonyBadge: "✨ LỄ VU QUY ✨",
       invitationHeadline: "Thư Mời Lễ Vu Quy",
+      primaryCoupleName: "Hường Nguyễn & Tú Văn",
+      shortCoupleName: "Hường & Tú",
+      uppercaseCoupleName: "HƯỜNG NGUYỄN & TÚ VĂN",
+      initials: "H & T",
+      firstName: "Hường Nguyễn",
+      secondName: "Tú Văn",
+      showGroomAccount: false,
       weddingDate: "2026-10-10",
       weddingDateFormatted: "10 . 10 . 2026",
       targetCountdownIso: nhaGaiEvent.startDateIso,
@@ -70,6 +88,13 @@ export function getActiveWeddingStage(
       ceremonyName: "Lễ Thành Hôn",
       ceremonyBadge: "✨ LỄ THÀNH HÔN ✨",
       invitationHeadline: "Thư Mời Thành Hôn",
+      primaryCoupleName: "Tú Văn & Hường Nguyễn",
+      shortCoupleName: "Tú & Hường",
+      uppercaseCoupleName: "TÚ VĂN & HƯỜNG NGUYỄN",
+      initials: "T & H",
+      firstName: "Tú Văn",
+      secondName: "Hường Nguyễn",
+      showGroomAccount: true,
       weddingDate: "2026-12-12",
       weddingDateFormatted: "12 . 12 . 2026",
       targetCountdownIso: nhaTraiEvent.startDateIso,
@@ -95,6 +120,13 @@ export function getActiveWeddingStage(
       ceremonyName: "Lễ Vu Quy",
       ceremonyBadge: "✨ LỄ VU QUY ✨",
       invitationHeadline: "Thư Mời Lễ Vu Quy",
+      primaryCoupleName: "Hường Nguyễn & Tú Văn",
+      shortCoupleName: "Hường & Tú",
+      uppercaseCoupleName: "HƯỜNG NGUYỄN & TÚ VĂN",
+      initials: "H & T",
+      firstName: "Hường Nguyễn",
+      secondName: "Tú Văn",
+      showGroomAccount: false,
       weddingDate: "2026-10-10",
       weddingDateFormatted: "10 . 10 . 2026",
       targetCountdownIso: nhaGaiEvent.startDateIso,
@@ -115,6 +147,13 @@ export function getActiveWeddingStage(
       ceremonyName: "Lễ Thành Hôn",
       ceremonyBadge: "✨ LỄ THÀNH HÔN ✨",
       invitationHeadline: "Thư Mời Thành Hôn",
+      primaryCoupleName: "Tú Văn & Hường Nguyễn",
+      shortCoupleName: "Tú & Hường",
+      uppercaseCoupleName: "TÚ VĂN & HƯỜNG NGUYỄN",
+      initials: "T & H",
+      firstName: "Tú Văn",
+      secondName: "Hường Nguyễn",
+      showGroomAccount: true,
       weddingDate: "2026-12-12",
       weddingDateFormatted: "12 . 12 . 2026",
       targetCountdownIso: nhaTraiEvent.startDateIso,
@@ -134,6 +173,13 @@ export function getActiveWeddingStage(
     ceremonyName: "Lễ Thành Hôn",
     ceremonyBadge: "✨ LỄ THÀNH HÔN ✨",
     invitationHeadline: "Thư Mời Thành Hôn",
+    primaryCoupleName: "Tú Văn & Hường Nguyễn",
+    shortCoupleName: "Tú & Hường",
+    uppercaseCoupleName: "TÚ VĂN & HƯỜNG NGUYỄN",
+    initials: "T & H",
+    firstName: "Tú Văn",
+    secondName: "Hường Nguyễn",
+    showGroomAccount: true,
     weddingDate: "2026-12-12",
     weddingDateFormatted: "12 . 12 . 2026",
     targetCountdownIso: nhaTraiEvent.startDateIso,

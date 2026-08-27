@@ -105,6 +105,7 @@ export function WeddingPageClient({
         onStartAudio={handleStartAudio}
         weddingDateFormatted={stage.weddingDateFormatted}
         ceremonyBadge={stage.ceremonyName}
+        stageKey={stage.stageKey}
       />
 
       {/* 2. Floating Ambient Rose Petals & Golden Sparkles */}
@@ -139,6 +140,7 @@ export function WeddingPageClient({
         isRevealed={hasOpenedInvitation}
         weddingDateFormatted={stage.weddingDateFormatted}
         ceremonyName={stage.ceremonyName}
+        stageKey={stage.stageKey}
       />
 
       {/* 5. Family Section (Nhà Trai & Nhà Gái) */}
@@ -205,12 +207,13 @@ export function WeddingPageClient({
           initialGuestName={guestName}
           isPersonalized={isPersonalized}
           webhookUrl={weddingData.appsheetWebhookUrl}
+          stageKey={stage.stageKey}
         />
       </ScrollReveal>
 
       {/* 13. Gift & QR Banking */}
       <ScrollReveal direction="up" delay={100}>
-        <GiftSection gift={weddingData.gift} />
+        <GiftSection gift={weddingData.gift} stageKey={stage.stageKey} />
       </ScrollReveal>
 
       {/* 14. Closing Thank You Section */}
@@ -218,6 +221,7 @@ export function WeddingPageClient({
         <ThankYouSection
           couple={weddingData.couple}
           weddingDateFormatted={stage.weddingDateFormatted}
+          stageKey={stage.stageKey}
           closingPhoto={
             weddingData.gallery[weddingData.gallery.length - 1]?.src ||
             "/images/TOBI1281.webp"

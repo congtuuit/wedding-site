@@ -1,32 +1,46 @@
 # 📋 HANDOVER DOCUMENT — WEDDING SITE TÚ VĂN & HƯỜNG NGUYỄN
 
-**Thời gian lưu:** 2026-08-26 23:22 (AWF 4.0.2)  
-**Trạng thái dự án:** Sẵn sàng Production (0 Lỗi Build)
+**Thời gian lưu:** 2026-08-27 08:03 (AWF 4.0.2)  
+**Trạng thái dự án:** Sẵn sàng Production (0 Lỗi Build — `npm run build` PASS)
 
 ---
 
 ## 📍 Đang làm & Trạng thái:
 - **Tính năng hoàn thành mới nhất:**
-  1. **Carousel Lời Chúc (Wishes Section):** Tích hợp chuẩn **Cinema Auto-Scroll Engine (Subpixel Virtual Accumulator 40px/s)**, trôi đều liên tục không giật khựng, vòng lặp vô tận đối xứng 3 chiều (*Triple-Set Loop*), tự dừng 0ms khi chạm/kéo chuột và tự chạy lại sau 2.5s.
-  2. **Tự Động Phát Nhạc Trên iOS Safari (iPhone):** Kích hoạt phát nhạc đồng bộ ngay khi bấm nút "Mở Thiệp" trong cùng call stack của user gesture để vượt qua 100% WebKit Autoplay Policy.
-  3. **Cụm Media Controls Nổi Dọc Góc Trên Phải:** Nút Bật/Tắt Nhạc ở trên, Nút Bật/Tắt Cuộn Trang ở dưới (kích thước 40–44px touch target, độ mờ nhẹ 75%).
-  4. **Favicon & Multi-Platform Dynamic App Icons:** Vector SVG `public/favicon.svg` + `src/app/icon.tsx` (32x32) + `src/app/apple-icon.tsx` (180x180).
-  5. **Điều Phối Lịch Trình Đa Sự Kiện Thông Minh:** `src/lib/wedding-timeline.ts` và `src/hooks/useActiveWeddingStage.ts` tự động chuyển đổi thông tin theo ngày tới trước (Nhà Gái 10.10.2026 - Lễ Vu Quy vs Nhà Trai 12.12.2026 - Lễ Thành Hôn).
+  1. **Đổi vị trí Tên Cô Dâu & Chú Rể theo Lễ Vu Quy vs Lễ Thành Hôn:**
+     - **Lễ Vu Quy (Nhà Gái - 10.10.2026 hoặc ?event=que):**
+       - Tên hiển thị ưu tiên: **Cô Dâu & Chú Rể** (*Hường Nguyễn & Tú Văn* / *Hường & Tú* / *HƯỜNG NGUYỄN & TÚ VĂN*).
+       - Monogram & Sáp niêm phong: **H & T**.
+       - **Ẩn thông tin chuyển khoản của Chú Rể:** Chỉ hiển thị duy nhất thẻ mừng cưới của Cô Dâu (Hường Nguyễn).
+     - **Lễ Thành Hôn (Nhà Trai - 12.12.2026 hoặc ?event=sg):**
+       - Tên hiển thị ưu tiên: **Chú Rể & Cô Dâu** (*Tú Văn & Hường Nguyễn* / *Tú & Hường* / *TÚ VĂN & HƯỜNG NGUYỄN*).
+       - Monogram & Sáp niêm phong: **T & H**.
+       - **Hiện cả 2 thông tin chuyển khoản:** Hiển thị cả Chú Rể (Tú Văn) và Cô Dâu (Hường Nguyễn).
+  2. **Đồng bộ hóa toàn diện mọi vị trí trên Website:**
+     - Phong bì mở đầu (`WeddingOpening.tsx`)
+     - Hero Section (`HeroSection.tsx`)
+     - Cột Hai bên gia đình (`FamilySection.tsx`)
+     - Sổ lưu bút & Form gửi lời chúc (`WishesSection.tsx`)
+     - Hộp mừng cưới QR Banking (`GiftSection.tsx`)
+     - Lời cảm ơn chân thành (`ThankYouSection.tsx`)
+     - Server Dynamic Metadata SEO & Social Share (`app/page.tsx`)
+     - Dynamic Edge Open Graph Image 1200x630 (`app/api/og/route.tsx`)
+     - Cổng tạo link cá nhân hóa & Mẫu tin nhắn mời (`app/share/page.tsx`)
 
 ---
 
 ## 📁 Files Quan Trọng Cần Biết:
-- `src/components/wedding/WishesSection.tsx`: Sổ lưu bút & Carousel trôi liên tục 40px/s.
-- `src/components/wedding/MusicController.tsx`: Trình phát nhạc nền với `forwardRef` và cơ chế tương tác đồng bộ.
-- `src/components/wedding/AutoScrollController.tsx`: Nút bấm bật/tắt cuộn trang điện ảnh.
-- `src/hooks/useAutoScroll.ts`: Động cơ cuộn trang thông minh (Subpixel accumulator 60/120fps).
-- `src/lib/wedding-timeline.ts`: Bộ logic tính toán lịch trình thông minh 10.10 vs 12.12.
-- `src/app/share/page.tsx`: Cổng quản lý tạo link cá nhân hóa và giả lập Zalo/Facebook.
-- `.brain/brain.json`: Bộ nhớ tri thức vĩnh viễn của dự án.
-- `.brain/session.json`: Nhật ký phiên làm việc hiện tại.
+- `src/lib/wedding-timeline.ts`: Bộ não điều phối thông minh `getActiveWeddingStage`.
+- `src/components/wedding/GiftSection.tsx`: Hộp mừng cưới tự động lọc tài khoản theo sự kiện.
+- `src/components/wedding/WeddingOpening.tsx`: Phong bì thư và sáp niêm phong đổi ngôi danh xưng.
+- `src/components/wedding/HeroSection.tsx`: Tiêu đề chính trang web với tên xuất hiện theo thứ tự lễ.
+- `src/components/wedding/WishesSection.tsx`: Sổ lưu bút & Cinema Wishes Carousel.
+- `src/components/wedding/ThankYouSection.tsx`: Chữ ký và dấu ấn kỷ niệm cuối trang.
+- `src/app/share/page.tsx`: Cổng quản lý link và tạo tin nhắn gửi khách.
 
 ---
 
 ## 💡 Hướng Dẫn Session Tiếp Theo:
-- Để khôi phục nhanh ngữ cảnh làm việc: Gõ `/recap`
+- Để khôi phục ngữ cảnh làm việc: Gõ `/recap`
 - Để triển khai lên môi trường online: Gõ `/deploy`
+- Để kiểm tra bảo mật & hiệu năng: Gõ `/audit`

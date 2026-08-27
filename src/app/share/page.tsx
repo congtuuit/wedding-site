@@ -163,15 +163,15 @@ export default function SharePage() {
       return [
         {
           title: "Mẫu Thân Mật (Lễ Vu Quy — Nhà Gái)",
-          body: `Thân gửi ${name},\n\nTú & Hường rất vui mừng được trân trọng gửi lời mời đến ${name} tới chung vui trong buổi Lễ Vu Quy & Tiệc Cưới tại nhà gái vào ngày ${previewStage.weddingDateFormatted}.\n\nThời gian: Thứ Bảy, 10 Tháng 10 Năm 2026 (09:00 Lễ Gia Tiên - 11:30 Khai Tiệc)\nĐịa điểm: Tư Gia Nhà Gái, Cát Tiên 3, Lâm Đồng.\n\nSự hiện diện của ${name} là niềm hạnh phúc to lớn đối với chúng mình!\n\nXem thiệp mời chi tiết tại đây:\n${currentLink}\n\nTrân trọng & Yêu thương!`,
+          body: `Thân gửi ${name},\n\nHường & Tú rất vui mừng được trân trọng gửi lời mời đến ${name} tới chung vui trong buổi Lễ Vu Quy & Tiệc Cưới tại nhà gái vào ngày ${previewStage.weddingDateFormatted}.\n\nThời gian: Thứ Bảy, 10 Tháng 10 Năm 2026 (09:00 Lễ Gia Tiên - 11:30 Khai Tiệc)\nĐịa điểm: Tư Gia Nhà Gái, Cát Tiên 3, Lâm Đồng.\n\nSự hiện diện của ${name} là niềm hạnh phúc to lớn đối với chúng mình!\n\nXem thiệp mời chi tiết tại đây:\n${currentLink}\n\nTrân trọng & Yêu thương!`,
         },
         {
           title: "Mẫu Trang Trọng (Người lớn, gia đình, họ hàng)",
-          body: `Kính gửi ${name},\n\nGia đình chúng tôi trân trọng kính mời ${name} cùng gia đình tới dự buổi tiệc mừng Lễ Vu Quy của hai cháu Tú Văn & Hường Nguyễn.\n\nThời gian: Thứ Bảy, 10 Tháng 10 Năm 2026\nĐịa điểm: Tư Gia Nhà Gái, Cát Tiên 3, Lâm Đồng.\n\nKính mời xem thiệp cưới trực tuyến tại:\n${currentLink}\n\nRất hân hạnh được đón tiếp!`,
+          body: `Kính gửi ${name},\n\nGia đình chúng tôi trân trọng kính mời ${name} cùng gia đình tới dự buổi tiệc mừng Lễ Vu Quy của hai cháu Hường Nguyễn & Tú Văn.\n\nThời gian: Thứ Bảy, 10 Tháng 10 Năm 2026\nĐịa điểm: Tư Gia Nhà Gái, Cát Tiên 3, Lâm Đồng.\n\nKính mời xem thiệp cưới trực tuyến tại:\n${currentLink}\n\nRất hân hạnh được đón tiếp!`,
         },
         {
           title: "Mẫu Ngắn Gọn (Gửi Zalo / Messenger)",
-          body: `Mời ${name} cùng người thương tới chung vui Lễ Vu Quy của Tú Văn & Hường Nguyễn ngày 10.10.2026 tại Lâm Đồng nhé!\nXem thiệp cưới tại: ${currentLink}`,
+          body: `Mời ${name} cùng người thương tới chung vui Lễ Vu Quy của Hường Nguyễn & Tú Văn ngày 10.10.2026 tại Lâm Đồng nhé!\nXem thiệp cưới tại: ${currentLink}`,
         },
       ];
     }
@@ -334,7 +334,7 @@ export default function SharePage() {
             <span>Xem Trang Thiệp Cưới</span>
           </Link>
           <div className="text-center">
-            <span className="font-couple text-xl text-[#8C1425]">Tú Văn & Hường Nguyễn</span>
+            <span className="font-couple text-xl text-[#8C1425]">{previewStage.primaryCoupleName}</span>
           </div>
           <div className="w-28 text-right flex items-center justify-end gap-1.5">
             <span className="text-[10px] uppercase font-sans font-semibold tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1">
@@ -671,10 +671,10 @@ export default function SharePage() {
                       tu-huong-wedding.vercel.app
                     </div>
                     <div className="text-xs font-bold text-[#280E12] line-clamp-1">
-                      💌 Thân gửi: {guestName.trim() || "Bạn & Người Thương"} — {previewStage.invitationHeadline} Tú Văn & Hường Nguyễn
+                      💌 Thân gửi: {guestName.trim() || "Bạn & Người Thương"} — {previewStage.invitationHeadline} {previewStage.primaryCoupleName}
                     </div>
                     <div className="text-[11px] text-[#6B4E53] line-clamp-2 leading-relaxed">
-                      Trân trọng kính mời {guestName.trim() || "bạn"} đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày {previewStage.weddingDateFormatted} ({previewStage.ceremonyName} tại {previewStage.location}).
+                      Trân trọng kính mời {guestName.trim() || "bạn"} đến chung vui trong ngày hạnh phúc của {previewStage.primaryCoupleName} vào ngày {previewStage.weddingDateFormatted} ({previewStage.ceremonyName} tại {previewStage.location}).
                     </div>
                   </div>
                 </div>

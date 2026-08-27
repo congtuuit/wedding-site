@@ -3,8 +3,6 @@ import { NextRequest } from "next/server";
 import { decodeGuestName } from "@/lib/utils";
 import { getActiveWeddingStage } from "@/lib/wedding-timeline";
 
-export const runtime = "edge";
-
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -83,7 +81,7 @@ export async function GET(req: NextRequest) {
               boxShadow: "0 0 30px rgba(212, 175, 55, 0.3)",
             }}
           >
-            T & H
+            {stage.initials}
           </div>
 
           {/* Subtitle / Header */}
@@ -117,7 +115,7 @@ export async function GET(req: NextRequest) {
               textShadow: "0 4px 20px rgba(0,0,0,0.8)",
             }}
           >
-            TÚ VĂN & HƯỜNG NGUYỄN
+            {stage.uppercaseCoupleName}
           </div>
 
           {/* Guest Invitation Box */}

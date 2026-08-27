@@ -36,11 +36,12 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const stage = getActiveWeddingStage(rawEventStr);
 
   const eventQueryPart = rawEventStr ? `&event=${encodeURIComponent(rawEventStr)}` : "";
+  const coupleNameStr = stage.primaryCoupleName;
 
   if (guestName) {
-    const title = `💌 Thân gửi: ${guestName} — ${stage.invitationHeadline} Tú Văn & Hường Nguyễn`;
-    const description = `Trân trọng kính mời ${guestName} đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày ${stage.weddingDateFormatted} (${stage.ceremonyName} tại ${stage.location}).`;
-    const ogTitle = `💌 Thân gửi: ${guestName} | ${stage.invitationHeadline} Tú Văn & Hường Nguyễn`;
+    const title = `💌 Thân gửi: ${guestName} — ${stage.invitationHeadline} ${coupleNameStr}`;
+    const description = `Trân trọng kính mời ${guestName} đến chung vui trong ngày hạnh phúc của ${coupleNameStr} vào ngày ${stage.weddingDateFormatted} (${stage.ceremonyName} tại ${stage.location}).`;
+    const ogTitle = `💌 Thân gửi: ${guestName} | ${stage.invitationHeadline} ${coupleNameStr}`;
     const ogImage = `/api/og?to=${encodeURIComponent(rawGuestStr)}${eventQueryPart}`;
     const pageUrl = `/?to=${encodeURIComponent(rawGuestStr)}${eventQueryPart}`;
 
@@ -51,7 +52,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
         title: ogTitle,
         description,
         url: pageUrl,
-        siteName: "Thiệp Cưới Tú Văn & Hường Nguyễn",
+        siteName: `Thiệp Cưới ${coupleNameStr}`,
         images: [
           {
             url: ogImage,
@@ -63,7 +64,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
             url: "/images/TOBI0448.webp",
             width: 1200,
             height: 630,
-            alt: "Thiệp Cưới Tú Văn & Hường Nguyễn",
+            alt: `Thiệp Cưới ${coupleNameStr}`,
           },
         ],
         locale: "vi_VN",
@@ -81,25 +82,25 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   // Default fallback metadata when no guest is specified
   const fallbackOgImage = `/api/og${rawEventStr ? `?event=${encodeURIComponent(rawEventStr)}` : ""}`;
   return {
-    title: `Tú Văn & Hường Nguyễn — ${stage.invitationHeadline} ${stage.weddingDateFormatted}`,
-    description: `Trân trọng kính mời bạn đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày ${stage.weddingDateFormatted} (${stage.ceremonyName} tại ${stage.location}).`,
+    title: `${coupleNameStr} — ${stage.invitationHeadline} ${stage.weddingDateFormatted}`,
+    description: `Trân trọng kính mời bạn đến chung vui trong ngày hạnh phúc của ${coupleNameStr} vào ngày ${stage.weddingDateFormatted} (${stage.ceremonyName} tại ${stage.location}).`,
     openGraph: {
-      title: `Tú Văn & Hường Nguyễn — ${stage.invitationHeadline} (${stage.weddingDateFormatted})`,
+      title: `${coupleNameStr} — ${stage.invitationHeadline} (${stage.weddingDateFormatted})`,
       description: `Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày trọng đại (${stage.ceremonyName})!`,
       url: `/${rawEventStr ? `?event=${encodeURIComponent(rawEventStr)}` : ""}`,
-      siteName: "Thiệp Cưới Tú Văn & Hường Nguyễn",
+      siteName: `Thiệp Cưới ${coupleNameStr}`,
       images: [
         {
           url: fallbackOgImage,
           width: 1200,
           height: 630,
-          alt: `Thiệp Cưới Tú Văn & Hường Nguyễn — ${stage.ceremonyName}`,
+          alt: `Thiệp Cưới ${coupleNameStr} — ${stage.ceremonyName}`,
         },
         {
           url: "/images/TOBI0448.webp",
           width: 1200,
           height: 630,
-          alt: "Thiệp Cưới Tú Văn & Hường Nguyễn",
+          alt: `Thiệp Cưới ${coupleNameStr}`,
         },
       ],
       locale: "vi_VN",
@@ -107,7 +108,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     },
     twitter: {
       card: "summary_large_image",
-      title: `Tú Văn & Hường Nguyễn — ${stage.invitationHeadline} ${stage.weddingDateFormatted}`,
+      title: `${coupleNameStr} — ${stage.invitationHeadline} ${stage.weddingDateFormatted}`,
       description: `Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày ${stage.ceremonyName}!`,
       images: [fallbackOgImage],
     },

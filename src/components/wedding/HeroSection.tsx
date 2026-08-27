@@ -11,6 +11,7 @@ interface HeroSectionProps {
   isRevealed?: boolean;
   weddingDateFormatted?: string;
   ceremonyName?: string;
+  stageKey?: "que" | "sg";
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -19,9 +20,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   isRevealed = true,
   weddingDateFormatted,
   ceremonyName,
+  stageKey = "sg",
 }) => {
+  const isVuQuy = stageKey === "que";
+  const firstPersonName = isVuQuy ? couple.bride.name : couple.groom.name;
+  const secondPersonName = isVuQuy ? couple.groom.name : couple.bride.name;
+
   const displayDate = weddingDateFormatted || couple.weddingDateFormatted;
-  const displayCeremony = ceremonyName || "Lễ Thành Hôn";
+  const displayCeremony = ceremonyName || (isVuQuy ? "Lễ Vu Quy" : "Lễ Thành Hôn");
   const scrollToRsvp = () => {
     const el = document.getElementById("rsvp");
     if (el) {
@@ -42,7 +48,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="absolute inset-0 z-0">
         <Image
           src={heroPhoto}
-          alt={`${couple.groom.name} & ${couple.bride.name}`}
+          alt={`${firstPersonName} & ${secondPersonName}`}
           fill
           priority
           sizes="100vw"
@@ -87,7 +93,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Names */}
         <div className="space-y-2">
-          {/* Groom Name with Shimmering Glow */}
+          {/* First Name with Shimmering Glow */}
           <div
             className={`transition-all duration-1000 ease-out ${
               isRevealed
@@ -97,7 +103,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             style={{ transitionDelay: "1000ms" }}
           >
             <h1 className="font-couple text-5xl sm:text-6xl font-normal tracking-wide text-[#FFFDF9] drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
-              {couple.groom.name}
+              {firstPersonName}
             </h1>
           </div>
 
@@ -117,7 +123,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="h-[1px] w-10 bg-gradient-to-l from-transparent via-amber-300/60 to-transparent" />
           </div>
 
-          {/* Bride Name with Shimmering Glow */}
+          {/* Second Name with Shimmering Glow */}
           <div
             className={`transition-all duration-1000 ease-out ${
               isRevealed
@@ -127,7 +133,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             style={{ transitionDelay: "1600ms" }}
           >
             <h1 className="font-couple text-5xl sm:text-6xl font-normal tracking-wide text-[#FFFDF9] drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
-              {couple.bride.name}
+              {secondPersonName}
             </h1>
           </div>
         </div>

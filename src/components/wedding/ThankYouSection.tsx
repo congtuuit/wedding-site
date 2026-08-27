@@ -7,13 +7,20 @@ interface ThankYouSectionProps {
   couple: CoupleInfo;
   closingPhoto: string;
   weddingDateFormatted?: string;
+  stageKey?: "que" | "sg";
 }
 
 export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
   couple,
   closingPhoto,
   weddingDateFormatted,
+  stageKey = "sg",
 }) => {
+  const isVuQuy = stageKey === "que";
+  const firstPersonName = isVuQuy ? couple.bride.name : couple.groom.name;
+  const secondPersonName = isVuQuy ? couple.groom.name : couple.bride.name;
+  const monogramInitials = isVuQuy ? "H & T" : couple.initials || "T & H";
+
   const displayDate = weddingDateFormatted || couple.weddingDateFormatted;
   return (
     <section className="w-full pt-20 pb-32 px-4 bg-surface text-textMain text-center relative overflow-hidden">
@@ -37,7 +44,7 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
         <div className="relative w-full max-w-lg mx-auto aspect-[4/3] rounded-3xl overflow-hidden shadow-lg border border-borderLight my-8">
           <Image
             src={closingPhoto}
-            alt="Tú Văn & Hường Nguyễn Thank You"
+            alt={`${firstPersonName} & ${secondPersonName} Thank You`}
             fill
             sizes="(max-width: 640px) 100vw, 500px"
             className="object-cover object-center"
@@ -48,7 +55,7 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
         {/* Signature */}
         <div className="space-y-1 pt-4">
           <p className="font-couple text-3xl sm:text-4xl text-[#8C1425]">
-            {couple.groom.name} & {couple.bride.name}
+            {firstPersonName} & {secondPersonName}
           </p>
           <p className="font-sans text-xs text-textMuted uppercase tracking-[0.3em]">
             {displayDate}
@@ -57,7 +64,7 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
 
         {/* Subtle Footer */}
         <div className="pt-12 text-[11px] text-textMuted/60 font-sans tracking-widest uppercase border-t border-borderLight/60">
-          Forever & Always • {couple.initials} • 2026
+          Forever & Always • {monogramInitials} • 2026
         </div>
       </div>
     </section>

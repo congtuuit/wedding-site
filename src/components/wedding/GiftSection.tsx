@@ -8,12 +8,23 @@ import { Copy, Check, QrCode, Gift, Download, X } from "lucide-react";
 
 interface GiftSectionProps {
   gift: WeddingData["gift"];
+  stageKey?: "que" | "sg";
 }
 
-export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
+export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" }) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [downloadingIndex, setDownloadingIndex] = useState<number | null>(null);
   const [selectedAccount, setSelectedAccount] = useState<WeddingData["gift"]["accounts"][0] | null>(null);
+
+  const isVuQuy = stageKey === "que";
+  const displayAccounts = gift.accounts.filter((account) => {
+    if (isVuQuy) {
+      // Lễ Vu Quy: Ẩn thông tin chuyển khoản của Chú Rể, chỉ hiển thị Cô Dâu
+      return account.role !== "groom";
+    }
+    // Lễ Thành Hôn: Hiện cả 2 thông tin chuyển khoản (Chú Rể & Cô Dâu)
+    return true;
+  });
 
   const handleCopy = (accountNumber: string, index: number) => {
     navigator.clipboard.writeText(accountNumber);
@@ -70,7 +81,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
 
         {/* Banking Cards (Clean Vertical Stack inside Mobile Frame) */}
         <div className="flex flex-col gap-5 mt-6">
-          {gift.accounts.map((account, index) => {
+          {displayAccounts.map((account, index) => {
             const isGroom = account.role === "groom";
             const downloadFileName = isGroom
               ? "QR-Mung-Cuoi-Chu-Re-Tu-Van.png"
@@ -78,7 +89,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift }) => {
 
             return (
               <div
-                key={index}
+                key={account.accountNumber || index}
                 className="p-5 sm:p-6 rounded-3xl bg-surface border border-borderLight shadow-[0_4px_24px_rgba(140,20,37,0.05)] hover:shadow-md transition-all duration-300 relative text-center space-y-4"
               >
                 {/* Role Badge */}

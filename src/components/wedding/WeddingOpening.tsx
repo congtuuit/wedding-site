@@ -12,6 +12,7 @@ interface WeddingOpeningProps {
   onStartAudio?: () => void;
   weddingDateFormatted?: string;
   ceremonyBadge?: string;
+  stageKey?: "que" | "sg";
 }
 
 // 1. Outer ambient constellation around the card (~12 glowing star points)
@@ -50,9 +51,15 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
   onStartAudio,
   weddingDateFormatted,
   ceremonyBadge,
+  stageKey = "sg",
 }) => {
   const [phase, setPhase] = useState<"idle" | "loading" | "splitting" | "dismissed">("idle");
   const [progress, setProgress] = useState<number>(0);
+
+  const isVuQuy = stageKey === "que";
+  const firstPersonName = isVuQuy ? couple.bride.name : couple.groom.name;
+  const secondPersonName = isVuQuy ? couple.groom.name : couple.bride.name;
+  const monogramInitials = isVuQuy ? "H & T" : couple.initials || "T & H";
 
   const displayDate = weddingDateFormatted || couple.weddingDateFormatted;
   const displayBadge = ceremonyBadge || "Wedding Invitation";
@@ -208,7 +215,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
           <div className="flex flex-col items-center justify-center mb-4 relative z-10">
             <div className="w-[54px] h-[54px] rounded-full border-2 border-amber-300/80 bg-gradient-to-b from-[#A8192E] to-[#590B17] flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.4)] relative mb-2.5">
               <span className="font-playfair text-amber-200 font-semibold text-sm tracking-widest drop-shadow">
-                {couple.initials}
+                {monogramInitials}
               </span>
               <div className="absolute -inset-1.5 rounded-full border border-amber-300/30 animate-pulse-slow pointer-events-none" />
             </div>
@@ -231,7 +238,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
           {/* Couple Names in Romantic, Graceful Script */}
           <div className="space-y-0.5 my-3 relative z-10">
             <h1 className="font-couple text-4xl sm:text-5xl text-[#FFFDF9] font-normal tracking-wide drop-shadow-md">
-              {couple.groom.name}
+              {firstPersonName}
             </h1>
             
             <div className="flex items-center justify-center gap-3 my-0">
@@ -243,7 +250,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
             </div>
 
             <h1 className="font-couple text-4xl sm:text-5xl text-[#FFFDF9] font-normal tracking-wide drop-shadow-md">
-              {couple.bride.name}
+              {secondPersonName}
             </h1>
           </div>
 

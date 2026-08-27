@@ -1,39 +1,26 @@
 {
-  "updated_at": "2026-08-26T16:22:00Z",
+  "updated_at": "2026-08-27T01:03:00Z",
   "working_on": {
-    "feature": "Cinema Wishes Carousel, iOS Safari Audio Autoplay & Smart Wedding Timeline",
+    "feature": "Stage-Aware Ceremony Logic (Vu Quy vs Thành Hôn) & Dynamic Couple Name Swapping & Bank Account Visibility",
     "status": "completed",
-    "current_state": "All user requirements have been fully implemented, optimized for mobile (iPhone iOS Safari & Android), and verified with a clean production build (0 errors)."
+    "current_state": "Completed Vu Quy / Thành Hôn logic: Vu Quy displays Cô Dâu & Chú Rể (Hường Nguyễn & Tú Văn) and hides Groom bank account; Thành Hôn displays Chú Rể & Cô Dâu (Tú Văn & Hường Nguyễn) and displays both bank accounts. Verified clean production build (0 errors)."
   },
   "completed_tasks": [
-    { "task": "Cinema Auto-Scroll Engine for Wishes Carousel (Subpixel Coordinate Tracker, 40px/s, infinite seamless loop, touch pause/resume)", "status": "done" },
-    { "task": "iOS Safari WebKit Audio Autoplay Fix (Synchronous trigger on 'Mở Thiệp' click + DOM preloading)", "status": "done" },
-    { "task": "Vertical Top-Right Media Cluster (Music Controller on Top, Auto-Scroll Controller Below with 40-44px touch targets)", "status": "done" },
-    { "task": "Favicon SVG & Dynamic Multi-Platform Icons (src/app/icon.tsx, src/app/apple-icon.tsx)", "status": "done" },
-    { "task": "Smart Multi-Event Timeline Stage Resolver (src/lib/wedding-timeline.ts & useActiveWeddingStage.ts for 10.10.2026 Vu Quy vs 12.12.2026 Thành Hôn)", "status": "done" },
-    { "task": "Dynamic Envelope, Hero, Family, Invitation, Countdown, Event, ThankYou Sections", "status": "done" },
-    { "task": "Dynamic Server Metadata & Edge Open Graph preview according to active event stage", "status": "done" },
-    { "task": "Multi-event Link Targeting & Message Templates in /share portal", "status": "done" },
-    { "task": "EXIF Auto-Orientation & 95.4% WebP Sharp Image Optimization (20 photos)", "status": "done" },
-    { "task": "Editorial Masonry Gallery with Fullscreen Lightbox & 8-photo preview", "status": "done" },
-    { "task": "Cinematic Game Loading Bar & Top-Bottom Split Curtain Reveal Animation", "status": "done" },
-    { "task": "Generated Official VietQR Codes for Groom (VPBank: 38689999996) & Bride (Techcombank: 19039619769011)", "status": "done" },
-    { "task": "Created Automated CLI Script (`npm run update:qr`) for instant bank & QR updates", "status": "done" },
-    { "task": "QR Code Download Feature on cards and within enlarged lightbox popup", "status": "done" },
-    { "task": "Locked website max-width to Fixed Mobile Frame (max-w-[480px]) on tablets and desktop monitors", "status": "done" }
+    { "task": "Vu Quy Logic: Cô Dâu & Chú Rể (Hường Nguyễn & Tú Văn) name ordering across Envelope, Hero, Wishes, Thank You, Metadata, OG image, and Share portal", "status": "done" },
+    { "task": "Vu Quy Banking Logic: Hidden groom bank account, displaying solely the bride's account on Gift Section", "status": "done" },
+    { "task": "Thành Hôn Logic: Chú Rể & Cô Dâu (Tú Văn & Hường Nguyễn) and displaying both groom & bride banking QR accounts", "status": "done" },
+    { "task": "Monogram & Initials Dynamic Switching: 'H & T' for Vu Quy vs 'T & H' for Thành Hôn", "status": "done" },
+    { "task": "Share Portal & Zalo/FB Message Templates updated with proper stage name priority", "status": "done" },
+    { "task": "Production Build Verification: 100% successful compile with Next.js 15.5.23 (0 errors)", "status": "done" }
   ],
   "decisions_made": [
     {
-      "decision": "Cinema Subpixel Auto-Scroll Engine for Carousel",
-      "reason": "Eliminates jumpy stepped transitions and integer truncation stutter on 120Hz ProMotion screens, providing an ultra-smooth, continuous reading drift that pauses naturally upon touch."
+      "decision": "Stage-Driven Name & Account Resolution",
+      "reason": "Centralized stageKey resolution in src/lib/wedding-timeline.ts provides consistent name ordering (primaryCoupleName, shortCoupleName, uppercaseCoupleName, initials) and bank account filtering across both client components and server metadata."
     },
     {
-      "decision": "Synchronous Audio Trigger on User Gesture",
-      "reason": "iOS Safari WebKit requires audio.play() to be invoked directly inside the click event call stack rather than inside asynchronous setTimeout callbacks."
-    },
-    {
-      "decision": "Vertical Top-Right Media Cluster Layout",
-      "reason": "Compact 40-44px translucent buttons with subtle opacity (75%) keep media controls easily accessible for thumb reach without obscuring card content."
+      "decision": "Vu Quy Groom Account Exclusion",
+      "reason": "In accordance with wedding customs, during Lễ Vu Quy (Nhà Gái) only the bride's banking QR card is presented, while during Lễ Thành Hôn (Nhà Trai) both accounts are displayed."
     }
   ],
   "next_recommended_steps": [

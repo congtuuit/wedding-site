@@ -17,13 +17,18 @@ interface WishesSectionProps {
   initialGuestName: string;
   isPersonalized: boolean;
   webhookUrl?: string;
+  stageKey?: "que" | "sg";
 }
 
 export const WishesSection: React.FC<WishesSectionProps> = ({
   initialGuestName,
   isPersonalized,
   webhookUrl,
+  stageKey = "sg",
 }) => {
+  const isVuQuy = stageKey === "que";
+  const coupleShortName = isVuQuy ? "Hường & Tú" : "Tú & Hường";
+
   const [wishes, setWishes] = useState<WishData[]>([]);
   const [senderName, setSenderName] = useState<string>("");
   const [content, setContent] = useState<string>("");
@@ -300,7 +305,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
           Gửi Lời Chúc Phúc
         </h2>
         <p className="text-xs text-textMuted font-sans max-w-md mx-auto mt-1.5">
-          Từng lời chúc của bạn là món quà ý nghĩa nhất cho ngày trọng đại của Tú & Hường
+          Từng lời chúc của bạn là món quà ý nghĩa nhất cho ngày trọng đại của {coupleShortName}
         </p>
 
         <SectionDivider variant="botanical" className="my-4" />
@@ -323,7 +328,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
 
             <div>
               <label className="block text-xs uppercase tracking-wider font-sans font-medium text-textMuted mb-1.5">
-                Lời chúc gửi tới Tú & Hường
+                Lời chúc gửi tới {coupleShortName}
               </label>
               <textarea
                 required
