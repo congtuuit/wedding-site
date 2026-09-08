@@ -6,15 +6,28 @@ Toàn bộ lịch sử các tính năng, nâng cấp giao diện và tối ưu h
 
 ## [v1.2.1] - 2026-09-08
 
-### 📱 Tối Ưu Tải Mã QR Trên iPhone & Chuẩn Hóa Thông Tin Mã QR (Enhanced)
+### 💍 Cập Nhật Ảnh Dòng Thời Gian "Khoảnh Khắc Cầu Hôn" (Updated)
+- **Tối ưu hóa ảnh cầu hôn mới (`src/images/0481.png`):** Chuyển đổi sang WebP chất lượng cao `public/images/TOBI0481.webp` (322 KB).
+- **Cập nhật dữ liệu [wedding.json](file:///Users/tuvan/Documents/wedding-site/src/data/wedding.json):** Áp dụng ảnh mới cho sự kiện năm 2022 trong phần **Hành Trình Yêu Thương** ([CoupleStory.tsx](file:///Users/tuvan/Documents/wedding-site/src/components/wedding/CoupleStory.tsx)).
+
+### 👰 Cập Nhật Ảnh Đại Diện Cô Dâu (Updated)
+- **Tối ưu hóa ảnh chân dung Cô dâu mới (`src/images/bride.png`):** Nén và chuyển đổi sang chuẩn WebP chất lượng cao `public/images/bride.webp` (332 KB).
+- **Chuẩn hóa khung hình gia đình (`FamilySection.tsx`):** Đồng bộ hiệu ứng hiển thị `object-cover object-top` mượt mà, cân xứng và tự nhiên giữa ảnh Cô dâu và Chú rể.
+
+### 💌 Đổi Vị Trí Tên Dâu/Rể Trong Lời Nhắn Thư Mời (InvitationSection) (Updated)
+- **Đồng bộ hóa thứ tự tên theo sự kiện:** Trong đoạn văn thư mời:
+  - **Lễ Vu Quy (`stageKey = "que"` / `?event=que`):** Hiển thị *"dành cho **Hường & Tú**."* (Cô dâu trước, Chú rể sau).
+  - **Lễ Thành Hôn (`stageKey = "sg"` / `?event=sg`):** Hiển thị *"dành cho **Tú & Hường**."* (Chú rể trước, Cô dâu sau).
+
+### 📱 Tối Ưu Tải Mã QR Trên iPhone & Tinh Gọn Mã QR (Enhanced)
 - **Hỗ trợ tải mã QR trên iOS/iPhone (`GiftSection.tsx`):**
   - Tích hợp chuẩn **Web Share API với File** (`navigator.share({ files })`) để kích hoạt trực tiếp bảng chia sẻ gốc của iOS với tùy chọn **"Lưu hình ảnh" (Save Image to Photos)** một chạm.
   - Dự phòng mở ảnh trong tab/modal mới trên iOS Safari khi thẻ `<a download>` bị WebKit chặn.
   - Bổ sung hướng dẫn *"Chạm & giữ ảnh 1 giây để Lưu vào Ảnh"* trực quan trong popup phóng to.
-- **Chuẩn hóa thông tin hiển thị trên mã QR (Không có số tiền 0đ):**
-  - Áp dụng chuẩn **VietQR Print** (`print.png`): Hiển thị đầy đủ **Tên chủ TK, Số TK, Tên Ngân hàng và Nội dung CK** (Mung cuoi Tu Van / Mung cuoi Huong Nguyen).
-  - **Không input số tiền:** Loại bỏ hoàn toàn trường `Số tiền: 0đ` để khách mời tự do nhập số tiền mừng tùy ý khi quét mã.
-  - Đồng bộ script `scripts/update-qr.mjs` sang template `print.png`.
+- **Tinh gọn ảnh mã QR (Chỉ hiển thị TÊN & STK):**
+  - Ảnh mã QR ([qr-groom.png](file:///Users/tuvan/Documents/wedding-site/public/images/qr-groom.png), [qr-bride.png](file:///Users/tuvan/Documents/wedding-site/public/images/qr-bride.png)) hiện chỉ hiển thị tối giản và sắc nét gồm: **Logo VietQR + Napas 24/7 + Logo Ngân hàng + TÊN CHỦ TK + SỐ TÀI KHOẢN**.
+  - Loại bỏ hoàn toàn dòng số tiền 0đ và các thông tin phụ, giúp bố cục thẻ QR cân đối và trang nhã.
+  - Tích hợp bộ xử lý `sharp` trong script `scripts/update-qr.mjs`.
 
 ### 🗓️ Tối Ưu Thẻ Sự Kiện (EventCard) (Updated)
 - **Ẩn nút "Lưu Vào Lịch":** Loại bỏ nút tải file `.ics` lịch cưới trong thẻ sự kiện ([EventCard.tsx](file:///Users/tuvan/Documents/wedding-site/src/components/wedding/EventCard.tsx)), chuyển nút **"Chỉ Đường (Google Maps)"** thành nút bấm chính full-width trực quan, dễ thao tác.

@@ -156,6 +156,8 @@ export function WeddingPageClient({
         <InvitationSection
           invitation={weddingData.invitation}
           headline={stage.invitationHeadline}
+          shortCoupleName={stage.shortCoupleName}
+          stageKey={stage.stageKey}
           guestName={guestName}
           isPersonalized={isPersonalized}
         />

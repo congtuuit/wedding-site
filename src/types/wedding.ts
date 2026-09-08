@@ -22,6 +22,14 @@ export interface CoupleInfo {
   weddingDateFormatted: string; // e.g. "12 . 12 . 2026"
 }
 
+export interface EventTimeslot {
+  time: string;
+  label: string;
+  venue?: string;
+  address?: string;
+  mapUrl?: string;
+}
+
 export interface WeddingEvent {
   id: string;
   category: "sg" | "que";
@@ -37,6 +45,7 @@ export interface WeddingEvent {
   calendarLocation: string;
   startDateIso: string; // 2026-12-12T09:00:00+07:00
   endDateIso: string; // 2026-12-12T12:00:00+07:00
+  timeslots?: EventTimeslot[];
 }
 
 export interface TimelineStory {

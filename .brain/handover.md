@@ -7,9 +7,17 @@
 
 ## 📍 Đang làm & Trạng thái:
 - **Tính năng & Fix hoàn thành mới nhất:**
-  1. **Chuẩn hóa mã VietQR (`print.png`) & Tải mã trên iPhone (`GiftSection.tsx`, `update-qr.mjs`):**
-     - **Hiển thị đầy đủ thông tin trên ảnh QR:** Tên người nhận, Số tài khoản, Ngân hàng, Nội dung chuyển khoản (*Mung cuoi Tu Van* / *Mung cuoi Huong Nguyen*).
-     - **Không set số tiền 0đ:** Bỏ hoàn toàn dòng số tiền 0đ để khách quét mã tự nhập số tiền mừng.
+  1. **Cập nhật ảnh Cầu hôn năm 2022 (`CoupleStory.tsx` & `public/images/TOBI0481.webp`):**
+     - Đã nén và chuyển đổi [src/images/0481.png](file:///Users/tuvan/Documents/wedding-site/src/images/0481.png) sang WebP tối ưu.
+     - Cập nhật mục "Khoảnh khắc cầu hôn" trong [wedding.json](file:///Users/tuvan/Documents/wedding-site/src/data/wedding.json).
+  2. **Cập nhật ảnh chân dung Cô dâu mới (`FamilySection.tsx` & `public/images/bride.webp`):**
+     - Đã chuyển đổi [src/images/bride.png](file:///Users/tuvan/Documents/wedding-site/src/images/bride.png) sang WebP tối ưu tải nhanh và hiển thị sắc nét trong phần **Hai Bên Gia Đình**.
+     - Căn chỉnh tỷ lệ khung ảnh đồng bộ và cân đối với ảnh Chú rể.
+  2. **Đổi thứ tự tên Dâu/Rể trong Thư mời (`InvitationSection.tsx`):**
+     - **Vu Quy:** *"món quà ý nghĩa nhất dành cho **Hường & Tú**"*
+     - **Thành Hôn:** *"món quà ý nghĩa nhất dành cho **Tú & Hường**"*
+  2. **Mã QR tinh gọn (Chỉ hiện TÊN & STK) + Hỗ trợ tải trên iPhone (`GiftSection.tsx`, `update-qr.mjs`):**
+     - **Thông tin trên ảnh QR:** Chỉ gồm **Tên người nhận** và **Số tài khoản** cùng logo ngân hàng + VietQR/Napas (Hoàn toàn không có dòng số tiền 0đ).
      - **Tải ảnh trên iPhone:** Tích hợp **Web Share API với File** mở menu chia sẻ iOS để chọn **"Lưu hình ảnh"** vào album Photos.
   2. **Ẩn nút "Lưu Vào Lịch" (`EventCard.tsx`):** Loại bỏ nút tải lịch, tối ưu nút "Chỉ Đường (Google Maps)" thành nút hành động duy nhất full-width gọn gàng và dễ thao tác trên mobile.
   3. **Cập nhật nhãn nút menu (`BottomNavigation.tsx`):** Đổi nhãn `RSVP` thành **`Xác Nhận`** đồng bộ thuần Việt với toàn bộ website.

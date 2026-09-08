@@ -15,7 +15,10 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
   const isQuePriority = priority === "que";
   const titleText = isQuePriority ? "Nhà Gái & Nhà Trai" : "Nhà Trai & Nhà Gái";
   return (
-    <section id="family-section" className="w-full py-14 sm:py-18 px-3 sm:px-6 bg-background text-textMain">
+    <section
+      id="family-section"
+      className="w-full py-14 sm:py-18 px-3 sm:px-6 bg-background text-textMain"
+    >
       <div className="max-w-4xl mx-auto text-center">
         {/* Subtitle */}
         <p className="font-sans text-[10px] sm:text-xs uppercase tracking-[0.25em] text-accent font-semibold mb-1">
@@ -64,7 +67,7 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
                         alt={couple.bride.fullName}
                         fill
                         sizes="(max-width: 480px) 45vw, 200px"
-                        className="object-cover object-top scale-[1.95] -translate-y-[53%] origin-top transition-transform duration-700 ease-out group-hover:scale-[2.05]"
+                        className="object-cover object-[center_55%] scale-125 transition-transform duration-700 ease-out group-hover:scale-130"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
                     </div>
@@ -186,7 +189,7 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
                         alt={couple.bride.fullName}
                         fill
                         sizes="(max-width: 480px) 45vw, 200px"
-                        className="object-cover object-top scale-[1.95] -translate-y-[53%] origin-top transition-transform duration-700 ease-out group-hover:scale-[2.05]"
+                        className="object-cover object-[center_15%] scale-125 transition-transform duration-700 ease-out group-hover:scale-130"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
                     </div>

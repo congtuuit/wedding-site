@@ -40,24 +40,45 @@
     {
       "id": "event-nha-gai",
       "category": "que",
-      "title": "LỄ GIA TIÊN & TIỆC CƯỚI NHÀ GÁI",
-      "subtitle": "Tư gia Nhà Gái (Lâm Đồng)",
+      "title": "Lễ Gia Tiên & Tiệc Cưới Nhà Gái",
       "date": "Thứ Bảy, 10 Tháng 10 Năm 2026",
-      "time": "09:00 Sáng (Lễ Gia Tiên) - 11:30 Trưa (Khai Tiệc)",
+      "time": "05:00 Sáng (Lễ Nhà Thờ) - 09:00 Sáng (Lễ Gia Tiên) - 10:30 Trưa (Khai Tiệc)",
       "venue": "Tư Gia Nhà Gái",
       "address": "Cát Tiên 3, Lâm Đồng",
       "mapUrl": "https://maps.app.goo.gl/brA9HFBX28HNHjdGA",
       "calendarTitle": "Lễ Gia Tiên & Tiệc Cưới Nhà Gái - Tú Văn & Hường Nguyễn",
       "calendarDescription": "Lễ Gia Tiên và Tiệc Cưới tại tư gia Nhà Gái (Cát Tiên 3, Lâm Đồng)",
       "calendarLocation": "Cát Tiên 3, Lâm Đồng",
-      "startDateIso": "2026-10-10T09:00:00+07:00",
-      "endDateIso": "2026-10-10T14:00:00+07:00"
+      "startDateIso": "2026-10-10T05:00:00+07:00",
+      "endDateIso": "2026-10-10T14:00:00+07:00",
+      "timeslots": [
+        {
+          "time": "05:00 Sáng",
+          "label": "Lễ Nhà Thờ",
+          "venue": "Nhà Thờ Gia Viễn",
+          "address": "Cát Tiên 3, Lâm Đồng",
+          "mapUrl": "https://maps.app.goo.gl/5KgwzTBsxvL325os9?g_st=iz"
+        },
+        {
+          "time": "09:00 Sáng",
+          "label": "Lễ Gia Tiên",
+          "venue": "Tư Gia Nhà Gái",
+          "address": "Cát Tiên 3, Lâm Đồng",
+          "mapUrl": "https://maps.app.goo.gl/brA9HFBX28HNHjdGA"
+        },
+        {
+          "time": "10:30 Trưa",
+          "label": "Khai Tiệc Tại Tư Gia Nhà Gái",
+          "venue": "Tư Gia Nhà Gái",
+          "address": "Cát Tiên 3, Lâm Đồng",
+          "mapUrl": "https://maps.app.goo.gl/brA9HFBX28HNHjdGA"
+        }
+      ]
     },
     {
       "id": "event-nha-trai",
       "category": "sg",
-      "title": "TIỆC CƯỚI NHÀ TRAI",
-      "subtitle": "TP. Hồ Chí Minh",
+      "title": "Tiệc Cưới Nhà Trai",
       "date": "Thứ Bảy, 12 Tháng 12 Năm 2026",
       "time": "18:00 Tối (Đón khách) - 19:00 Khai tiệc",
       "venue": "The ADORA Center",
@@ -67,30 +88,53 @@
       "calendarDescription": "Tiệc cưới mừng thành hôn Tú Văn & Hường Nguyễn tại The ADORA Center, TP. Hồ Chí Minh",
       "calendarLocation": "The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh",
       "startDateIso": "2026-12-12T18:00:00+07:00",
-      "endDateIso": "2026-12-12T21:30:00+07:00"
+      "endDateIso": "2026-12-12T21:30:00+07:00",
+      "timeslots": [
+        {
+          "time": "18:00 Tối",
+          "label": "Đón Khách",
+          "venue": "The ADORA Center",
+          "address": "431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh",
+          "mapUrl": "https://maps.app.goo.gl/FRs6bSaK1khXCZBL8"
+        },
+        {
+          "time": "19:00 Tối",
+          "label": "Khai Tiệc",
+          "venue": "The ADORA Center",
+          "address": "431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh",
+          "mapUrl": "https://maps.app.goo.gl/FRs6bSaK1khXCZBL8"
+        }
+      ]
     }
   ],
   "timeline": [
     {
-      "year": "2016",
+      "year": "2015",
       "title": "Lần đầu gặp gỡ",
       "subtitle": "Khởi đầu của một định mệnh ngọt ngào",
       "description": "Khoảnh khắc ánh mắt chạm nhau giữa những ngày tháng thanh xuân rực rỡ nhất, nhen nhóm một tình cảm dịu dàng.",
       "image": "/images/TOBI0500.webp"
     },
     {
-      "year": "2017",
+      "year": "2016",
       "title": "Lời hẹn ước & Tỏ tình",
       "subtitle": "Chính thức nắm tay nhau",
       "description": "Lời tỏ tình mộc mạc nhưng chân thành đã mở ra hành trình đồng hành cùng nhau qua bao thăng trầm tuổi trẻ.",
       "image": "/images/TOBI0527.webp"
     },
     {
-      "year": "2023",
+      "year": "2017 - 2022",
+      "title": "Cùng nhau học tập và trưởng thành",
+      "subtitle": "Những năm tháng thanh xuân rực rỡ",
+      "description": "Cùng nhau học tập và trưởng thành, nếm trải những vui buồn của tuổi trẻ, cùng nhau chia sẻ và động viên nhau trong cuộc sống.",
+      "image": ""
+    },
+    {
+      "year": "2022",
       "title": "Khoảnh khắc cầu hôn",
       "subtitle": "Câu trả lời là 'Em đồng ý!'",
       "description": "Dưới bầu trời lãng mạn, chiếc nhẫn được trao cùng lời hẹn ước sẽ cùng nhau đi hết chặng đường dài phía trước.",
-      "image": "/images/TOBI0656.webp"
+      "image": "/images/TOBI0481.webp"
     },
     {
       "year": "2026",

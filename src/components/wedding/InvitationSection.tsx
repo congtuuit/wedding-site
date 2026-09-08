@@ -8,6 +8,8 @@ interface InvitationSectionProps {
   guestName: string;
   isPersonalized: boolean;
   headline?: string;
+  shortCoupleName?: string;
+  stageKey?: "que" | "sg";
 }
 
 export const InvitationSection: React.FC<InvitationSectionProps> = ({
@@ -15,8 +17,11 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({
   guestName,
   isPersonalized,
   headline,
+  shortCoupleName,
+  stageKey = "sg",
 }) => {
   const displayHeadline = headline || invitation.headline;
+  const coupleName = shortCoupleName || (stageKey === "que" ? "Hường & Tú" : "Tú & Hường");
 
   return (
     <section id="invitation" className="w-full py-16 px-4 bg-surface text-textMain relative overflow-hidden">
@@ -58,9 +63,10 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({
 
         {/* Body Paragraphs */}
         <div className="space-y-3 text-xs sm:text-sm text-textMuted font-sans leading-relaxed">
-          {invitation.messageParagraphs.map((para, idx) => (
-            <p key={idx}>{para}</p>
-          ))}
+          {invitation.messageParagraphs.map((para, idx) => {
+            const formattedPara = para.replace(/Tú\s*&\s*Hường|Hường\s*&\s*Tú/g, coupleName);
+            return <p key={idx}>{formattedPara}</p>;
+          })}
         </div>
 
         {/* Closing */}
