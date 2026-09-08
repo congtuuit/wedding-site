@@ -27,7 +27,23 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
   });
 
   const handleCopy = (accountNumber: string, index: number) => {
-    navigator.clipboard.writeText(accountNumber);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(accountNumber).catch(() => {
+        const textArea = document.createElement("textarea");
+        textArea.value = accountNumber;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+      });
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = accountNumber;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+    }
     setCopiedIndex(index);
     setTimeout(() => {
       setCopiedIndex(null);
@@ -41,6 +57,33 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
     try {
       const response = await fetch(qrUrl);
       const blob = await response.blob();
+
+      // 1. Web Share API with File (Optimized for iPhone / iOS Safari — opens Native Share Sheet with "Lưu hình ảnh" / Save Image)
+      if (
+        typeof navigator !== "undefined" &&
+        navigator.canShare &&
+        typeof File !== "undefined"
+      ) {
+        try {
+          const file = new File([blob], fileName, { type: blob.type || "image/png" });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: "Mã QR Mừng Cưới",
+              text: "Mã QR Mừng Cưới Tú Văn & Hường Nguyễn",
+            });
+            return;
+          }
+        } catch (shareErr) {
+          // If the user dismissed or cancelled the share sheet, return gracefully
+          if (shareErr instanceof Error && shareErr.name === "AbortError") {
+            return;
+          }
+          console.log("Web Share API fallback:", shareErr);
+        }
+      }
+
+      // 2. Standard Blob Link Download (Desktop & Android)
       const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = blobUrl;
@@ -48,9 +91,23 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch {
-      // Fallback direct download
+
+      // 3. Fallback for iOS Safari when <a> download is ignored by WebKit
+      const isIOS =
+        typeof window !== "undefined" &&
+        (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+          (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
+
+      if (isIOS) {
+        window.open(blobUrl, "_blank");
+      }
+
+      setTimeout(() => {
+        window.URL.revokeObjectURL(blobUrl);
+      }, 3000);
+    } catch (err) {
+      console.error("QR Download fallback:", err);
+      // Fallback direct link
       const link = document.createElement("a");
       link.href = qrUrl;
       link.download = fileName;
@@ -59,7 +116,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
     } finally {
       setTimeout(() => {
         setDownloadingIndex(null);
-      }, 1500);
+      }, 1000);
     }
   };
 
@@ -220,7 +277,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
             </div>
 
             {/* Download Button in Modal */}
-            <div className="pt-2">
+            <div className="pt-2 space-y-2">
               <button
                 type="button"
                 onClick={() =>
@@ -231,11 +288,14 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
                       : "QR-Mung-Cuoi-Co-Dau-Huong-Nguyen.png"
                   )
                 }
-                className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-full bg-[#8C1425] hover:bg-[#700F1D] text-white font-sans text-xs font-semibold tracking-wider uppercase transition-all shadow-md active:scale-95 cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-full bg-[#8C1425] hover:bg-[#700F1D] text-white font-sans text-xs font-semibold tracking-wider uppercase transition-all shadow-md active:scale-95 cursor-pointer"
               >
                 <Download className="w-4 h-4" />
-                <span>Tải Mã QR Về Máy</span>
+                <span>Lưu / Tải Mã QR Về Máy</span>
               </button>
+              <p className="text-[11px] text-textMuted font-sans leading-relaxed">
+                💡 Trên iPhone: Bạn cũng có thể <b>chạm &amp; giữ ảnh 1 giây</b> để chọn &ldquo;Lưu vào Ảnh&rdquo; (Save to Photos).
+              </p>
             </div>
           </div>
         </div>

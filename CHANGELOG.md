@@ -6,6 +6,16 @@ Toàn bộ lịch sử các tính năng, nâng cấp giao diện và tối ưu h
 
 ## [v1.2.1] - 2026-09-08
 
+### 📱 Tối Ưu Tải Mã QR Trên iPhone & Chuẩn Hóa Thông Tin Mã QR (Enhanced)
+- **Hỗ trợ tải mã QR trên iOS/iPhone (`GiftSection.tsx`):**
+  - Tích hợp chuẩn **Web Share API với File** (`navigator.share({ files })`) để kích hoạt trực tiếp bảng chia sẻ gốc của iOS với tùy chọn **"Lưu hình ảnh" (Save Image to Photos)** một chạm.
+  - Dự phòng mở ảnh trong tab/modal mới trên iOS Safari khi thẻ `<a download>` bị WebKit chặn.
+  - Bổ sung hướng dẫn *"Chạm & giữ ảnh 1 giây để Lưu vào Ảnh"* trực quan trong popup phóng to.
+- **Chuẩn hóa thông tin hiển thị trên mã QR (Không có số tiền 0đ):**
+  - Áp dụng chuẩn **VietQR Print** (`print.png`): Hiển thị đầy đủ **Tên chủ TK, Số TK, Tên Ngân hàng và Nội dung CK** (Mung cuoi Tu Van / Mung cuoi Huong Nguyen).
+  - **Không input số tiền:** Loại bỏ hoàn toàn trường `Số tiền: 0đ` để khách mời tự do nhập số tiền mừng tùy ý khi quét mã.
+  - Đồng bộ script `scripts/update-qr.mjs` sang template `print.png`.
+
 ### 🗓️ Tối Ưu Thẻ Sự Kiện (EventCard) (Updated)
 - **Ẩn nút "Lưu Vào Lịch":** Loại bỏ nút tải file `.ics` lịch cưới trong thẻ sự kiện ([EventCard.tsx](file:///Users/tuvan/Documents/wedding-site/src/components/wedding/EventCard.tsx)), chuyển nút **"Chỉ Đường (Google Maps)"** thành nút bấm chính full-width trực quan, dễ thao tác.
 

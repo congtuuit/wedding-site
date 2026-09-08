@@ -64,11 +64,7 @@ function getBankInfo(input) {
 
 async function downloadVietQR(bankCode, accountNumber, accountName, memo, outputPath) {
   const encodedName = encodeURIComponent(accountName.trim());
-  let url = `https://img.vietqr.io/image/${bankCode}-${accountNumber}-compact2.png?accountName=${encodedName}`;
-  
-  if (memo && memo.trim()) {
-    url += `&addInfo=${encodeURIComponent(memo.trim())}`;
-  }
+  const url = `https://img.vietqr.io/image/${bankCode}-${accountNumber}-compact2.png?accountName=${encodedName}`;
 
   console.log(`⏳ Đang tải mã VietQR: ${url}`);
   const response = await fetch(url);
@@ -78,8 +74,20 @@ async function downloadVietQR(bankCode, accountNumber, accountName, memo, output
 
   const arrayBuffer = await response.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
-  fs.writeFileSync(outputPath, buffer);
-  console.log(`✅ Đã lưu ảnh QR thành công: ${outputPath} (${(buffer.length / 1024).toFixed(1)} KB)`);
+
+  try {
+    const sharp = (await import("sharp")).default;
+    const processedBuffer = await sharp(buffer)
+      .extract({ left: 0, top: 0, width: 540, height: 585 })
+      .extend({ bottom: 20, background: { r: 255, g: 255, b: 255, alpha: 1 } })
+      .toBuffer();
+
+    fs.writeFileSync(outputPath, processedBuffer);
+    console.log(`✅ Đã lưu ảnh QR (chỉ TÊN & STK) thành công: ${outputPath} (${(processedBuffer.length / 1024).toFixed(1)} KB)`);
+  } catch (err) {
+    console.log("Sharp process fallback:", err.message);
+    fs.writeFileSync(outputPath, buffer);
+  }
 }
 
 function parseArgs() {

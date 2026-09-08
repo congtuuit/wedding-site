@@ -7,8 +7,12 @@
 
 ## 📍 Đang làm & Trạng thái:
 - **Tính năng & Fix hoàn thành mới nhất:**
-  1. **Ẩn nút "Lưu Vào Lịch" (`EventCard.tsx`):** Loại bỏ nút tải lịch, tối ưu nút "Chỉ Đường (Google Maps)" thành nút hành động duy nhất full-width gọn gàng và dễ thao tác trên mobile.
-  2. **Cập nhật nhãn nút menu (`BottomNavigation.tsx`):** Đổi nhãn `RSVP` thành **`Xác Nhận`** đồng bộ thuần Việt với toàn bộ website.
+  1. **Chuẩn hóa mã VietQR (`print.png`) & Tải mã trên iPhone (`GiftSection.tsx`, `update-qr.mjs`):**
+     - **Hiển thị đầy đủ thông tin trên ảnh QR:** Tên người nhận, Số tài khoản, Ngân hàng, Nội dung chuyển khoản (*Mung cuoi Tu Van* / *Mung cuoi Huong Nguyen*).
+     - **Không set số tiền 0đ:** Bỏ hoàn toàn dòng số tiền 0đ để khách quét mã tự nhập số tiền mừng.
+     - **Tải ảnh trên iPhone:** Tích hợp **Web Share API với File** mở menu chia sẻ iOS để chọn **"Lưu hình ảnh"** vào album Photos.
+  2. **Ẩn nút "Lưu Vào Lịch" (`EventCard.tsx`):** Loại bỏ nút tải lịch, tối ưu nút "Chỉ Đường (Google Maps)" thành nút hành động duy nhất full-width gọn gàng và dễ thao tác trên mobile.
+  3. **Cập nhật nhãn nút menu (`BottomNavigation.tsx`):** Đổi nhãn `RSVP` thành **`Xác Nhận`** đồng bộ thuần Việt với toàn bộ website.
   3. **Ẩn ô nhập lời chúc trong Form Xác nhận tham dự (`RSVPSection.tsx`):**
      - Loại bỏ textarea lời chúc khỏi form RSVP giúp form tinh gọn, nhanh chóng cho khách xác nhận.
      - Khách mời có thể gửi lời chúc qua phần riêng biệt **Sổ Lưu Bút** (`WishesSection.tsx`).
