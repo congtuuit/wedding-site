@@ -43,7 +43,7 @@ export default function SharePage() {
 
   // Single mode state
   const [guestName, setGuestName] = useState<string>("");
-  const [linkType, setLinkType] = useState<"plain" | "base64">("plain");
+  const [linkType, setLinkType] = useState<"plain" | "base64">("base64");
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
   const [copiedTemplateIdx, setCopiedTemplateIdx] = useState<number | null>(null);
   const [showQr, setShowQr] = useState<boolean>(false);
