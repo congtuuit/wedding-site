@@ -2,16 +2,23 @@ import fs from "fs";
 import path from "path";
 import sharp from "sharp";
 
-const inputDir = path.resolve("src/images");
-const outputDir = path.resolve("public/images");
+const publicDir = path.resolve("public/images");
+const srcDir = path.resolve("src/images");
 
 async function optimizeImages() {
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+  // Use public/images if TOBI jpgs are placed there, otherwise src/images
+  let inputDir = srcDir;
+  const publicJpgs = fs.existsSync(publicDir)
+    ? fs.readdirSync(publicDir).filter((file) => /\.(jpg|jpeg|png)$/i.test(file))
+    : [];
+
+  if (publicJpgs.length > 0) {
+    inputDir = publicDir;
   }
 
+  console.log(`Scanning directory: ${inputDir}`);
   const files = fs.readdirSync(inputDir).filter((file) =>
-    /\.(jpg|jpeg|png|JPG|JPEG|PNG)$/i.test(file)
+    /\.(jpg|jpeg|png)$/i.test(file) && !file.endsWith(".webp")
   );
 
   console.log(`Found ${files.length} images to optimize...`);
@@ -22,7 +29,12 @@ async function optimizeImages() {
   for (const file of files) {
     const inputPath = path.join(inputDir, file);
     const baseName = path.parse(file).name;
-    const outputPath = path.join(outputDir, `${baseName}.webp`);
+    const outputPath = path.join(publicDir, `${baseName}.webp`);
+
+    // Sync file to src/images if inputDir is publicDir
+    if (inputDir === publicDir && fs.existsSync(srcDir)) {
+      fs.copyFileSync(inputPath, path.join(srcDir, file));
+    }
 
     const originalStats = fs.statSync(inputPath);
     totalOriginalSize += originalStats.size;
