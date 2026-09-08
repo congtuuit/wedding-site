@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { MapPin } from "lucide-react";
 import { CoupleInfo } from "@/types/wedding";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 
@@ -48,8 +49,9 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
                     <p className="font-sans text-[11px] sm:text-xs md:text-sm text-textMain font-medium leading-snug whitespace-nowrap">
                       {couple.bride.motherName}
                     </p>
-                    <p className="text-[9px] sm:text-[10px] text-textMuted font-sans tracking-wide pt-0.5 leading-tight">
-                      Quê quán: {couple.bride.hometown}
+                    <p className="flex items-center justify-center gap-1 text-[9px] sm:text-[10px] text-textMuted font-sans tracking-wide pt-0.5 leading-tight">
+                      <MapPin className="w-2.5 h-2.5 text-[#8C1425]/50 flex-shrink-0" />
+                      {couple.bride.hometown}
                     </p>
                   </div>
                 </div>
@@ -88,8 +90,9 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
                     <p className="font-sans text-[11px] sm:text-xs md:text-sm text-textMain font-medium leading-snug whitespace-nowrap">
                       {couple.groom.motherName}
                     </p>
-                    <p className="text-[9px] sm:text-[10px] text-textMuted font-sans tracking-wide pt-0.5 leading-tight">
-                      Quê quán: {couple.groom.hometown}
+                    <p className="flex items-center justify-center gap-1 text-[9px] sm:text-[10px] text-textMuted font-sans tracking-wide pt-0.5 leading-tight">
+                      <MapPin className="w-2.5 h-2.5 text-[#8C1425]/50 flex-shrink-0" />
+                      {couple.groom.hometown}
                     </p>
                   </div>
                 </div>
@@ -107,7 +110,7 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
                         alt={couple.groom.fullName}
                         fill
                         sizes="(max-width: 480px) 45vw, 200px"
-                        className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="object-cover object-[center_15%] scale-110 transition-transform duration-700 ease-out group-hover:scale-115"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
                     </div>
@@ -130,8 +133,9 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
                     <p className="font-sans text-[11px] sm:text-xs md:text-sm text-textMain font-medium leading-snug whitespace-nowrap">
                       {couple.groom.motherName}
                     </p>
-                    <p className="text-[9px] sm:text-[10px] text-textMuted font-sans tracking-wide pt-0.5 leading-tight">
-                      Quê quán: {couple.groom.hometown}
+                    <p className="flex items-center justify-center gap-1 text-[9px] sm:text-[10px] text-textMuted font-sans tracking-wide pt-0.5 leading-tight">
+                      <MapPin className="w-2.5 h-2.5 text-[#8C1425]/50 flex-shrink-0" />
+                      {couple.groom.hometown}
                     </p>
                   </div>
                 </div>
@@ -149,7 +153,7 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
                         alt={couple.groom.fullName}
                         fill
                         sizes="(max-width: 480px) 45vw, 200px"
-                        className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="object-cover object-[center_15%] scale-110 transition-transform duration-700 ease-out group-hover:scale-115"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
                     </div>
@@ -170,8 +174,9 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
                     <p className="font-sans text-[11px] sm:text-xs md:text-sm text-textMain font-medium leading-snug whitespace-nowrap">
                       {couple.bride.motherName}
                     </p>
-                    <p className="text-[9px] sm:text-[10px] text-textMuted font-sans tracking-wide pt-0.5 leading-tight">
-                      Quê quán: {couple.bride.hometown}
+                    <p className="flex items-center justify-center gap-1 text-[9px] sm:text-[10px] text-textMuted font-sans tracking-wide pt-0.5 leading-tight">
+                      <MapPin className="w-2.5 h-2.5 text-[#8C1425]/50 flex-shrink-0" />
+                      {couple.bride.hometown}
                     </p>
                   </div>
                 </div>
