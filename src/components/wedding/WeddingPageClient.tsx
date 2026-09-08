@@ -87,6 +87,7 @@ export function WeddingPageClient({
     isAutoScrolling,
     isPausedByUser,
     toggleAutoScroll,
+    pauseAutoScroll,
   } = useAutoScroll({
     enabled: hasOpenedInvitation,
     speed: 48,
@@ -232,7 +233,7 @@ export function WeddingPageClient({
       </ScrollReveal>
 
       {/* 15. Mobile Fixed Dock Navigation */}
-      {hasOpenedInvitation && <BottomNavigation />}
+      {hasOpenedInvitation && <BottomNavigation onNavigate={pauseAutoScroll} />}
 
       {/* 16. Floating Back To Top Button */}
       {hasOpenedInvitation && <BackToTop />}

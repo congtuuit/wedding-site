@@ -11,10 +11,15 @@ interface GiftSectionProps {
   stageKey?: "que" | "sg";
 }
 
-export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" }) => {
+export const GiftSection: React.FC<GiftSectionProps> = ({
+  gift,
+  stageKey = "sg",
+}) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [downloadingIndex, setDownloadingIndex] = useState<number | null>(null);
-  const [selectedAccount, setSelectedAccount] = useState<WeddingData["gift"]["accounts"][0] | null>(null);
+  const [selectedAccount, setSelectedAccount] = useState<
+    WeddingData["gift"]["accounts"][0] | null
+  >(null);
 
   const isVuQuy = stageKey === "que";
   const displayAccounts = gift.accounts.filter((account) => {
@@ -50,7 +55,11 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
     }, 3000);
   };
 
-  const handleDownloadQr = async (qrUrl: string, fileName: string, index?: number) => {
+  const handleDownloadQr = async (
+    qrUrl: string,
+    fileName: string,
+    index?: number,
+  ) => {
     if (typeof index === "number") {
       setDownloadingIndex(index);
     }
@@ -65,7 +74,9 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
         typeof File !== "undefined"
       ) {
         try {
-          const file = new File([blob], fileName, { type: blob.type || "image/png" });
+          const file = new File([blob], fileName, {
+            type: blob.type || "image/png",
+          });
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({
               files: [file],
@@ -121,7 +132,10 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
   };
 
   return (
-    <section id="gift" className="w-full py-16 px-3 sm:px-4 bg-background text-textMain relative">
+    <section
+      id="gift"
+      className="w-full py-16 px-3 sm:px-4 bg-background text-textMain relative"
+    >
       <div className="max-w-xl mx-auto text-center">
         {/* Header */}
         <div className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#8C1425]/10 text-[#8C1425] mb-3">
@@ -223,11 +237,17 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
                   {/* Download QR Button */}
                   <button
                     type="button"
-                    onClick={() => handleDownloadQr(account.qrImage, downloadFileName, index)}
+                    onClick={() =>
+                      handleDownloadQr(account.qrImage, downloadFileName, index)
+                    }
                     className="inline-flex items-center justify-center gap-1 py-2 px-2 rounded-full bg-[#8C1425] hover:bg-[#700F1D] text-white font-sans text-[11px] font-semibold tracking-wider uppercase transition-all shadow-sm hover:shadow-md active:scale-95 min-h-[38px] cursor-pointer whitespace-nowrap overflow-hidden"
                   >
-                    <Download className={`w-3.5 h-3.5 flex-shrink-0 ${downloadingIndex === index ? "animate-bounce" : ""}`} />
-                    <span>{downloadingIndex === index ? "Đang Tải..." : "Tải Mã QR"}</span>
+                    <Download
+                      className={`w-3.5 h-3.5 flex-shrink-0 ${downloadingIndex === index ? "animate-bounce" : ""}`}
+                    />
+                    <span>
+                      {downloadingIndex === index ? "Đang Tải..." : "Tải Mã QR"}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -271,8 +291,12 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
             </div>
 
             <div className="space-y-1 text-xs text-textMuted font-sans">
-              <p className="font-semibold text-textMain text-sm">{selectedAccount.bankName}</p>
-              <p className="font-mono text-base font-bold text-[#8C1425]">{selectedAccount.accountNumber}</p>
+              <p className="font-semibold text-textMain text-sm">
+                {selectedAccount.bankName}
+              </p>
+              <p className="font-mono text-base font-bold text-[#8C1425]">
+                {selectedAccount.accountNumber}
+              </p>
               <p className="uppercase">{selectedAccount.ownerName}</p>
             </div>
 
@@ -285,7 +309,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
                     selectedAccount.qrImage,
                     selectedAccount.role === "groom"
                       ? "QR-Mung-Cuoi-Chu-Re-Tu-Van.png"
-                      : "QR-Mung-Cuoi-Co-Dau-Huong-Nguyen.png"
+                      : "QR-Mung-Cuoi-Co-Dau-Huong-Nguyen.png",
                   )
                 }
                 className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-full bg-[#8C1425] hover:bg-[#700F1D] text-white font-sans text-xs font-semibold tracking-wider uppercase transition-all shadow-md active:scale-95 cursor-pointer"
@@ -293,9 +317,6 @@ export const GiftSection: React.FC<GiftSectionProps> = ({ gift, stageKey = "sg" 
                 <Download className="w-4 h-4" />
                 <span>Lưu / Tải Mã QR Về Máy</span>
               </button>
-              <p className="text-[11px] text-textMuted font-sans leading-relaxed">
-                💡 Trên iPhone: Bạn cũng có thể <b>chạm &amp; giữ ảnh 1 giây</b> để chọn &ldquo;Lưu vào Ảnh&rdquo; (Save to Photos).
-              </p>
             </div>
           </div>
         </div>

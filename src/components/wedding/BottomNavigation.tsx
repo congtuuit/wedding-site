@@ -3,7 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { Mail, Calendar, Image as ImageIcon, Send, Gift } from "lucide-react";
 
-export const BottomNavigation: React.FC = () => {
+interface BottomNavigationProps {
+  onNavigate?: () => void; // Gọi trước khi scroll (dừng auto-scroll)
+}
+
+export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,10 +28,17 @@ export const BottomNavigation: React.FC = () => {
   }, []);
 
   const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    // Dừng auto-scroll TRƯỚC để tránh xung đột với scrollIntoView
+    onNavigate?.();
+
+    // Dùng requestAnimationFrame để đảm bảo auto-scroll đã dừng hẳn trước khi scroll
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    });
   };
 
   if (!isVisible) return null;
