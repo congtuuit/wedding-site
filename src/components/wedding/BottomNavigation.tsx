@@ -66,7 +66,7 @@ export const BottomNavigation: React.FC = () => {
             className="flex flex-col items-center justify-center py-1.5 px-3 rounded-full bg-gradient-to-r from-accent to-[#5A0D18] text-white font-semibold hover:brightness-110 transition-all min-w-[40px] min-h-[40px] shadow-[0_0_15px_rgba(128,20,36,0.55)] cursor-pointer active:scale-95"
           >
             <Send className="w-3.5 h-3.5 mb-0.5 fill-white" />
-            <span className="text-[10px] font-sans font-bold tracking-wider">RSVP</span>
+            <span className="text-[10px] font-sans font-bold tracking-wider">Xác Nhận</span>
           </button>
 
           <button

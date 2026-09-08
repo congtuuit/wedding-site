@@ -26,11 +26,10 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
   const [attending, setAttending] = useState<"yes" | "no">("yes");
   const [selectedEvent, setSelectedEvent] = useState<string>("all");
   const [guestCount, setGuestCount] = useState<number>(1);
-  const [message, setMessage] = useState<string>("");
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [statusMessage, setStatusMessage] = useState<string>("");
+  const [statusMessage, setStatusMessage] = useState<string>("" );
 
   // Initialize guest name
   useEffect(() => {
@@ -60,7 +59,6 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
       attending,
       eventSelected: selectedEvent,
       numberOfGuests: guestCount,
-      message: message.trim(),
       submittedAt: new Date().toISOString(),
     };
 
@@ -221,20 +219,6 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
                 </div>
               </>
             )}
-
-            {/* Message / Wish */}
-            <div className="space-y-2">
-              <label className="block text-xs uppercase tracking-wider font-sans font-semibold text-textMain">
-                Lời Chúc Dành Cho Cô Dâu & Chú Rể
-              </label>
-              <textarea
-                rows={3}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Gửi gắm lời chúc tốt đẹp tới Tú Văn & Hường Nguyễn..."
-                className="w-full px-4 py-3 rounded-xl bg-background border border-borderLight focus:border-accent focus:ring-1 focus:ring-accent outline-none text-sm text-textMain font-sans transition-all resize-none"
-              />
-            </div>
 
             {/* Submit Button */}
             <button

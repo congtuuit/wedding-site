@@ -11,7 +11,7 @@ import React, {
 import { VolumeX, Music } from "lucide-react";
 
 export interface MusicControllerHandle {
-  play: () => void;
+  play: () => Promise<void> | void;
   pause: () => void;
   toggle: () => void;
 }
@@ -29,35 +29,48 @@ export const MusicController = forwardRef<
 >(({ src, autoPlayTrigger = false, standalone = true, visible = true }, ref) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [hasInteracted, setHasInteracted] = useState<boolean>(false);
+  const userPausedRef = useRef<boolean>(false);
+  const hasAttemptedAutoplayRef = useRef<boolean>(false);
 
   // Play audio safely
   const playAudio = useCallback(() => {
     if (!audioRef.current) return;
-    audioRef.current
-      .play()
-      .then(() => {
-        setIsPlaying(true);
-        setHasInteracted(true);
-      })
-      .catch((err) => {
-        console.log("Audio autoplay prevented by browser policy:", err);
-      });
+    userPausedRef.current = false;
+    const playPromise = audioRef.current.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.log("Audio play was prevented:", err);
+          setIsPlaying(false);
+        });
+    }
   }, []);
 
   const pauseAudio = useCallback(() => {
     if (!audioRef.current) return;
+    userPausedRef.current = true;
     audioRef.current.pause();
     setIsPlaying(false);
   }, []);
 
-  const toggleAudio = useCallback(() => {
-    if (isPlaying) {
-      pauseAudio();
-    } else {
-      playAudio();
-    }
-  }, [isPlaying, pauseAudio, playAudio]);
+  const toggleAudio = useCallback(
+    (e?: React.MouseEvent) => {
+      if (e) {
+        e.stopPropagation();
+      }
+      if (!audioRef.current) return;
+
+      if (!audioRef.current.paused && isPlaying) {
+        pauseAudio();
+      } else {
+        playAudio();
+      }
+    },
+    [isPlaying, pauseAudio, playAudio]
+  );
 
   // Expose imperative handle for direct synchronous calls on click events
   useImperativeHandle(
@@ -70,29 +83,61 @@ export const MusicController = forwardRef<
     [playAudio, pauseAudio, toggleAudio]
   );
 
-  // Trigger play when autoPlayTrigger becomes true
+  // Synchronize state with native audio element events
   useEffect(() => {
-    if (autoPlayTrigger && !isPlaying) {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onEnded = () => setIsPlaying(false);
+
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+    audio.addEventListener("ended", onEnded);
+
+    return () => {
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("ended", onEnded);
+    };
+  }, []);
+
+  // Trigger play when autoPlayTrigger becomes true for the first time
+  useEffect(() => {
+    if (
+      autoPlayTrigger &&
+      !hasAttemptedAutoplayRef.current &&
+      !userPausedRef.current
+    ) {
+      hasAttemptedAutoplayRef.current = true;
       playAudio();
     }
-  }, [autoPlayTrigger, isPlaying, playAudio]);
+  }, [autoPlayTrigger, playAudio]);
 
-  // iOS Safari Fallback: Listen for first interaction anywhere on page to unlock audio if blocked
+  // iOS Safari Fallback: Listen for user gesture only if autoplay hasn't started and user hasn't explicitly paused
   useEffect(() => {
+    if (!autoPlayTrigger || isPlaying || userPausedRef.current) return;
+
     const unlockAudioOnGesture = () => {
-      if (autoPlayTrigger && !isPlaying && audioRef.current) {
+      if (!userPausedRef.current && audioRef.current && audioRef.current.paused) {
         audioRef.current
           .play()
           .then(() => {
             setIsPlaying(true);
-            setHasInteracted(true);
           })
           .catch(() => {});
       }
     };
 
-    window.addEventListener("touchstart", unlockAudioOnGesture, { passive: true });
-    window.addEventListener("click", unlockAudioOnGesture, { passive: true });
+    window.addEventListener("touchstart", unlockAudioOnGesture, {
+      passive: true,
+      once: true,
+    });
+    window.addEventListener("click", unlockAudioOnGesture, {
+      passive: true,
+      once: true,
+    });
 
     return () => {
       window.removeEventListener("touchstart", unlockAudioOnGesture);
@@ -100,16 +145,19 @@ export const MusicController = forwardRef<
     };
   }, [autoPlayTrigger, isPlaying]);
 
-  // Handle visibility change (pause when tab hidden, resume when visible)
+  // Handle visibility change (pause when tab hidden, resume only if not paused by user)
   useEffect(() => {
     const handleVisibilityChange = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+
       if (document.hidden) {
-        if (isPlaying && audioRef.current) {
-          audioRef.current.pause();
+        if (!audio.paused) {
+          audio.pause();
         }
       } else {
-        if (isPlaying && audioRef.current) {
-          audioRef.current.play().catch(() => {});
+        if (!userPausedRef.current && autoPlayTrigger) {
+          audio.play().catch(() => {});
         }
       }
     };
@@ -118,7 +166,7 @@ export const MusicController = forwardRef<
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [isPlaying, hasInteracted]);
+  }, [autoPlayTrigger]);
 
   const musicButton = (
     <button
@@ -171,3 +219,4 @@ export const MusicController = forwardRef<
 });
 
 MusicController.displayName = "MusicController";
+

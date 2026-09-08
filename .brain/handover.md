@@ -1,12 +1,21 @@
 # 📋 HANDOVER DOCUMENT — WEDDING SITE TÚ VĂN & HƯỜNG NGUYỄN
 
-**Thời gian lưu:** 2026-08-27 08:03 (AWF 4.0.2)  
+**Thời gian lưu:** 2026-09-08 22:40 (AWF 4.0.2)  
 **Trạng thái dự án:** Sẵn sàng Production (0 Lỗi Build — `npm run build` PASS)
 
 ---
 
 ## 📍 Đang làm & Trạng thái:
-- **Tính năng hoàn thành mới nhất:**
+- **Tính năng & Fix hoàn thành mới nhất:**
+  1. **Ẩn nút "Lưu Vào Lịch" (`EventCard.tsx`):** Loại bỏ nút tải lịch, tối ưu nút "Chỉ Đường (Google Maps)" thành nút hành động duy nhất full-width gọn gàng và dễ thao tác trên mobile.
+  2. **Cập nhật nhãn nút menu (`BottomNavigation.tsx`):** Đổi nhãn `RSVP` thành **`Xác Nhận`** đồng bộ thuần Việt với toàn bộ website.
+  3. **Ẩn ô nhập lời chúc trong Form Xác nhận tham dự (`RSVPSection.tsx`):**
+     - Loại bỏ textarea lời chúc khỏi form RSVP giúp form tinh gọn, nhanh chóng cho khách xác nhận.
+     - Khách mời có thể gửi lời chúc qua phần riêng biệt **Sổ Lưu Bút** (`WishesSection.tsx`).
+  4. **Sửa lỗi nút Bật/Tắt Nhạc nền (`MusicController.tsx`):**
+     - Thêm cờ `userPausedRef` để nhận diện khi người dùng chủ động bấm tắt nhạc.
+     - Triệt tiêu hoàn toàn hiện tượng `useEffect` và sự kiện click/touch trên trang kích hoạt phát lại nhạc sau khi người dùng đã tắt.
+     - Lắng nghe trực tiếp các sự kiện native `play` / `pause` / `ended` trên thẻ `<audio>`.
   1. **Đổi vị trí Tên Cô Dâu & Chú Rể theo Lễ Vu Quy vs Lễ Thành Hôn:**
      - **Lễ Vu Quy (Nhà Gái - 10.10.2026 hoặc ?event=que):**
        - Tên hiển thị ưu tiên: **Cô Dâu & Chú Rể** (*Hường Nguyễn & Tú Văn* / *Hường & Tú* / *HƯỜNG NGUYỄN & TÚ VĂN*).

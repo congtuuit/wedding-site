@@ -4,6 +4,22 @@ Toàn bộ lịch sử các tính năng, nâng cấp giao diện và tối ưu h
 
 ---
 
+## [v1.2.1] - 2026-09-08
+
+### 🗓️ Tối Ưu Thẻ Sự Kiện (EventCard) (Updated)
+- **Ẩn nút "Lưu Vào Lịch":** Loại bỏ nút tải file `.ics` lịch cưới trong thẻ sự kiện ([EventCard.tsx](file:///Users/tuvan/Documents/wedding-site/src/components/wedding/EventCard.tsx)), chuyển nút **"Chỉ Đường (Google Maps)"** thành nút bấm chính full-width trực quan, dễ thao tác.
+
+### 📝 Tinh Gọn Form Xác Nhận Tham Dự & Menu Điều Hướng (Updated)
+- **Đổi nhãn Menu:** Đổi chữ `RSVP` trên thanh Menu điều hướng nổi dưới đáy (`BottomNavigation.tsx`) thành tiếng Việt chuẩn: **`Xác Nhận`**.
+- **Ẩn ô nhập Lời chúc trong Form RSVP:** Giản lược form xác nhận tham dự thành 3 bước nhanh (Họ tên, Khả năng tham dự, Số lượng người), tách biệt hoàn toàn với phần **Sổ Lưu Bút & Gửi Lời Chúc** (`WishesSection`) phía trên để tránh trùng lặp.
+
+### 🎵 Sửa Lỗi Tắt/Bật Nhạc Nền (Fixed)
+- **Khắc phục xung đột Autoplay & User Gesture:** Sửa lỗi nút âm thanh không thể tắt nhạc do `useEffect` tự động kích hoạt lại `play()` khi `isPlaying` chuyển thành `false`.
+- **Cơ chế User Paused Intent (`userPausedRef`):** Ghi nhận trạng thái người dùng chủ động tắt nhạc, ngăn chặn các sự kiện chạm màn hình / cuộn trang hoặc chuyển tab tự kích hoạt phát lại nhạc khi người dùng đã bấm tắt.
+- **Lắng nghe sự kiện Audio chuẩn native:** Đồng bộ hóa trạng thái nút với các sự kiện `play`, `pause`, `ended` của thẻ `<audio>`.
+
+---
+
 ## [v1.2.0] - 2026-08-26
 
 ### 🔄 Điều Phối Lịch Trình Đa Sự Kiện Thông Minh (Added)

@@ -114,7 +114,7 @@ export function WeddingPageClient({
       {/* 3. Floating Top-Right Vertical Media Cluster (Music Controller on Top, Auto-Scroll Below) */}
       <div className="fixed top-4 inset-x-0 z-40 pointer-events-none flex justify-center px-3 sm:px-4">
         <div className="w-full max-w-[480px] flex items-start justify-end">
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2 pointer-events-auto">
             <MusicController
               ref={musicRef}
               src={weddingData.music.src}
