@@ -315,7 +315,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
                 className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-full bg-[#8C1425] hover:bg-[#700F1D] text-white font-sans text-xs font-semibold tracking-wider uppercase transition-all shadow-md active:scale-95 cursor-pointer"
               >
                 <Download className="w-4 h-4" />
-                <span>Lưu / Tải Mã QR Về Máy</span>
+                <span>Tải Mã QR</span>
               </button>
             </div>
           </div>
