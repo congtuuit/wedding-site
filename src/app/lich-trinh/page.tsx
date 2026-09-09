@@ -375,6 +375,45 @@ function LichTrinhPage() {
   const searchParams = useSearchParams();
   const isDebug = searchParams.get("debug") === "1";
 
+  // Dynamic days state synced with Google Sheets
+  const [days, setDays] = useState<ItineraryDay[]>(
+    () => itinerary.days as ItineraryDay[]
+  );
+
+  useEffect(() => {
+    const fetchSheetItinerary = async () => {
+      const url = weddingData.appsheetWebhookUrl;
+      if (!url) return;
+      try {
+        const res = await fetch(`${url}?action=lich_trinh`);
+        const json = await res.json();
+        if (json?.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
+          const byDay: Record<string, ItineraryEvent[]> = {};
+          json.data.forEach((row: Record<string, string>) => {
+            if (!byDay[row.dayId]) byDay[row.dayId] = [];
+            byDay[row.dayId].push({
+              id: row.id,
+              time: row.time,
+              title: row.title,
+              description: row.description,
+              mapUrl: row.mapUrl,
+              category: row.category as ItineraryCategory,
+            });
+          });
+          setDays((prev) =>
+            prev.map((day) => ({
+              ...day,
+              events: byDay[day.id] ?? day.events,
+            }))
+          );
+        }
+      } catch (e) {
+        console.warn("Could not fetch sheet itinerary:", e);
+      }
+    };
+    fetchSheetItinerary();
+  }, []);
+
   // Debug: mock time override (stored as VN local string "YYYY-MM-DDTHH:MM")
   const [mockTime, setMockTime] = useState<string>("");
 
@@ -392,22 +431,22 @@ function LichTrinhPage() {
   );
 
   const statuses = useMemo(
-    () => computeStatuses(itinerary.days as ItineraryDay[], now),
-    [now, itinerary.days]
+    () => computeStatuses(days, now),
+    [now, days]
   );
 
   // Auto-open the day that has the active event (or day-1 by default)
   const defaultOpen = useMemo<Record<string, boolean>>(() => {
     const obj: Record<string, boolean> = {};
     let foundActive = false;
-    for (const day of itinerary.days) {
+    for (const day of days) {
       const hasActive = day.events.some((ev) => statuses.get(ev.id) === "active");
       if (hasActive) { obj[day.id] = true; foundActive = true; }
       else { obj[day.id] = false; }
     }
     if (!foundActive) obj["day-1"] = true;
     return obj;
-  }, [statuses, itinerary.days]);
+  }, [statuses, days]);
 
   const [openDays, setOpenDays] = useState<Record<string, boolean>>(defaultOpen);
 
@@ -493,11 +532,11 @@ function LichTrinhPage() {
             {/* Stats row */}
             <div className="mt-6 grid grid-cols-3 gap-3">
               <div className="stat-card rounded-2xl p-3 text-center shadow-sm">
-                <div className="text-2xl font-bold text-rose-600">{itinerary.days.length}</div>
+                <div className="text-2xl font-bold text-rose-600">{days.length}</div>
                 <div className="text-xs text-gray-500 mt-0.5">Ngày</div>
               </div>
               <div className="stat-card rounded-2xl p-3 text-center shadow-sm">
-                <div className="text-2xl font-bold text-rose-600">{totalEvents}</div>
+                <div className="text-2xl font-bold text-rose-600">{days.reduce((sum, d) => sum + d.events.length, 0)}</div>
                 <div className="text-xs text-gray-500 mt-0.5">Hoạt động</div>
               </div>
               <div className="stat-card rounded-2xl p-3 text-center shadow-sm">
@@ -535,7 +574,7 @@ function LichTrinhPage() {
               </div>
               {/* Quick-jump buttons per event */}
               <div className="flex flex-wrap gap-1.5">
-                {(itinerary.days as ItineraryDay[]).flatMap((day) =>
+                {days.flatMap((day) =>
                   day.events.map((ev) => {
                     const parsed = parseDayDate(day.dayName);
                     if (!parsed) return null;
@@ -585,7 +624,7 @@ function LichTrinhPage() {
 
         {/* Itinerary Days */}
         <div className="max-w-md mx-auto px-4 py-6 space-y-4">
-          {itinerary.days.map((day) => (
+          {days.map((day) => (
             <DaySection
               key={day.id}
               day={day as ItineraryDay}
