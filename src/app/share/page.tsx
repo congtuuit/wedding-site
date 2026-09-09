@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import {
   Link as LinkIcon,
@@ -19,6 +19,19 @@ import {
   Heart,
   Search,
   RefreshCw,
+  MapPin,
+  Clock,
+  Car,
+  UtensilsCrossed,
+  BedDouble,
+  Church,
+  PartyPopper,
+  Save,
+  RotateCcw,
+  Navigation,
+  CalendarDays,
+  Pencil,
+  X,
 } from "lucide-react";
 import { encodeGuestName } from "@/lib/utils";
 import { getActiveWeddingStage } from "@/lib/wedding-timeline";
@@ -34,9 +47,50 @@ interface GeneratedItem {
 const STORAGE_KEY = "wedding_custom_links_history";
 const WEBHOOK_URL = weddingDataJson.appsheetWebhookUrl || "";
 
+// ─── Itinerary Types ───────────────────────────────────────────────────────
+type ItinCategory = "travel" | "meal" | "rest" | "ceremony" | "party";
+
+interface ItinEvent {
+  id: string;
+  time: string;
+  title: string;
+  description: string;
+  mapUrl: string;
+  category: ItinCategory;
+}
+
+interface ItinDay {
+  id: string;
+  dayLabel: string;
+  dayName: string;
+  theme: string;
+  events: ItinEvent[];
+}
+
+const ITIN_CAT_CONFIG: Record<ItinCategory, { icon: React.ReactNode; label: string; color: string; bg: string }> = {
+  travel:   { icon: <Car className="w-3.5 h-3.5" />,           label: "Di chuyển",  color: "text-sky-700",     bg: "bg-sky-50" },
+  meal:     { icon: <UtensilsCrossed className="w-3.5 h-3.5" />, label: "Ăn uống",   color: "text-amber-700",   bg: "bg-amber-50" },
+  rest:     { icon: <BedDouble className="w-3.5 h-3.5" />,      label: "Nghỉ ngơi", color: "text-violet-700",  bg: "bg-violet-50" },
+  ceremony: { icon: <Church className="w-3.5 h-3.5" />,         label: "Nghi lễ",   color: "text-rose-700",    bg: "bg-rose-50" },
+  party:    { icon: <PartyPopper className="w-3.5 h-3.5" />,    label: "Tiệc tùng", color: "text-fuchsia-700", bg: "bg-fuchsia-50" },
+};
+// ───────────────────────────────────────────────────────────────────────────
+
 export default function SharePage() {
-  const [activeTab, setActiveTab] = useState<"single" | "bulk" | "history">("single");
+  const [activeTab, setActiveTab] = useState<"single" | "bulk" | "history" | "itinerary">("single");
   const [baseUrl, setBaseUrl] = useState<string>("");
+
+  // Itinerary state
+  const [itinDays, setItinDays] = useState<ItinDay[]>(() => {
+    const raw = weddingDataJson.itinerary?.days as ItinDay[] | undefined;
+    return raw ? JSON.parse(JSON.stringify(raw)) : [];
+  });
+  const [itinDirty, setItinDirty] = useState(false);
+  const [itinSaving, setItinSaving] = useState(false);
+  const [itinSaved, setItinSaved] = useState(false);
+  const [itinLoading, setItinLoading] = useState(false);
+  const [editingEventId, setEditingEventId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState<Partial<ItinEvent>>({});
 
   // Event targeting state
   const [eventTarget, setEventTarget] = useState<"auto" | "que" | "sg">("auto");
@@ -397,6 +451,18 @@ export default function SharePage() {
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>Lịch Sử ({history.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("itinerary")}
+            className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold tracking-wide transition-all flex items-center justify-center gap-1.5 relative ${
+              activeTab === "itinerary"
+                ? "bg-[#8C1425] text-white shadow-sm"
+                : "text-[#6B4E53] hover:text-[#280E12] hover:bg-[#FAF7F2]"
+            }`}
+          >
+            <CalendarDays className="w-3.5 h-3.5" />
+            <span>Lịch Trình</span>
           </button>
         </div>
 
@@ -1009,6 +1075,292 @@ export default function SharePage() {
                 </table>
               </div>
             )}
+          </div>
+        )}
+
+        {/* TAB 4: ITINERARY EDITOR */}
+        {activeTab === "itinerary" && (
+          <div className="space-y-6">
+            {/* Header card */}
+            <div className="p-5 sm:p-6 rounded-3xl bg-white border border-[#E8DCDD] shadow-sm">
+              <div className="flex items-start justify-between gap-3 flex-wrap">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <CalendarDays className="w-5 h-5 text-[#8C1425]" />
+                    <h2 className="font-semibold text-[#280E12] text-base">Lịch Trình Di Chuyển</h2>
+                  </div>
+                  <p className="text-xs text-[#6B4E53]">
+                    Chỉnh sửa lịch trình và đồng bộ lên Google Sheets (tab{" "}
+                    <code className="bg-[#FAF7F2] px-1 rounded font-mono text-[10px]">LICH_TRINH</code>).
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Link
+                    href="/lich-trinh"
+                    target="_blank"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-[#E8DCDD] text-[#6B4E53] hover:text-[#280E12] transition-colors"
+                  >
+                    <Navigation className="w-3.5 h-3.5" />
+                    Xem trang
+                  </Link>
+                  <button
+                    onClick={async () => {
+                      if (!WEBHOOK_URL || !WEBHOOK_URL.startsWith("http")) return;
+                      setItinLoading(true);
+                      try {
+                        const res = await fetch(`${WEBHOOK_URL}?action=lich_trinh`);
+                        const json = await res.json();
+                        if (json?.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
+                          const byDay: Record<string, ItinEvent[]> = {};
+                          json.data.forEach((row: Record<string, string>) => {
+                            if (!byDay[row.dayId]) byDay[row.dayId] = [];
+                            byDay[row.dayId].push({
+                              id: row.id,
+                              time: row.time,
+                              title: row.title,
+                              description: row.description,
+                              mapUrl: row.mapUrl,
+                              category: row.category as ItinCategory,
+                            });
+                          });
+                          setItinDays(prev =>
+                            prev.map(day => ({
+                              ...day,
+                              events: byDay[day.id] ?? day.events,
+                            }))
+                          );
+                          setItinDirty(false);
+                        }
+                      } catch (err) {
+                        console.warn("Load from Sheets error:", err);
+                      } finally {
+                        setItinLoading(false);
+                      }
+                    }}
+                    disabled={itinLoading}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-[#E8DCDD] text-[#6B4E53] hover:text-[#280E12] transition-colors disabled:opacity-50"
+                  >
+                    {itinLoading ? (
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <RotateCcw className="w-3.5 h-3.5" />
+                    )}
+                    Load từ Sheets
+                  </button>
+                  <button
+                    onClick={async () => {
+                      if (!WEBHOOK_URL || !WEBHOOK_URL.startsWith("http")) return;
+                      setItinSaving(true);
+                      try {
+                        const allEvents = itinDays.flatMap(day =>
+                          day.events.map(ev => ({
+                            ...ev,
+                            dayId: day.id,
+                            dayLabel: day.dayLabel,
+                            dayName: day.dayName,
+                          }))
+                        );
+                        await fetch(WEBHOOK_URL, {
+                          method: "POST",
+                          headers: { "Content-Type": "text/plain;charset=utf-8" },
+                          body: JSON.stringify({ type: "LICH_TRINH", events: allEvents }),
+                        });
+                        setItinDirty(false);
+                        setItinSaved(true);
+                        setTimeout(() => setItinSaved(false), 3000);
+                      } catch (err) {
+                        console.warn("Save to Sheets error:", err);
+                      } finally {
+                        setItinSaving(false);
+                      }
+                    }}
+                    disabled={itinSaving || !itinDirty}
+                    className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border transition-colors disabled:opacity-50 ${
+                      itinSaved
+                        ? "bg-emerald-100 border-emerald-300 text-emerald-700"
+                        : "bg-[#8C1425] border-[#8C1425] text-white hover:bg-[#6d0f1c]"
+                    }`}
+                  >
+                    {itinSaving ? (
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    ) : itinSaved ? (
+                      <Check className="w-3.5 h-3.5" />
+                    ) : (
+                      <Save className="w-3.5 h-3.5" />
+                    )}
+                    {itinSaved ? "Đã lưu!" : "Lưu lên Sheets"}
+                  </button>
+                </div>
+              </div>
+
+              {itinDirty && (
+                <div className="mt-3 flex items-center gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                  Có thay đổi chưa được lưu lên Google Sheets.
+                </div>
+              )}
+            </div>
+
+            {/* Days */}
+            {itinDays.map((day, dayIdx) => (
+              <div key={day.id} className="rounded-3xl bg-white border border-[#E8DCDD] shadow-sm overflow-hidden">
+                {/* Day header */}
+                <div className="px-5 py-3 bg-gradient-to-r from-rose-50 to-fuchsia-50 border-b border-[#E8DCDD] flex items-center gap-3">
+                  <CalendarDays className="w-4 h-4 text-[#8C1425]" />
+                  <div>
+                    <span className="text-xs font-bold text-[#8C1425] uppercase tracking-wider">{day.dayLabel}</span>
+                    <span className="text-xs text-[#6B4E53] ml-2">{day.dayName}</span>
+                    <p className="text-sm font-semibold text-[#280E12]">{day.theme}</p>
+                  </div>
+                </div>
+
+                {/* Events */}
+                <div className="divide-y divide-[#F0E8E9]">
+                  {day.events.map((event, evIdx) => {
+                    const cat = ITIN_CAT_CONFIG[event.category] || ITIN_CAT_CONFIG.travel;
+                    const isEditing = editingEventId === event.id;
+
+                    return (
+                      <div key={event.id} className="px-4 py-3">
+                        {isEditing ? (
+                          /* Edit form */
+                          <div className="space-y-3">
+                            <div className="grid grid-cols-2 gap-2">
+                              <div>
+                                <label className="block text-[10px] uppercase font-semibold text-[#6B4E53] mb-1">Giờ</label>
+                                <input
+                                  type="text"
+                                  value={editDraft.time ?? ""}
+                                  onChange={e => setEditDraft(d => ({ ...d, time: e.target.value }))}
+                                  className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#E8DCDD] text-sm focus:border-[#8C1425] outline-none"
+                                  placeholder="HH:MM"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-[10px] uppercase font-semibold text-[#6B4E53] mb-1">Loại</label>
+                                <select
+                                  value={editDraft.category ?? "travel"}
+                                  onChange={e => setEditDraft(d => ({ ...d, category: e.target.value as ItinCategory }))}
+                                  className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#E8DCDD] text-sm focus:border-[#8C1425] outline-none"
+                                >
+                                  {(Object.entries(ITIN_CAT_CONFIG) as [ItinCategory, { label: string }][]).map(([k, v]) => (
+                                    <option key={k} value={k}>{v.label}</option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div>
+                              <label className="block text-[10px] uppercase font-semibold text-[#6B4E53] mb-1">Tiêu đề</label>
+                              <input
+                                type="text"
+                                value={editDraft.title ?? ""}
+                                onChange={e => setEditDraft(d => ({ ...d, title: e.target.value }))}
+                                className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#E8DCDD] text-sm focus:border-[#8C1425] outline-none"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] uppercase font-semibold text-[#6B4E53] mb-1">Mô tả</label>
+                              <textarea
+                                rows={2}
+                                value={editDraft.description ?? ""}
+                                onChange={e => setEditDraft(d => ({ ...d, description: e.target.value }))}
+                                className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#E8DCDD] text-sm focus:border-[#8C1425] outline-none resize-none"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] uppercase font-semibold text-[#6B4E53] mb-1">Link bản đồ (tuỳ chọn)</label>
+                              <input
+                                type="url"
+                                value={editDraft.mapUrl ?? ""}
+                                onChange={e => setEditDraft(d => ({ ...d, mapUrl: e.target.value }))}
+                                className="w-full px-3 py-2 rounded-xl bg-[#FAF7F2] border border-[#E8DCDD] text-sm focus:border-[#8C1425] outline-none"
+                                placeholder="https://maps.app.goo.gl/..."
+                              />
+                            </div>
+                            <div className="flex items-center gap-2 pt-1">
+                              <button
+                                onClick={() => {
+                                  setItinDays(prev =>
+                                    prev.map((d, di) =>
+                                      di !== dayIdx ? d : {
+                                        ...d,
+                                        events: d.events.map((ev, ei) =>
+                                          ei !== evIdx ? ev : { ...ev, ...editDraft } as ItinEvent
+                                        ),
+                                      }
+                                    )
+                                  );
+                                  setItinDirty(true);
+                                  setEditingEventId(null);
+                                }}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#8C1425] text-white text-xs font-semibold hover:bg-[#6d0f1c] transition-colors"
+                              >
+                                <Check className="w-3.5 h-3.5" /> Lưu
+                              </button>
+                              <button
+                                onClick={() => setEditingEventId(null)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-[#E8DCDD] text-[#6B4E53] text-xs font-semibold hover:text-[#280E12] transition-colors"
+                              >
+                                <X className="w-3.5 h-3.5" /> Huỷ
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          /* Display row */
+                          <div className="flex items-start gap-3 group">
+                            <div className={`flex-shrink-0 mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center ${cat.bg} ${cat.color}`}>
+                              {cat.icon}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-1.5">
+                                <Clock className="w-3 h-3 text-rose-400" />
+                                <span className="text-xs font-bold text-rose-600">{event.time}</span>
+                                <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${cat.bg} ${cat.color}`}>
+                                  {cat.label}
+                                </span>
+                              </div>
+                              <p className="text-sm font-medium text-[#280E12] mt-0.5 leading-snug">{event.title}</p>
+                              {event.description && (
+                                <p className="text-xs text-[#6B4E53] mt-0.5 line-clamp-1">{event.description}</p>
+                              )}
+                              {event.mapUrl && (
+                                <a
+                                  href={event.mapUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-[10px] text-sky-600 hover:text-sky-800 mt-1"
+                                >
+                                  <MapPin className="w-2.5 h-2.5" /> Xem bản đồ
+                                </a>
+                              )}
+                            </div>
+                            <button
+                              onClick={() => {
+                                setEditingEventId(event.id);
+                                setEditDraft({ ...event });
+                              }}
+                              className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg text-[#6B4E53] hover:text-[#280E12] hover:bg-[#FAF7F2] border border-transparent hover:border-[#E8DCDD]"
+                              title="Chỉnh sửa"
+                            >
+                              <Pencil className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {/* Info footer */}
+            <div className="rounded-2xl bg-blue-50 border border-blue-200 p-4">
+              <p className="text-xs text-blue-700 leading-relaxed">
+                <strong>💡 Hướng dẫn:</strong> Hover vào từng hoạt động để thấy nút chỉnh sửa ✏️. Sau khi chỉnh sửa xong, nhấn{" "}
+                <strong>"Lưu lên Sheets"</strong> để đồng bộ toàn bộ lịch trình lên Google Sheets (tab{" "}
+                <code className="bg-white px-1 rounded">LICH_TRINH</code>).
+              </p>
+            </div>
           </div>
         )}
       </main>

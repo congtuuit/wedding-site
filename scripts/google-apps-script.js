@@ -29,6 +29,8 @@ function doPost(e) {
       saveGuestLink(doc, data);
     } else if (data.type === "BULK_GUEST_LINKS") {
       saveBulkGuestLinks(doc, data);
+    } else if (data.type === "LICH_TRINH") {
+      saveLichTrinh(doc, data);
     } else {
       saveRSVP(doc, data);
     }
@@ -57,7 +59,12 @@ function doGet(e) {
       return getGuestLinks(doc);
     }
 
-    // 2. Mặc định: Lấy danh sách lời chúc (Sổ lưu bút)
+    // 2. Lấy lịch trình di chuyển (LICH_TRINH)
+    if (action === "lich_trinh") {
+      return getLichTrinh(doc);
+    }
+
+    // 3. Mặc định: Lấy danh sách lời chúc (Sổ lưu bút)
     return getWishesList(doc);
 
   } catch (error) {
@@ -272,4 +279,117 @@ function getOrCreateGuestSheet(doc) {
   }
 
   return sheet;
+}
+
+/**
+ * 5. Lưu / ghi đè toàn bộ lịch trình (LICH_TRINH)
+ * Cấu trúc sheet: ID | Day ID | Day Label | Day Name | Time | Title | Description | Map URL | Category | Cập nhật lúc
+ */
+function saveLichTrinh(doc, data) {
+  var sheetName = "LICH_TRINH";
+  var sheet = doc.getSheetByName(sheetName);
+
+  // Tạo sheet mới nếu chưa có
+  if (!sheet) {
+    sheet = doc.insertSheet(sheetName);
+  } else {
+    // Xoá toàn bộ dữ liệu cũ (trừ header)
+    if (sheet.getLastRow() > 1) {
+      sheet.deleteRows(2, sheet.getLastRow() - 1);
+    }
+  }
+
+  // Đặt header nếu chưa có
+  var headers = [
+    "ID",
+    "Day ID",
+    "Ngày (Label)",
+    "Ngày (Tên)",
+    "Thời Gian",
+    "Tiêu Đề",
+    "Mô Tả",
+    "Map URL",
+    "Loại (Category)",
+    "Cập Nhật Lúc"
+  ];
+
+  // Ghi header nếu sheet mới hoặc trống
+  var firstRow = sheet.getRange(1, 1, 1, headers.length).getValues()[0];
+  if (!firstRow[0] || firstRow[0].toString().trim() === "") {
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+    sheet.getRange(1, 1, 1, headers.length)
+      .setFontWeight("bold")
+      .setBackground("#FCECEE")
+      .setFontColor("#8C1425");
+    sheet.setFrozenRows(1);
+    sheet.setColumnWidth(1, 80);
+    sheet.setColumnWidth(2, 80);
+    sheet.setColumnWidth(3, 100);
+    sheet.setColumnWidth(4, 160);
+    sheet.setColumnWidth(5, 80);
+    sheet.setColumnWidth(6, 280);
+    sheet.setColumnWidth(7, 280);
+    sheet.setColumnWidth(8, 260);
+    sheet.setColumnWidth(9, 100);
+    sheet.setColumnWidth(10, 160);
+  }
+
+  // Ghi các dòng dữ liệu
+  var events = data.events || [];
+  if (events.length === 0) return;
+
+  var now = Utilities.formatDate(new Date(), "GMT+7", "dd/MM/yyyy HH:mm:ss");
+  var rows = events.map(function(ev) {
+    return [
+      ev.id || "",
+      ev.dayId || "",
+      ev.dayLabel || "",
+      ev.dayName || "",
+      ev.time || "",
+      ev.title || "",
+      ev.description || "",
+      ev.mapUrl || "",
+      ev.category || "",
+      now
+    ];
+  });
+
+  sheet.getRange(2, 1, rows.length, headers.length).setValues(rows);
+}
+
+/**
+ * Đọc lịch trình từ sheet LICH_TRINH
+ */
+function getLichTrinh(doc) {
+  var sheet = doc.getSheetByName("LICH_TRINH");
+  if (!sheet || sheet.getLastRow() < 2) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "success", data: [] }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  var values = sheet.getDataRange().getValues();
+  var events = [];
+
+  for (var i = 1; i < values.length; i++) {
+    var row = values[i];
+    if (row[0]) { // Có ID
+      events.push({
+        id:          row[0] ? row[0].toString().trim() : "",
+        dayId:       row[1] ? row[1].toString().trim() : "",
+        dayLabel:    row[2] ? row[2].toString().trim() : "",
+        dayName:     row[3] ? row[3].toString().trim() : "",
+        time:        row[4] ? row[4].toString().trim() : "",
+        title:       row[5] ? row[5].toString().trim() : "",
+        description: row[6] ? row[6].toString().trim() : "",
+        mapUrl:      row[7] ? row[7].toString().trim() : "",
+        category:    row[8] ? row[8].toString().trim() : "travel",
+        updatedAt:   row[9] ? row[9].toString() : ""
+      });
+    }
+  }
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "success", data: events }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
