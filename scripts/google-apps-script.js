@@ -338,6 +338,9 @@ function saveLichTrinh(doc, data) {
   var events = data.events || [];
   if (events.length === 0) return;
 
+  // Set time column (column 5) to Text format so Google Sheet doesn't auto-convert to Date
+  sheet.getRange(2, 5, Math.max(events.length, 1), 1).setNumberFormat("@");
+
   var now = Utilities.formatDate(new Date(), "GMT+7", "dd/MM/yyyy HH:mm:ss");
   var rows = events.map(function(ev) {
     return [
@@ -345,7 +348,7 @@ function saveLichTrinh(doc, data) {
       ev.dayId || "",
       ev.dayLabel || "",
       ev.dayName || "",
-      ev.time || "",
+      "'" + (ev.time || ""), // Prefix single quote to force text
       ev.title || "",
       ev.description || "",
       ev.mapUrl || "",
@@ -368,18 +371,23 @@ function getLichTrinh(doc) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 
-  var values = sheet.getDataRange().getValues();
+  // Get display values instead of raw Date objects for clean HH:mm formatting
+  var values = sheet.getDataRange().getDisplayValues();
   var events = [];
 
   for (var i = 1; i < values.length; i++) {
     var row = values[i];
     if (row[0]) { // Có ID
+      var timeStr = row[4] ? row[4].toString().trim() : "";
+      // If timeStr starts with single quote, strip it
+      if (timeStr.startsWith("'")) timeStr = timeStr.substring(1);
+
       events.push({
         id:          row[0] ? row[0].toString().trim() : "",
         dayId:       row[1] ? row[1].toString().trim() : "",
         dayLabel:    row[2] ? row[2].toString().trim() : "",
         dayName:     row[3] ? row[3].toString().trim() : "",
-        time:        row[4] ? row[4].toString().trim() : "",
+        time:        timeStr,
         title:       row[5] ? row[5].toString().trim() : "",
         description: row[6] ? row[6].toString().trim() : "",
         mapUrl:      row[7] ? row[7].toString().trim() : "",
