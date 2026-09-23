@@ -14,20 +14,7 @@ export interface WishData {
   createdAt: string;
 }
 
-const DEFAULT_WISHES: WishData[] = [
-  {
-    id: "wish-1",
-    senderName: "Gia đình Bác Thành",
-    content: "Chúc hai cháu Tú & Hường trăm năm hạnh phúc, cùng nhau xây dựng tổ ấm ngập tràn niềm vui và bình an!",
-    createdAt: "2026-08-20T10:00:00.000Z",
-  },
-  {
-    id: "wish-2",
-    senderName: "Hội bạn thân Đại Học",
-    content: "Chúc mừng tình yêu đơm hoa kết trái! Mãi mãi mặn nồng và ngọt ngào như ngày đầu nhé!",
-    createdAt: "2026-08-21T14:30:00.000Z",
-  }
-];
+const DEFAULT_WISHES: WishData[] = [];
 
 const STORAGE_KEY_RSVP = "wedding_user_rsvp";
 const STORAGE_KEY_WISHES = "wedding_user_wishes";
@@ -35,7 +22,10 @@ const STORAGE_KEY_WISHES = "wedding_user_wishes";
 /**
  * Submit RSVP to Webhook / Google AppSheet and store in localStorage
  */
-export async function submitRSVP(data: RSVPData, webhookUrl?: string): Promise<{ success: boolean; message: string }> {
+export async function submitRSVP(
+  data: RSVPData,
+  webhookUrl?: string,
+): Promise<{ success: boolean; message: string }> {
   try {
     // Save to local storage for immediate feedback
     if (typeof window !== "undefined") {
@@ -104,7 +94,9 @@ export function getWishes(): WishData[] {
 /**
  * Fetch live wishes from Google Sheet API (falls back to local + defaults)
  */
-export async function fetchLiveWishes(webhookUrl?: string): Promise<WishData[]> {
+export async function fetchLiveWishes(
+  webhookUrl?: string,
+): Promise<WishData[]> {
   const localWishes = getWishes();
   if (!webhookUrl || !webhookUrl.startsWith("http")) {
     return localWishes;
@@ -113,9 +105,16 @@ export async function fetchLiveWishes(webhookUrl?: string): Promise<WishData[]> 
   try {
     const res = await fetch(webhookUrl, { method: "GET" });
     const json = await res.json();
-    if (json && json.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
+    if (
+      json &&
+      json.status === "success" &&
+      Array.isArray(json.data) &&
+      json.data.length > 0
+    ) {
       const sheetWishes: WishData[] = json.data;
-      return sheetWishes.length < 3 ? [...sheetWishes, ...DEFAULT_WISHES] : sheetWishes;
+      return sheetWishes.length < 3
+        ? [...sheetWishes, ...DEFAULT_WISHES]
+        : sheetWishes;
     }
   } catch (err) {
     console.warn("Could not fetch live wishes from Google Sheet:", err);
@@ -129,7 +128,7 @@ export async function fetchLiveWishes(webhookUrl?: string): Promise<WishData[]> 
  */
 export async function addWish(
   wish: { senderName: string; content: string },
-  webhookUrl?: string
+  webhookUrl?: string,
 ): Promise<WishData> {
   const newWish: WishData = {
     id: `wish-${Date.now()}`,
@@ -159,8 +158,8 @@ export async function addWish(
           type: "WISH",
           ...newWish,
         }),
-      }).catch(() => { });
-    } catch { }
+      }).catch(() => {});
+    } catch {}
   }
 
   return newWish;
