@@ -5,18 +5,21 @@ import { Mail, Calendar, Image as ImageIcon, Send, Gift } from "lucide-react";
 
 interface BottomNavigationProps {
   onNavigate?: () => void; // Gọi trước khi scroll (dừng auto-scroll)
+  visible?: boolean;
 }
 
-export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate }) => {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate, visible }) => {
+  const [internalVisible, setInternalVisible] = useState<boolean>(false);
 
   useEffect(() => {
+    if (visible !== undefined) return;
+
     let ticking = false;
 
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsVisible(window.scrollY > 300);
+          setInternalVisible(window.scrollY > 300);
           ticking = false;
         });
         ticking = true;
@@ -25,7 +28,9 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [visible]);
+
+  const isVisible = visible !== undefined ? visible : internalVisible;
 
   const scrollToSection = (id: string) => {
     // Dừng auto-scroll TRƯỚC để tránh xung đột với scrollIntoView

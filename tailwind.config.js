@@ -21,11 +21,11 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-sans)", "var(--font-heading)", "Be Vietnam Pro", "Plus Jakarta Sans", "sans-serif"],
         heading: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "Be Vietnam Pro", "sans-serif"],
-        couple: ["var(--font-couple)", "var(--font-cursive)", "Alex Brush", "Great Vibes", "cursive"],
+        couple: ["var(--font-couple)", "Alex Brush", "cursive"],
         serif: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "Be Vietnam Pro", "sans-serif"],
         playfair: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "sans-serif"],
         cormorant: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "sans-serif"],
-        cursive: ["var(--font-cursive)", "var(--font-couple)", "Great Vibes", "Alex Brush", "cursive"],
+        cursive: ["var(--font-couple)", "Alex Brush", "cursive"],
       },
       animation: {
         "fade-in": "fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",

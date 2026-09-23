@@ -1,11 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { GalleryPhoto } from "@/types/wedding";
-import { Lightbox } from "./Lightbox";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { Eye, ImageIcon, ChevronDown, ChevronUp } from "lucide-react";
+
+const Lightbox = dynamic(
+  () => import("./Lightbox").then((mod) => mod.Lightbox),
+  { ssr: false }
+);
 
 interface GalleryProps {
   photos: GalleryPhoto[];
@@ -115,14 +120,16 @@ export const Gallery: React.FC<GalleryProps> = ({ photos }) => {
           <span>Chạm vào ảnh bất kỳ để phóng to & vuốt xem toàn bộ album</span>
         </p>
 
-        {/* Lightbox Modal */}
-        <Lightbox
-          photos={photos}
-          currentIndex={lightboxIndex}
-          isOpen={isLightboxOpen}
-          onClose={() => setIsLightboxOpen(false)}
-          onNavigate={setLightboxIndex}
-        />
+        {/* Lightbox Modal (Dynamic Loaded on Demand) */}
+        {isLightboxOpen && (
+          <Lightbox
+            photos={photos}
+            currentIndex={lightboxIndex}
+            isOpen={isLightboxOpen}
+            onClose={() => setIsLightboxOpen(false)}
+            onNavigate={setLightboxIndex}
+          />
+        )}
       </div>
     </section>
   );

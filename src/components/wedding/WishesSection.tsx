@@ -47,6 +47,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
   const resumeTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastTimestampRef = useRef<number | null>(null);
   const virtualScrollXRef = useRef<number>(0);
+  const oneThirdWidthRef = useRef<number>(0);
 
   // IntersectionObserver: Pause when completely out of viewport
   useEffect(() => {
@@ -120,6 +121,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
     isScrollingRef.current = true;
     lastTimestampRef.current = null;
     virtualScrollXRef.current = container.scrollLeft;
+    oneThirdWidthRef.current = container.scrollWidth / 3;
 
     const speed = 40; // 40px/second smooth cinema reading drift
 
@@ -145,8 +147,8 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
         virtualScrollXRef.current = container.scrollLeft;
       }
 
-      // Seamless wrap-around at 1/3 point
-      const oneThirdWidth = container.scrollWidth / 3;
+      // Seamless wrap-around at 1/3 point using cached width (eliminates forced synchronous layout)
+      const oneThirdWidth = oneThirdWidthRef.current;
       if (oneThirdWidth > 0 && virtualScrollXRef.current >= oneThirdWidth) {
         virtualScrollXRef.current -= oneThirdWidth;
       }

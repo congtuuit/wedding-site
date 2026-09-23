@@ -51,7 +51,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           alt={`${firstPersonName} & ${secondPersonName}`}
           fill
           priority
-          sizes="100vw"
+          sizes="(max-width: 480px) 100vw, 480px"
           className="object-cover object-center transform scale-105 animate-fade-in"
         />
         {/* Editorial Gradients & Soft Vignette */}

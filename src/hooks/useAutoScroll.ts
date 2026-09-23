@@ -18,13 +18,13 @@ export interface AutoScrollReturn {
 }
 
 /**
- * Enhanced Cinema Auto-Scroll Hook for Mobile (iPhone iOS Safari & Android) and Desktop:
+ * Ultra-Smooth Cinema Auto-Scroll Hook for Mobile (iOS Safari & Android) and Desktop:
  * - Sub-pixel virtual position accumulator prevents WebKit integer truncation stutter on iPhone ProMotion (120Hz)
+ * - Zero Layout-Thrashing in requestAnimationFrame loop (cached layout metrics, event-driven focus & modal state)
  * - Seamless gesture detection with iOS momentum & inertial scrolling sync
  * - Automatically halts when typing into inputs / textareas (virtual keyboard on iPhone)
- * - Pauses when modal / photo lightbox is active
+ * - Pauses when modal / photo lightbox is active (monitored via MutationObserver instead of polling DOM queries)
  * - Handles iPhone tab switching / screen locking via Visibility API
- * - Provides pause/resume state and toggle controls for custom UI
  */
 export function useAutoScroll({
   enabled,
@@ -39,36 +39,36 @@ export function useAutoScroll({
   const isPausedByUserRef = useRef<boolean>(false);
   const isInitializedRef = useRef<boolean>(false);
   const isUserTouchingRef = useRef<boolean>(false);
+  const isInputFocusedRef = useRef<boolean>(false);
+  const isModalOpenRef = useRef<boolean>(false);
 
   const rafIdRef = useRef<number | null>(null);
   const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastTimestampRef = useRef<number | null>(null);
   const virtualScrollYRef = useRef<number>(0);
   const isProgrammaticScrollRef = useRef<boolean>(false);
+  const cachedScrollHeightRef = useRef<number>(0);
 
-  const isAtBottom = useCallback((): boolean => {
-    if (typeof window === "undefined" || typeof document === "undefined") return false;
-    const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-    const currentScroll = window.scrollY + window.innerHeight;
-    return currentScroll >= scrollHeight - 25;
+  const updateCachedScrollHeight = useCallback(() => {
+    if (typeof document === "undefined") return;
+    cachedScrollHeightRef.current =
+      document.documentElement.scrollHeight || document.body.scrollHeight || 0;
   }, []);
 
-  const isLightboxOrModalOpen = useCallback((): boolean => {
+  const checkModalState = useCallback((): boolean => {
     if (typeof document === "undefined") return false;
     return (
+      document.body.classList.contains("overflow-hidden") ||
       !!document.querySelector(".yarl__fullsize") ||
       !!document.querySelector('[role="dialog"]') ||
-      !!document.querySelector(".fixed.inset-0.z-50") ||
-      document.body.classList.contains("overflow-hidden")
+      !!document.querySelector(".fixed.inset-0.z-50")
     );
   }, []);
 
-  const isInputOrInteractiveFocused = useCallback((): boolean => {
-    if (typeof document === "undefined") return false;
-    const active = document.activeElement;
-    if (!active) return false;
-    const tag = active.tagName.toUpperCase();
-    return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || active.hasAttribute("contenteditable");
+  const isAtBottom = useCallback((): boolean => {
+    if (typeof window === "undefined") return false;
+    const currentScroll = window.scrollY + window.innerHeight;
+    return currentScroll >= cachedScrollHeightRef.current - 25;
   }, []);
 
   const stopScroll = useCallback(() => {
@@ -82,13 +82,16 @@ export function useAutoScroll({
   }, []);
 
   const startScroll = useCallback(() => {
+    updateCachedScrollHeight();
+    isModalOpenRef.current = checkModalState();
+
     if (
       isScrollingRef.current ||
       isPausedByUserRef.current ||
       isUserTouchingRef.current ||
-      isAtBottom() ||
-      isLightboxOrModalOpen() ||
-      isInputOrInteractiveFocused()
+      isModalOpenRef.current ||
+      isInputFocusedRef.current ||
+      isAtBottom()
     ) {
       return;
     }
@@ -101,12 +104,13 @@ export function useAutoScroll({
     const step = (timestamp: number) => {
       if (!isScrollingRef.current) return;
 
+      // Pure O(1) checks without any DOM queries or forced layout reflows in RAF loop
       if (
         isPausedByUserRef.current ||
         isUserTouchingRef.current ||
-        isAtBottom() ||
-        isLightboxOrModalOpen() ||
-        isInputOrInteractiveFocused()
+        isModalOpenRef.current ||
+        isInputFocusedRef.current ||
+        isAtBottom()
       ) {
         stopScroll();
         return;
@@ -145,7 +149,7 @@ export function useAutoScroll({
     };
 
     rafIdRef.current = requestAnimationFrame(step);
-  }, [isAtBottom, isLightboxOrModalOpen, isInputOrInteractiveFocused, speed, stopScroll]);
+  }, [checkModalState, isAtBottom, speed, stopScroll, updateCachedScrollHeight]);
 
   const scheduleResume = useCallback(() => {
     if (idleTimerRef.current) {
@@ -157,14 +161,14 @@ export function useAutoScroll({
       if (
         !isPausedByUserRef.current &&
         !isUserTouchingRef.current &&
-        !isAtBottom() &&
-        !isLightboxOrModalOpen() &&
-        !isInputOrInteractiveFocused()
+        !isModalOpenRef.current &&
+        !isInputFocusedRef.current &&
+        !isAtBottom()
       ) {
         startScroll();
       }
     }, resumeDelay);
-  }, [resumeDelay, isAtBottom, isLightboxOrModalOpen, isInputOrInteractiveFocused, startScroll]);
+  }, [resumeDelay, isAtBottom, startScroll]);
 
   const pauseAutoScroll = useCallback(() => {
     isPausedByUserRef.current = true;
@@ -191,6 +195,46 @@ export function useAutoScroll({
 
   useEffect(() => {
     if (!enabled || typeof window === "undefined") return;
+
+    updateCachedScrollHeight();
+
+    // Event-driven focus detection (eliminates querying document.activeElement every frame)
+    const handleFocusIn = (e: FocusEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      const tag = target.tagName?.toUpperCase();
+      if (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        target.isContentEditable
+      ) {
+        isInputFocusedRef.current = true;
+        stopScroll();
+      }
+    };
+
+    const handleFocusOut = () => {
+      isInputFocusedRef.current = false;
+      scheduleResume();
+    };
+
+    // Event-driven Modal / Lightbox monitoring via MutationObserver
+    const observer = new MutationObserver(() => {
+      const isOpen = checkModalState();
+      isModalOpenRef.current = isOpen;
+      if (isOpen) {
+        stopScroll();
+      } else {
+        scheduleResume();
+      }
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+      childList: true,
+    });
 
     // Handle user physical touches on iPhone / Touch devices
     const handleTouchStart = () => {
@@ -233,15 +277,9 @@ export function useAutoScroll({
       }
     };
 
-    // Focus on forms / virtual keyboard
-    const handleFocusIn = () => {
-      if (isInputOrInteractiveFocused()) {
-        stopScroll();
-      }
-    };
-
-    const handleFocusOut = () => {
-      scheduleResume();
+    // Recalculate cached scrollHeight on window resize
+    const handleResize = () => {
+      updateCachedScrollHeight();
     };
 
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
@@ -254,6 +292,7 @@ export function useAutoScroll({
     window.addEventListener("pointerdown", handleUserInteraction, { passive: true });
     window.addEventListener("keydown", handleUserInteraction, { passive: true });
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
     document.addEventListener("focusin", handleFocusIn);
@@ -273,6 +312,7 @@ export function useAutoScroll({
         clearTimeout(idleTimerRef.current);
       }
       stopScroll();
+      observer.disconnect();
 
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchStart);
@@ -284,12 +324,21 @@ export function useAutoScroll({
       window.removeEventListener("pointerdown", handleUserInteraction);
       window.removeEventListener("keydown", handleUserInteraction);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
 
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       document.removeEventListener("focusin", handleFocusIn);
       document.removeEventListener("focusout", handleFocusOut);
     };
-  }, [enabled, initialDelay, isInputOrInteractiveFocused, scheduleResume, startScroll, stopScroll]);
+  }, [
+    checkModalState,
+    enabled,
+    initialDelay,
+    scheduleResume,
+    startScroll,
+    stopScroll,
+    updateCachedScrollHeight,
+  ]);
 
   return {
     isAutoScrolling,

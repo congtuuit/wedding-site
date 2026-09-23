@@ -55,6 +55,7 @@ export function WeddingPageClient({
   const stage = useActiveWeddingStage(initialStage);
 
   const [hasOpenedInvitation, setHasOpenedInvitation] = useState<boolean>(false);
+  const [showFloatingNav, setShowFloatingNav] = useState<boolean>(false);
   const musicRef = useRef<MusicControllerHandle | null>(null);
 
   // Guarantee page is always at the absolute top on initial load
@@ -63,6 +64,22 @@ export function WeddingPageClient({
       window.history.scrollRestoration = "manual";
       window.scrollTo(0, 0);
     }
+  }, []);
+
+  // Synchronize bottom floating nav & action controls to appear simultaneously when scroll > 300px
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setShowFloatingNav(window.scrollY > 300);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleStartAudio = () => {
@@ -112,27 +129,6 @@ export function WeddingPageClient({
       {/* 2. Floating Ambient Rose Petals & Golden Sparkles */}
       {hasOpenedInvitation && <FloatingPetals />}
 
-      {/* 3. Floating Top-Right Vertical Media Cluster (Music Controller on Top, Auto-Scroll Below) */}
-      <div className="fixed top-4 inset-x-0 z-40 pointer-events-none flex justify-center px-3 sm:px-4">
-        <div className="w-full max-w-[480px] flex items-start justify-end">
-          <div className="flex flex-col items-center gap-2 pointer-events-auto">
-            <MusicController
-              ref={musicRef}
-              src={weddingData.music.src}
-              autoPlayTrigger={hasOpenedInvitation}
-              standalone={false}
-              visible={hasOpenedInvitation}
-            />
-            {hasOpenedInvitation && (
-              <AutoScrollController
-                isAutoScrolling={isAutoScrolling}
-                isPausedByUser={isPausedByUser}
-                onToggle={toggleAutoScroll}
-              />
-            )}
-          </div>
-        </div>
-      </div>
 
       {/* 4. Cinematic Hero Section */}
       <HeroSection
@@ -232,11 +228,44 @@ export function WeddingPageClient({
         />
       </ScrollReveal>
 
-      {/* 15. Mobile Fixed Dock Navigation */}
-      {hasOpenedInvitation && <BottomNavigation onNavigate={pauseAutoScroll} />}
+      {/* 15. Mobile Fixed Dock Navigation (Đồng bộ hiển thị khi scroll > 300) */}
+      {hasOpenedInvitation && (
+        <BottomNavigation
+          visible={showFloatingNav}
+          onNavigate={pauseAutoScroll}
+        />
+      )}
 
-      {/* 16. Floating Back To Top Button */}
-      {hasOpenedInvitation && <BackToTop />}
+      {/* 16. Floating Bottom-Right Media & Navigation Cluster (Xuất hiện đồng bộ cùng Menu khi scroll > 300) */}
+      <div className="fixed bottom-20 sm:bottom-22 inset-x-0 z-40 pointer-events-none flex justify-center px-3 sm:px-4">
+        <div className="w-full max-w-[480px] flex justify-end">
+          <div
+            className={`flex flex-col items-center gap-2 pointer-events-auto transition-all duration-300 ease-out ${
+              hasOpenedInvitation && showFloatingNav
+                ? "opacity-100 scale-100 translate-y-0"
+                : "opacity-0 scale-90 translate-y-4 pointer-events-none"
+            }`}
+          >
+            <BackToTop
+              inline
+              visible={hasOpenedInvitation && showFloatingNav}
+              onScrollToTop={pauseAutoScroll}
+            />
+            <AutoScrollController
+              isAutoScrolling={isAutoScrolling}
+              isPausedByUser={isPausedByUser}
+              onToggle={toggleAutoScroll}
+            />
+            <MusicController
+              ref={musicRef}
+              src={weddingData.music.src}
+              autoPlayTrigger={hasOpenedInvitation}
+              standalone={false}
+              visible={hasOpenedInvitation}
+            />
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

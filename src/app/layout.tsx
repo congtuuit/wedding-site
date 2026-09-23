@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Be_Vietnam_Pro, Montserrat, Alex_Brush, Great_Vibes } from "next/font/google";
+import { Plus_Jakarta_Sans, Be_Vietnam_Pro, Alex_Brush } from "next/font/google";
 import "./globals.css";
 
 // Modern Luxury Sans-Serif for Headings & Titles (Font Không Chân Sang Trọng)
@@ -18,25 +18,11 @@ const beVietnam = Be_Vietnam_Pro({
   display: "swap",
 });
 
-const montserrat = Montserrat({
-  subsets: ["latin", "vietnamese"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-montserrat",
-  display: "swap",
-});
-
 // Romantic, flowing, graceful cursive script for Groom & Bride names
 const alexBrush = Alex_Brush({
   subsets: ["latin", "vietnamese"],
   weight: ["400"],
   variable: "--font-couple",
-  display: "swap",
-});
-
-const greatVibes = Great_Vibes({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400"],
-  variable: "--font-cursive",
   display: "swap",
 });
 
@@ -95,7 +81,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${plusJakarta.variable} ${beVietnam.variable} ${montserrat.variable} ${alexBrush.variable} ${greatVibes.variable}`}
+      className={`${plusJakarta.variable} ${beVietnam.variable} ${alexBrush.variable}`}
     >
       <body className="font-sans bg-[#120406] text-textMain min-h-screen antialiased flex justify-center">
         {children}
