@@ -1,26 +1,35 @@
 {
-  "updated_at": "2026-08-27T01:03:00Z",
+  "updated_at": "2026-09-23T22:54:00+07:00",
   "working_on": {
-    "feature": "Stage-Aware Ceremony Logic (Vu Quy vs Thành Hôn) & Dynamic Couple Name Swapping & Bank Account Visibility",
+    "feature": "Performance Optimization & Bottom-Right FAB Cluster (Music, AutoScroll, BackToTop)",
     "status": "completed",
-    "current_state": "Completed Vu Quy / Thành Hôn logic: Vu Quy displays Cô Dâu & Chú Rể (Hường Nguyễn & Tú Văn) and hides Groom bank account; Thành Hôn displays Chú Rể & Cô Dâu (Tú Văn & Hường Nguyễn) and displays both bank accounts. Verified clean production build (0 errors)."
+    "current_state": "Completed timeline update, full performance optimization (-35.6% homepage JS, -91% bride image, 0 layout thrashing), fixed BackToTop while scrolling, and synchronized 3 FAB buttons with BottomNavigation (scrollY > 300). Verified clean production build (0 errors)."
   },
   "completed_tasks": [
-    { "task": "Vu Quy Logic: Cô Dâu & Chú Rể (Hường Nguyễn & Tú Văn) name ordering across Envelope, Hero, Wishes, Thank You, Metadata, OG image, and Share portal", "status": "done" },
-    { "task": "Vu Quy Banking Logic: Hidden groom bank account, displaying solely the bride's account on Gift Section", "status": "done" },
-    { "task": "Thành Hôn Logic: Chú Rể & Cô Dâu (Tú Văn & Hường Nguyễn) and displaying both groom & bride banking QR accounts", "status": "done" },
-    { "task": "Monogram & Initials Dynamic Switching: 'H & T' for Vu Quy vs 'T & H' for Thành Hôn", "status": "done" },
-    { "task": "Share Portal & Zalo/FB Message Templates updated with proper stage name priority", "status": "done" },
-    { "task": "Production Build Verification: 100% successful compile with Next.js 15.5.23 (0 errors)", "status": "done" }
+    { "task": "Timeline Update: Updated '2017 – 2022' story in wedding.json with narrative of growth, distance and finding each other again", "status": "done" },
+    { "task": "Image Optimization: Re-compressed public/images/bride.webp from 2.0MB (4000x6000) to 179KB (720x1080), saving 96.8% decode RAM", "status": "done" },
+    { "task": "Eliminate Layout Thrashing: Event-driven focus & modal state, cached scrollHeight in useAutoScroll (0 DOM queries/frame)", "status": "done" },
+    { "task": "Wishes Carousel Optimization: Cached scrollWidth/3 in WishesSection, eliminating forced synchronous reflows", "status": "done" },
+    { "task": "Dynamic Lightbox: Converted yet-another-react-lightbox in Gallery.tsx to next/dynamic (reduced initial bundle by 18.6kB)", "status": "done" },
+    { "task": "Audio Bandwidth Release: Set preload='none' on background audio in MusicController, saving 6.6MB network contention", "status": "done" },
+    { "task": "Font Cleanup: Removed unused Montserrat and Great_Vibes Google Fonts in layout.tsx & tailwind.config.js", "status": "done" },
+    { "task": "FAB Cluster Ergonomics: Relocated Music & AutoScroll from top-right down to bottom-right above BottomNav (Thumb Zone)", "status": "done" },
+    { "task": "BackToTop Fix: Added onScrollToTop handler to pause auto-scroll before smooth scroll, eliminating scroll conflicts", "status": "done" },
+    { "task": "UI Synchronization: BottomNavigation and 3-button FAB cluster now appear and hide synchronously at window.scrollY > 300", "status": "done" },
+    { "task": "Production Build Verification: 100% successful compile in 3.3s with Next.js 15.5.23 (0 errors)", "status": "done" }
   ],
   "decisions_made": [
     {
-      "decision": "Stage-Driven Name & Account Resolution",
-      "reason": "Centralized stageKey resolution in src/lib/wedding-timeline.ts provides consistent name ordering (primaryCoupleName, shortCoupleName, uppercaseCoupleName, initials) and bank account filtering across both client components and server metadata."
+      "decision": "Synchronized Bottom Controls at scrollY > 300",
+      "reason": "Keeping the top of the page pristine and uncluttered while ensuring all interactive controls (menu, music, auto-scroll, back-to-top) appear simultaneously in the natural mobile thumb zone."
     },
     {
-      "decision": "Vu Quy Groom Account Exclusion",
-      "reason": "In accordance with wedding customs, during Lễ Vu Quy (Nhà Gái) only the bride's banking QR card is presented, while during Lễ Thành Hôn (Nhà Trai) both accounts are displayed."
+      "decision": "Prioritize Pause on BackToTop",
+      "reason": "When a user initiates Back To Top, auto-scroll is immediately halted to prevent continuous RAF scrollTo calls from fighting the browser smooth scroll."
+    },
+    {
+      "decision": "Dynamic Lightbox on Demand",
+      "reason": "Prevents loading 45KB of lightbox JavaScript and CSS during the critical initial page load, only fetching when a photo is clicked."
     }
   ],
   "next_recommended_steps": [

@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": "1.1.0",
     "awf_version": "4.0.2",
-    "last_updated": "2026-08-26T16:22:00Z"
+    "last_updated": "2026-09-23T22:54:00+07:00"
   },
   "project": {
     "name": "wedding-site",
@@ -29,11 +29,11 @@
     "framework": "Next.js 15.5.23 (App Router, Server-Side Dynamic Metadata, Edge Runtime)",
     "ui_library": "React 19, TailwindCSS v3",
     "icons": "lucide-react, public/favicon.svg, Dynamic Apple Touch Icons (src/app/apple-icon.tsx)",
-    "effects": "canvas-confetti, custom CSS GPU-composited animations, Cinema 60/120fps Subpixel Accumulator",
-    "lightbox": "yet-another-react-lightbox (Zoom, Thumbnails, Counter, Fullscreen)",
+    "effects": "canvas-confetti, custom CSS GPU-composited animations, Cinema 60/120fps Subpixel Accumulator, Zero Layout-Thrashing Engine",
+    "lightbox": "yet-another-react-lightbox (Dynamic Import on demand with next/dynamic)",
     "image_processing": "Sharp 0.34.5 (EXIF auto-orientation, WebP conversion)",
     "og_generation": "next/og (Edge runtime dynamic ImageResponse 1200x630)",
-    "typography": "Google Fonts (Plus Jakarta Sans, Be Vietnam Pro, Alex Brush, Great Vibes, Montserrat)"
+    "typography": "Google Fonts (Plus Jakarta Sans, Be Vietnam Pro, Alex Brush)"
   },
   "design_system": {
     "viewport": "Fixed Mobile App Frame (max-w-[480px] centered on Desktop/Tablet with luxury shadow & dark velvet outer backdrop #120406)",
@@ -51,8 +51,7 @@
     "fonts": {
       "body": "Be Vietnam Pro (Font Không Chân chuẩn tiếng Việt)",
       "headings": "Plus Jakarta Sans (Font Không Chân hình học cao cấp)",
-      "couple_names": "Alex Brush (Thư pháp uyển chuyển, lãng mạn)",
-      "ampersand": "Great Vibes (Calligraphy mềm mại)"
+      "couple_names": "Alex Brush (Thư pháp uyển chuyển, lãng mạn)"
     }
   },
   "api_endpoints": [
@@ -82,27 +81,27 @@
     },
     {
       "id": "cinema_auto_scroll",
-      "name": "Bộ Động Cơ Tự Động Cuộn Trang Cinema (Cinema Auto-Scroll Engine)",
+      "name": "Bộ Động Cơ Tự Động Cuộn Trang Cinema Không Giật Khung Hình (Zero Layout-Thrashing)",
       "component": "src/hooks/useAutoScroll.ts & src/components/wedding/AutoScrollController.tsx",
-      "description": "Bộ tích lũy tọa độ ảo số thực (Subpixel Floating Point Accumulator) loại bỏ hoàn toàn lỗi khựng hình WebKit trên màn hình ProMotion 120Hz của iPhone. Tự động tạm dừng khi nhập form, mở ảnh, chạm tay và tiếp tục sau 8 giây."
+      "description": "Bộ tích lũy tọa độ ảo số thực loại bỏ hoàn toàn lỗi khựng hình trên 120Hz ProMotion. Cơ chế Event-driven loại bỏ 100% DOM queries và forced layout reflow trong requestAnimationFrame."
     },
     {
       "id": "cinema_wishes_carousel",
       "name": "Carousel Lời Chúc Tự Động Cuộn Siêu Mượt (Continuous Wishes Glide)",
       "component": "src/components/wedding/WishesSection.tsx",
-      "description": "Dải lời chúc cuộn đều 40px/s với vòng lặp vô tận đối xứng 3 chiều (Triple-Set Loop), tạm dừng 0ms khi chạm tay/kéo chuột và tự động chạy lại sau 2.5s."
+      "description": "Dải lời chúc cuộn đều 40px/s với vòng lặp vô tận đối xứng 3 chiều (Triple-Set Loop), tạm dừng 0ms khi chạm tay/kéo chuột, lưu cache scrollWidth tránh forced reflow."
+    },
+    {
+      "id": "bottom_right_fab_cluster",
+      "name": "Cụm Công Cụ Nổi Dọc Góc Dưới Phải (Bottom-Right FAB Cluster)",
+      "component": "src/components/wedding/WeddingPageClient.tsx",
+      "description": "Gom 3 nút điều khiển (BackToTop, AutoScroll, Music) thành cụm FAB góc dưới phải ngay trên thanh menu, xuất hiện đồng bộ cùng BottomNavigation khi scroll > 300px. BackToTop tự động tạm dừng auto-scroll trước khi cuộn mượt về đầu trang."
     },
     {
       "id": "ios_safari_autoplay",
       "name": "Cơ Chế Kích Hoạt Âm Thanh Đồng Bộ Cho iOS Safari WebKit",
       "component": "src/components/wedding/MusicController.tsx & WeddingOpening.tsx",
-      "description": "Gọi audio.play() trực tiếp trong call stack sự kiện bấm nút 'Mở Thiệp', vượt qua 100% chính sách chặn autoplay của Apple Safari."
-    },
-    {
-      "id": "vertical_media_cluster",
-      "name": "Cụm Nút Điều Khiển Media Nổi Dọc Góc Phải (Vertical Media Controls)",
-      "component": "src/components/wedding/WeddingPageClient.tsx",
-      "description": "Bố cục dọc tinh tế ở góc trên bên phải (Nút Bật/Tắt Nhạc trên, Nút Tự Động Cuộn Trang dưới) chuẩn kích thước 40-44px touch target với hiệu ứng thủy tinh mờ sang trọng."
+      "description": "Gọi audio.play() trực tiếp trong call stack sự kiện bấm nút 'Mở Thiệp', vượt qua 100% chính sách chặn autoplay của Apple Safari. Đặt preload='none' để tiết kiệm 6.6MB băng thông lúc mở trang."
     },
     {
       "id": "dynamic_seo_og",
@@ -112,15 +111,15 @@
     },
     {
       "id": "editorial_gallery",
-      "name": "Album Ảnh Cưới Tạp Chí & Fullscreen Lightbox",
+      "name": "Album Ảnh Cưới Tạp Chí & Fullscreen Lightbox Nạp Động",
       "component": "src/components/wedding/Gallery.tsx & Lightbox.tsx",
-      "description": "20 ảnh WebP tối ưu 95.4% dung lượng, CSS masonry không cắt ảnh, xem trước 8 ảnh + nút mở rộng, Lightbox vuốt mượt mà với thanh thumbnail filmstrip và pinch-to-zoom."
+      "description": "20 ảnh WebP tối ưu, CSS masonry không cắt ảnh, xem trước 8 ảnh + nút mở rộng, Lightbox nạp trễ qua next/dynamic chỉ khi người dùng chạm mở ảnh."
     },
     {
       "id": "gift_vietqr",
       "name": "Hộp Mừng Cưới & Tải Mã VietQR Chuẩn NAPAS 24/7",
       "component": "src/components/wedding/GiftSection.tsx",
-      "description": "Mã VietQR tự động điền số tài khoản, tên và nội dung chuyển khoản, nút 'Sao Chép STK' & 'Tải Mã QR' cùng 1 dòng, modal phóng to sắc nét."
+      "description": "Mã VietQR tự động điền số tài khoản, tên và nội dung chuyển khoản, nút 'Sao Chép STK' & 'Tải Mã QR' hỗ trợ Web Share API lưu thẳng vào Photos trên iOS."
     },
     {
       "id": "share_admin",
@@ -137,8 +136,10 @@
     "optimize:images": "node scripts/optimize-images.mjs — Nén ảnh và xoay EXIF bằng Sharp"
   },
   "knowledge_items": {
+    "back_to_top_scroll_conflict": "Khi auto-scroll đang chạy ở tần số 60-120fps, gọi window.scrollTo({ top: 0, behavior: 'smooth' }) sẽ bị loop auto-scroll ghi đè vị trí. Cần gọi pauseAutoScroll() và trì hoãn 1 frame (requestAnimationFrame) để vòng lặp auto-scroll dừng hẳn trước khi kích hoạt cuộn mượt.",
     "ios_webkit_audio_policy": "Trên iOS Safari, HTMLAudioElement.play() PHẢI được gọi đồng bộ (synchronous) ngay trong handler sự kiện touch/click của user. Nếu bọc trong setTimeout hoặc animation transition >1s, trình duyệt sẽ thu hồi quyền kích hoạt dẫn đến lỗi NotAllowedError.",
     "subpixel_raf_scrolling": "Trên các thiết bị ProMotion 120Hz (như iPhone 13 Pro trở lên), việc làm tròn vị trí cuộn sang số nguyên (integer) sẽ gây giật micro-stutter. Phải tích lũy vị trí bằng biến float ảo và gán scrollTo với behavior: instant.",
+    "zero_layout_thrashing_raf": "Trong vòng lặp requestAnimationFrame, tuyệt đối không gọi các thuộc tính layout như scrollHeight, scrollWidth hoặc querySelector vì sẽ gây Forced Synchronous Layout. Cần dùng MutationObserver và event listeners (focusin/focusout) để cập nhật trạng thái theo Event-driven.",
     "triple_set_loop": "Để tạo carousel trôi vô tận mà không có điểm nối đứt đoạn, nhân 3 mảng dữ liệu [...items, ...items, ...items] và reset tọa độ khi scrollLeft vượt quá 1/3 tổng scrollWidth.",
     "dynamic_metadata_nextjs": "Khi cần dynamic Open Graph SEO cho page, page.tsx phải là Server Component để export generateMetadata({ searchParams }), còn toàn bộ logic tương tác UI được tách vào Client Component riêng.",
     "mobile_frame_lock": "Để website luôn hiển thị dạng mobile trên tablet/desktop, container chính đặt max-w-[480px] mx-auto và các element fixed neo bằng left-1/2 -translate-x-1/2 w-full max-w-[480px]."
