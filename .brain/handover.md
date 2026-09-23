@@ -7,7 +7,10 @@
 
 ## 📍 Đang làm & Trạng thái:
 - **Tính năng & Fix hoàn thành mới nhất:**
-  1. **Cập nhật ảnh Cầu hôn năm 2022 (`CoupleStory.tsx` & `public/images/TOBI0481.webp`):**
+  1. **Cập nhật nội dung mốc "2017 – 2022" (`wedding.json` & `CoupleStory.tsx`):**
+     - Cập nhật câu chuyện xa cách, trưởng thành và tìm lại nhau: *"Là một khoảng thời gian đủ dài để chúng mình đi qua những năm tháng xa cách, mỗi người một hành trình, một trải nghiệm. Để rồi sau những tháng ngày học tập, trưởng thành và thay đổi, chúng mình lại tìm thấy nhau — bình yên hơn, chín chắn hơn và sẵn sàng viết tiếp câu chuyện của hai người."*
+     - Đồng bộ tiêu đề: **Trưởng thành & Tìm lại nhau** và tiêu đề phụ: **Để rồi lại tìm thấy nhau**.
+  2. **Cập nhật ảnh Cầu hôn năm 2022 (`CoupleStory.tsx` & `public/images/TOBI0481.webp`):**
      - Đã nén và chuyển đổi [src/images/0481.png](file:///Users/tuvan/Documents/wedding-site/src/images/0481.png) sang WebP tối ưu.
      - Cập nhật mục "Khoảnh khắc cầu hôn" trong [wedding.json](file:///Users/tuvan/Documents/wedding-site/src/data/wedding.json).
   2. **Cập nhật ảnh chân dung Cô dâu mới (`FamilySection.tsx` & `public/images/bride.webp`):**
