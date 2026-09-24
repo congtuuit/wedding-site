@@ -12,7 +12,8 @@
     { "task": "Admin Dashboard Sync: Updated share/page.tsx mock preview card to display TOBI0530-og.jpg", "status": "done" },
     { "task": "Dynamic Domain Resolution: Replaced hardcoded domain in page.tsx with request headers (x-forwarded-host / host / proto) and metadataBase", "status": "done" },
     { "task": "Optimal 1.91:1 Aspect Ratio (Facebook Checklist): Cropped TOBI0530 to exact 1200x630 (1.91:1) in TOBI0530-og.jpg (239KB), achieving 100% optimal rating on Facebook Debugger", "status": "done" },
-    { "task": "Production Build Verification: 100% successful compile in 2.7s with Next.js 15.5.23 (0 errors)", "status": "done" }
+    { "task": "Fix Query Parameter Preservation on Preview Click: Hoisted canonical link and property='og:url' with full search params (?to=...&event=...), and made admin share preview card clickable", "status": "done" },
+    { "task": "Production Build Verification: 100% successful compile in 2.9s with Next.js 15.5.23 (0 errors)", "status": "done" }
   ],
   "decisions_made": [
     {
