@@ -3,6 +3,8 @@ import { NextRequest } from "next/server";
 import { decodeGuestName } from "@/lib/utils";
 import { getActiveWeddingStage } from "@/lib/wedding-timeline";
 
+export const runtime = "edge";
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -193,6 +195,9 @@ export async function GET(req: NextRequest) {
       {
         width: 1200,
         height: 630,
+        headers: {
+          "Cache-Control": "public, immutable, no-transform, max-age=31536000",
+        },
       }
     );
   } catch (e: unknown) {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { decodeGuestName } from "@/lib/utils";
 import { getActiveWeddingStage } from "@/lib/wedding-timeline";
 import { WeddingPageClient } from "@/components/wedding/WeddingPageClient";
@@ -35,19 +36,50 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const guestName = decodeGuestName(rawGuestStr);
   const stage = getActiveWeddingStage(rawEventStr);
 
+  let siteUrl = "";
+  try {
+    const headersList = await headers();
+    const host = headersList.get("x-forwarded-host") || headersList.get("host");
+    const proto =
+      headersList.get("x-forwarded-proto") ||
+      (host?.startsWith("localhost") || host?.startsWith("127.0.0.1") ? "http" : "https");
+    if (host) {
+      siteUrl = `${proto}://${host}`;
+    }
+  } catch {
+    // Fallback when headers are not available
+  }
+
+  if (!siteUrl) {
+    siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "https://tu-huong-wedding.vercel.app");
+  }
+
+  siteUrl = siteUrl.replace(/\/+$/, "");
+
   const eventQueryPart = rawEventStr ? `&event=${encodeURIComponent(rawEventStr)}` : "";
   const coupleNameStr = stage.primaryCoupleName;
+
+  const shareImageUrl = `${siteUrl}/images/TOBI0530.webp`;
 
   if (guestName) {
     const title = `💌 Thân gửi: ${guestName} — ${stage.invitationHeadline} ${coupleNameStr}`;
     const description = `Trân trọng kính mời ${guestName} đến chung vui trong ngày hạnh phúc của ${coupleNameStr} vào ngày ${stage.weddingDateFormatted} (${stage.ceremonyName} tại ${stage.location}).`;
     const ogTitle = `💌 Thân gửi: ${guestName} | ${stage.invitationHeadline} ${coupleNameStr}`;
-    const ogImage = `/api/og?to=${encodeURIComponent(rawGuestStr)}${eventQueryPart}`;
-    const pageUrl = `/?to=${encodeURIComponent(rawGuestStr)}${eventQueryPart}`;
+    const pageUrl = `${siteUrl}/?to=${encodeURIComponent(rawGuestStr)}${eventQueryPart}`;
 
     return {
+      metadataBase: new URL(siteUrl),
       title,
       description,
+      alternates: {
+        canonical: pageUrl,
+      },
       openGraph: {
         title: ogTitle,
         description,
@@ -55,16 +87,12 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
         siteName: `Thiệp Cưới ${coupleNameStr}`,
         images: [
           {
-            url: ogImage,
-            width: 1200,
-            height: 630,
+            url: shareImageUrl,
+            secureUrl: shareImageUrl,
+            width: 2048,
+            height: 1365,
+            type: "image/webp",
             alt: `${stage.invitationHeadline} gửi ${guestName}`,
-          },
-          {
-            url: "/images/TOBI0448.webp",
-            width: 1200,
-            height: 630,
-            alt: `Thiệp Cưới ${coupleNameStr}`,
           },
         ],
         locale: "vi_VN",
@@ -74,33 +102,33 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
         card: "summary_large_image",
         title: ogTitle,
         description,
-        images: [ogImage],
+        images: [shareImageUrl],
       },
     };
   }
 
   // Default fallback metadata when no guest is specified
-  const fallbackOgImage = `/api/og${rawEventStr ? `?event=${encodeURIComponent(rawEventStr)}` : ""}`;
+  const fallbackPageUrl = `${siteUrl}/${rawEventStr ? `?event=${encodeURIComponent(rawEventStr)}` : ""}`;
   return {
+    metadataBase: new URL(siteUrl),
     title: `${coupleNameStr} — ${stage.invitationHeadline} ${stage.weddingDateFormatted}`,
     description: `Trân trọng kính mời bạn đến chung vui trong ngày hạnh phúc của ${coupleNameStr} vào ngày ${stage.weddingDateFormatted} (${stage.ceremonyName} tại ${stage.location}).`,
+    alternates: {
+      canonical: fallbackPageUrl,
+    },
     openGraph: {
       title: `${coupleNameStr} — ${stage.invitationHeadline} (${stage.weddingDateFormatted})`,
       description: `Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày trọng đại (${stage.ceremonyName})!`,
-      url: `/${rawEventStr ? `?event=${encodeURIComponent(rawEventStr)}` : ""}`,
+      url: fallbackPageUrl,
       siteName: `Thiệp Cưới ${coupleNameStr}`,
       images: [
         {
-          url: fallbackOgImage,
-          width: 1200,
-          height: 630,
+          url: shareImageUrl,
+          secureUrl: shareImageUrl,
+          width: 2048,
+          height: 1365,
+          type: "image/webp",
           alt: `Thiệp Cưới ${coupleNameStr} — ${stage.ceremonyName}`,
-        },
-        {
-          url: "/images/TOBI0448.webp",
-          width: 1200,
-          height: 630,
-          alt: `Thiệp Cưới ${coupleNameStr}`,
         },
       ],
       locale: "vi_VN",
@@ -110,7 +138,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       card: "summary_large_image",
       title: `${coupleNameStr} — ${stage.invitationHeadline} ${stage.weddingDateFormatted}`,
       description: `Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày ${stage.ceremonyName}!`,
-      images: [fallbackOgImage],
+      images: [shareImageUrl],
     },
   };
 }

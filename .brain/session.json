@@ -1,39 +1,29 @@
 {
-  "updated_at": "2026-09-23T22:54:00+07:00",
+  "updated_at": "2026-09-24T21:07:00+07:00",
   "working_on": {
-    "feature": "Performance Optimization & Bottom-Right FAB Cluster (Music, AutoScroll, BackToTop)",
+    "feature": "Unified Social Share Preview Image (TOBI0530.webp) across Facebook, Zalo & Social Platforms",
     "status": "completed",
-    "current_state": "Completed timeline update, full performance optimization (-35.6% homepage JS, -91% bride image, 0 layout thrashing), fixed BackToTop while scrolling, and synchronized 3 FAB buttons with BottomNavigation (scrollY > 300). Verified clean production build (0 errors)."
+    "current_state": "Investigated reason for Facebook vs Zalo preview discrepancy (multiple og:images, missing MIME types, canonical collapse). Standardized TOBI0530.webp across all pages (layout.tsx, page.tsx, share/page.tsx preview). Verified clean production build (0 errors)."
   },
   "completed_tasks": [
-    { "task": "Timeline Update: Updated '2017 – 2022' story in wedding.json with narrative of growth, distance and finding each other again", "status": "done" },
-    { "task": "Image Optimization: Re-compressed public/images/bride.webp from 2.0MB (4000x6000) to 179KB (720x1080), saving 96.8% decode RAM", "status": "done" },
-    { "task": "Eliminate Layout Thrashing: Event-driven focus & modal state, cached scrollHeight in useAutoScroll (0 DOM queries/frame)", "status": "done" },
-    { "task": "Wishes Carousel Optimization: Cached scrollWidth/3 in WishesSection, eliminating forced synchronous reflows", "status": "done" },
-    { "task": "Dynamic Lightbox: Converted yet-another-react-lightbox in Gallery.tsx to next/dynamic (reduced initial bundle by 18.6kB)", "status": "done" },
-    { "task": "Audio Bandwidth Release: Set preload='none' on background audio in MusicController, saving 6.6MB network contention", "status": "done" },
-    { "task": "Font Cleanup: Removed unused Montserrat and Great_Vibes Google Fonts in layout.tsx & tailwind.config.js", "status": "done" },
-    { "task": "FAB Cluster Ergonomics: Relocated Music & AutoScroll from top-right down to bottom-right above BottomNav (Thumb Zone)", "status": "done" },
-    { "task": "BackToTop Fix: Added onScrollToTop handler to pause auto-scroll before smooth scroll, eliminating scroll conflicts", "status": "done" },
-    { "task": "UI Synchronization: BottomNavigation and 3-button FAB cluster now appear and hide synchronously at window.scrollY > 300", "status": "done" },
-    { "task": "Production Build Verification: 100% successful compile in 3.3s with Next.js 15.5.23 (0 errors)", "status": "done" }
+    { "task": "Investigate Facebook vs Zalo OG Discrepancy: Pinpointed multiple og:image tags where Facebook picked generic fallback and Zalo picked first image", "status": "done" },
+    { "task": "Standardize Social Preview Image: Set TOBI0530.webp with 2048x1365 dimensions and image/webp type in layout.tsx", "status": "done" },
+    { "task": "Dynamic Metadata Unification: Updated page.tsx generateMetadata to uniformly use TOBI0530.webp for all personalized and fallback links while keeping custom guest titles", "status": "done" },
+    { "task": "Admin Dashboard Sync: Updated share/page.tsx mock preview card to display TOBI0530.webp", "status": "done" },
+    { "task": "Production Build Verification: 100% successful compile in 2.7s with Next.js 15.5.23 (0 errors)", "status": "done" }
   ],
   "decisions_made": [
     {
-      "decision": "Synchronized Bottom Controls at scrollY > 300",
-      "reason": "Keeping the top of the page pristine and uncluttered while ensuring all interactive controls (menu, music, auto-scroll, back-to-top) appear simultaneously in the natural mobile thumb zone."
+      "decision": "Use TOBI0530.webp as the Single Unified Social Share Image",
+      "reason": "Eliminates multi-image crawler confusion between Facebook and Zalo, ensuring perfectly consistent, high-resolution branding across all platforms (Facebook, Zalo, Telegram, iMessage)."
     },
     {
-      "decision": "Prioritize Pause on BackToTop",
-      "reason": "When a user initiates Back To Top, auto-scroll is immediately halted to prevent continuous RAF scrollTo calls from fighting the browser smooth scroll."
-    },
-    {
-      "decision": "Dynamic Lightbox on Demand",
-      "reason": "Prevents loading 45KB of lightbox JavaScript and CSS during the critical initial page load, only fetching when a photo is clicked."
+      "decision": "Retain Personalized Title & Description with Unified Photo",
+      "reason": "Allows guest names and ceremony dates to remain personalized in the preview text (e.g., '💌 Thân gửi: [Tên khách]') while the visual thumbnail remains consistent and instantly recognizable."
     }
   ],
   "next_recommended_steps": [
-    { "task": "Deploy production build to Vercel / Cloudflare (/deploy)", "priority": "high" },
-    { "task": "Test personalized links with Facebook Sharing Debugger & Zalo Debugger", "priority": "medium" }
+    { "task": "Deploy production build to Vercel / Cloudflare", "priority": "high" },
+    { "task": "Use Facebook Sharing Debugger to scrape again and clear Facebook's old link cache", "priority": "high" }
   ]
 }

@@ -716,18 +716,14 @@ export default function SharePage() {
                     <span>Mô phỏng hiển thị khi dán link qua Zalo / Facebook / iMessage</span>
                   </span>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FCECEE] text-[#8C1425] font-medium border border-[#8C1425]/20">
-                    Dynamic SEO & OG Image
+                    Xem Trước Tin Nhắn
                   </span>
                 </div>
 
                 <div className="rounded-xl overflow-hidden border border-[#E2D4D6] bg-white shadow-sm max-w-lg mx-auto">
                   <div className="relative aspect-[1200/630] w-full bg-[#150204] flex items-center justify-center overflow-hidden border-b border-[#E8DCDD]">
                     <img
-                      src={`/api/og?to=${encodeURIComponent(
-                        linkType === "base64"
-                          ? encodeGuestName(guestName.trim())
-                          : guestName.trim()
-                      )}${eventTarget !== "auto" ? `&event=${eventTarget}` : ""}`}
+                      src="/images/TOBI0530.webp"
                       alt="Open Graph Preview Card"
                       className="w-full h-full object-cover"
                     />

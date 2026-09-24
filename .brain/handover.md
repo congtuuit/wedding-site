@@ -1,13 +1,18 @@
 # 📋 HANDOVER DOCUMENT — WEDDING SITE TÚ VĂN & HƯỜNG NGUYỄN
 
-**Thời gian lưu:** 2026-09-23 22:54 (AWF 4.0.2)  
+**Thời gian lưu:** 2026-09-24 21:07 (AWF 4.0.2)  
 **Trạng thái dự án:** Sẵn sàng Production (0 Lỗi Build — `npm run build` PASS)
 
 ---
 
 ## 📍 Đang làm & Trạng thái:
 - **Tính năng & Fix hoàn thành mới nhất:**
-  1. **Đồng bộ cụm 3 nút (Nhạc, Auto-Scroll, BackToTop) & Sửa lỗi BackToTop khi đang cuộn:**
+  1. **Đồng bộ ảnh xem trước mạng xã hội (Facebook, Zalo, Twitter, iMessage) sang `TOBI0530.webp` & nhãn thuần Việt "Xem Trước Tin Nhắn":**
+     - **Nguyên nhân lệch ảnh trước đó:** Cấu hình cũ khai báo 2 ảnh `og:image` (ảnh động `/api/og` và ảnh tĩnh `TOBI0448.webp`). Zalo chỉ lấy ảnh đầu tiên trong khi Facebook scraper ưu tiên chọn ảnh tĩnh có đuôi file rõ ràng hoặc hiển thị ảnh lưu trong cache. Ngoài ra `og:url` cũ bị Next.js chuẩn hóa dẫn đến Facebook gộp link về trang chủ.
+     - **Giải pháp triệt để:** Thống nhất dùng duy nhất ảnh [public/images/TOBI0530.webp](file:///Users/tuvan/Documents/wedding-site/public/images/TOBI0530.webp) cho toàn bộ thẻ OpenGraph và Twitter Card (trong cả `layout.tsx`, `page.tsx` và preview của `share/page.tsx`).
+     - **Nhãn thuần Việt trang `/share`:** Đặt nhãn badge mô phỏng là **"Xem Trước Tin Nhắn"** gần gũi, tinh tế và chuẩn tiếng Việt.
+     - **Giữ trọn nội dung cá nhân hóa:** Tiêu đề (`og:title`) và lời mời (`og:description`) vẫn hiển thị đầy đủ tên từng khách mời (vd: *"💌 Thân gửi: [Tên khách]..."*), trong khi hình ảnh đại diện hiển thị đồng bộ 100% trên tất cả các mạng xã hội.
+  2. **Đồng bộ cụm 3 nút (Nhạc, Auto-Scroll, BackToTop) & Sửa lỗi BackToTop khi đang cuộn:**
      - **Sửa lỗi BackToTop khi đang Play Scroll:** Khi bấm nút Back To Top, hệ thống gọi `pauseAutoScroll()` và chờ 1 frame để auto-scroll loop dừng hẳn trước khi gọi `window.scrollTo({ top: 0, behavior: "smooth" })`, triệt tiêu hoàn toàn xung đột bị auto-scroll đè vị trí.
      - **Đồng bộ hiển thị với Menu đáy:** Cả thanh `BottomNavigation` và cụm 3 nút FAB góc dưới phải đều cùng xuất hiện đồng thời khi `window.scrollY > 300px` và cùng ẩn đi khi cuộn lên đầu trang.
   2. **Tối ưu hóa hiệu năng toàn diện cho máy yếu & mobile 3G/4G (Performance Optimization):**
