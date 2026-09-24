@@ -77,9 +77,6 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       metadataBase: new URL(siteUrl),
       title,
       description,
-      alternates: {
-        canonical: pageUrl,
-      },
       openGraph: {
         title: ogTitle,
         description,
@@ -103,21 +100,14 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
         description,
         images: [shareImageUrl],
       },
-      other: {
-        "og:url": pageUrl,
-      },
     };
   }
 
   // Default fallback metadata when no guest is specified
-  const fallbackPageUrl = `${siteUrl}/${rawEventStr ? `?event=${encodeURIComponent(rawEventStr)}` : ""}`;
   return {
     metadataBase: new URL(siteUrl),
     title: `${coupleNameStr} — ${stage.invitationHeadline} ${stage.weddingDateFormatted}`,
     description: `Trân trọng kính mời bạn đến chung vui trong ngày hạnh phúc của ${coupleNameStr} vào ngày ${stage.weddingDateFormatted} (${stage.ceremonyName} tại ${stage.location}).`,
-    alternates: {
-      canonical: fallbackPageUrl,
-    },
     openGraph: {
       title: `${coupleNameStr} — ${stage.invitationHeadline} (${stage.weddingDateFormatted})`,
       description: `Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày trọng đại (${stage.ceremonyName})!`,
@@ -140,9 +130,6 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       title: `${coupleNameStr} — ${stage.invitationHeadline} ${stage.weddingDateFormatted}`,
       description: `Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày ${stage.ceremonyName}!`,
       images: [shareImageUrl],
-    },
-    other: {
-      "og:url": fallbackPageUrl,
     },
   };
 }
@@ -175,12 +162,46 @@ export default async function Page({ searchParams }: Props) {
   const guestName = decodeGuestName(rawGuestStr);
   const stage = getActiveWeddingStage(rawEventStr);
 
+  let siteUrl = "";
+  try {
+    const headersList = await headers();
+    const host = headersList.get("x-forwarded-host") || headersList.get("host");
+    const proto =
+      headersList.get("x-forwarded-proto") ||
+      (host?.startsWith("localhost") || host?.startsWith("127.0.0.1") ? "http" : "https");
+    if (host) {
+      siteUrl = `${proto}://${host}`;
+    }
+  } catch {
+    // Fallback when headers are not available
+  }
+
+  if (!siteUrl) {
+    siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "https://tu-huong-wedding.vercel.app");
+  }
+  siteUrl = siteUrl.replace(/\/+$/, "");
+
+  const eventQueryPart = rawEventStr ? `&event=${encodeURIComponent(rawEventStr)}` : "";
+  const currentFullUrl = rawGuestStr
+    ? `${siteUrl}/?to=${encodeURIComponent(rawGuestStr)}${eventQueryPart}`
+    : `${siteUrl}/${rawEventStr ? `?event=${encodeURIComponent(rawEventStr)}` : ""}`;
+
   return (
-    <WeddingPageClient
-      initialGuestName={guestName || undefined}
-      initialIsPersonalized={Boolean(guestName)}
-      initialStage={stage}
-    />
+    <>
+      <link rel="canonical" href={currentFullUrl} />
+      <meta property="og:url" content={currentFullUrl} />
+      <WeddingPageClient
+        initialGuestName={guestName || undefined}
+        initialIsPersonalized={Boolean(guestName)}
+        initialStage={stage}
+      />
+    </>
   );
 }
 

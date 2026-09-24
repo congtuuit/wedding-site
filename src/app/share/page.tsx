@@ -720,26 +720,38 @@ export default function SharePage() {
                   </span>
                 </div>
 
-                <div className="rounded-xl overflow-hidden border border-[#E2D4D6] bg-white shadow-sm max-w-lg mx-auto">
+                <a
+                  href={currentLink || "/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-xl overflow-hidden border border-[#E2D4D6] bg-white shadow-sm hover:shadow-md hover:border-[#8C1425]/40 transition-all max-w-lg mx-auto group cursor-pointer"
+                  title="Nhấp để mở thử liên kết thiệp mời này trong tab mới"
+                >
                   <div className="relative aspect-[1200/630] w-full bg-[#150204] flex items-center justify-center overflow-hidden border-b border-[#E8DCDD]">
                     <img
                       src="/images/TOBI0530-og.jpg"
                       alt="Open Graph Preview Card"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
                     />
                   </div>
                   <div className="p-3.5 space-y-1">
-                    <div className="text-[10px] uppercase font-semibold text-[#8C1425] tracking-wider">
-                      tu-huong-wedding.vercel.app
+                    <div className="flex items-center justify-between">
+                      <div className="text-[10px] uppercase font-semibold text-[#8C1425] tracking-wider">
+                        {baseUrl ? baseUrl.replace(/^https?:\/\//, "") : "tu-huong-wedding.vercel.app"}
+                      </div>
+                      <div className="text-[10px] text-[#8C1425] font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ExternalLink className="w-3 h-3" />
+                        <span>Mở liên kết</span>
+                      </div>
                     </div>
-                    <div className="text-xs font-bold text-[#280E12] line-clamp-1">
+                    <div className="text-xs font-bold text-[#280E12] line-clamp-1 group-hover:text-[#8C1425] transition-colors">
                       💌 Thân gửi: {guestName.trim() || "Bạn & Người Thương"} — {previewStage.invitationHeadline} {previewStage.primaryCoupleName}
                     </div>
                     <div className="text-[11px] text-[#6B4E53] line-clamp-2 leading-relaxed">
                       Trân trọng kính mời {guestName.trim() || "bạn"} đến chung vui trong ngày hạnh phúc của {previewStage.primaryCoupleName} vào ngày {previewStage.weddingDateFormatted} ({previewStage.ceremonyName} tại {previewStage.location}).
                     </div>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
 
