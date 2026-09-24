@@ -9,14 +9,15 @@
     { "task": "Investigate Facebook vs Zalo OG Discrepancy: Pinpointed multiple og:image tags where Facebook picked generic fallback and Zalo picked first image", "status": "done" },
     { "task": "Standardize Social Preview Image: Set TOBI0530.webp with 2048x1365 dimensions and image/webp type in layout.tsx", "status": "done" },
     { "task": "Dynamic Metadata Unification: Updated page.tsx generateMetadata to uniformly use TOBI0530.webp for all personalized and fallback links while keeping custom guest titles", "status": "done" },
-    { "task": "Admin Dashboard Sync: Updated share/page.tsx mock preview card to display TOBI0530.webp", "status": "done" },
+    { "task": "Admin Dashboard Sync: Updated share/page.tsx mock preview card to display TOBI0530-og.jpg", "status": "done" },
     { "task": "Dynamic Domain Resolution: Replaced hardcoded domain in page.tsx with request headers (x-forwarded-host / host / proto) and metadataBase", "status": "done" },
-    { "task": "Production Build Verification: 100% successful compile in 2.4s with Next.js 15.5.23 (0 errors)", "status": "done" }
+    { "task": "Optimal 1.91:1 Aspect Ratio (Facebook Checklist): Cropped TOBI0530 to exact 1200x630 (1.91:1) in TOBI0530-og.jpg (239KB), achieving 100% optimal rating on Facebook Debugger", "status": "done" },
+    { "task": "Production Build Verification: 100% successful compile in 2.7s with Next.js 15.5.23 (0 errors)", "status": "done" }
   ],
   "decisions_made": [
     {
-      "decision": "Use TOBI0530.webp as the Single Unified Social Share Image",
-      "reason": "Eliminates multi-image crawler confusion between Facebook and Zalo, ensuring perfectly consistent, high-resolution branding across all platforms (Facebook, Zalo, Telegram, iMessage)."
+      "decision": "Crop TOBI0530 to Standard 1200x630 (1.91:1) as TOBI0530-og.jpg",
+      "reason": "Resolves Facebook's 'The ratio of your og:image isn't optimal' warning while preserving bride, groom, bouquet, chandeliers, and floral arch in the golden zone."
     },
     {
       "decision": "Retain Personalized Title & Description with Unified Photo",

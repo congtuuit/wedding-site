@@ -83,7 +83,6 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       openGraph: {
         title: ogTitle,
         description,
-        url: pageUrl,
         siteName: `Thiệp Cưới ${coupleNameStr}`,
         images: [
           {
@@ -104,6 +103,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
         description,
         images: [shareImageUrl],
       },
+      other: {
+        "og:url": pageUrl,
+      },
     };
   }
 
@@ -119,7 +121,6 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     openGraph: {
       title: `${coupleNameStr} — ${stage.invitationHeadline} (${stage.weddingDateFormatted})`,
       description: `Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày trọng đại (${stage.ceremonyName})!`,
-      url: fallbackPageUrl,
       siteName: `Thiệp Cưới ${coupleNameStr}`,
       images: [
         {
@@ -139,6 +140,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
       title: `${coupleNameStr} — ${stage.invitationHeadline} ${stage.weddingDateFormatted}`,
       description: `Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày ${stage.ceremonyName}!`,
       images: [shareImageUrl],
+    },
+    other: {
+      "og:url": fallbackPageUrl,
     },
   };
 }

@@ -40,7 +40,6 @@ export const metadata: Metadata = {
     title: "Tú Văn & Hường Nguyễn — Thư Mời Thành Hôn (12.12.2026)",
     description:
       "Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày trọng đại!",
-    url: "https://tu-huong-wedding.vercel.app",
     siteName: "Thiệp Cưới Tú Văn & Hường Nguyễn",
     images: [
       {

@@ -7,11 +7,11 @@
 
 ## 📍 Đang làm & Trạng thái:
 - **Tính năng & Fix hoàn thành mới nhất:**
-  1. **Đồng bộ ảnh xem trước mạng xã hội (Facebook, Zalo, Twitter, iMessage) sang `TOBI0530.webp` & nhãn thuần Việt "Xem Trước Tin Nhắn":**
-     - **Nguyên nhân lệch ảnh trước đó:** Cấu hình cũ khai báo 2 ảnh `og:image` (ảnh động `/api/og` và ảnh tĩnh `TOBI0448.webp`). Zalo chỉ lấy ảnh đầu tiên trong khi Facebook scraper ưu tiên chọn ảnh tĩnh có đuôi file rõ ràng hoặc hiển thị ảnh lưu trong cache. Ngoài ra `og:url` cũ bị Next.js chuẩn hóa dẫn đến Facebook gộp link về trang chủ.
-     - **Giải pháp triệt để:** Thống nhất dùng duy nhất ảnh [public/images/TOBI0530.webp](file:///Users/tuvan/Documents/wedding-site/public/images/TOBI0530.webp) cho toàn bộ thẻ OpenGraph và Twitter Card (trong cả `layout.tsx`, `page.tsx` và preview của `share/page.tsx`).
-     - **Nhãn thuần Việt trang `/share`:** Đặt nhãn badge mô phỏng là **"Xem Trước Tin Nhắn"** gần gũi, tinh tế và chuẩn tiếng Việt.
+  1. **Đồng bộ ảnh xem trước mạng xã hội sang chuẩn tối ưu Facebook 1.91:1 (`TOBI0530-og.jpg` - 1200x630):**
+     - **Giải quyết cảnh báo Facebook Checklist:** Ảnh gốc `TOBI0530.webp` có tỷ lệ 3:2 (2048x1365 = 1.50:1) nên bị Facebook báo *"The ratio of your og:image isn't optimal"*.
+     - **Tối ưu tỷ lệ vàng 1.91:1:** Đã crop thông minh ảnh `TOBI0530` sang kích thước chuẩn quốc tế **1200 x 630 px** (`TOBI0530-og.jpg`, 239 KB), giữ trọn vẹn gương mặt Cô dâu - Chú rể, hoa cưới, cổng vòm hoa và đèn chùm ở trung tâm bố cục. Đạt chuẩn 100% xanh lá trên Facebook Sharing Debugger.
      - **Tự động nhận diện Domain hiện tại (Dynamic Domain):** Thay thế domain hardcode bằng `await headers()` (`x-forwarded-host` / `host` / `x-forwarded-proto`), tự động thích ứng chính xác 100% khi chạy trên local, preview Vercel hay bất kỳ tên miền tùy chỉnh (custom domain) nào.
+     - **Nhãn thuần Việt trang `/share`:** Đặt nhãn badge mô phỏng là **"Xem Trước Tin Nhắn"** gần gũi, tinh tế và chuẩn tiếng Việt.
      - **Giữ trọn nội dung cá nhân hóa:** Tiêu đề (`og:title`) và lời mời (`og:description`) vẫn hiển thị đầy đủ tên từng khách mời (vd: *"💌 Thân gửi: [Tên khách]..."*), trong khi hình ảnh đại diện hiển thị đồng bộ 100% trên tất cả các mạng xã hội.
   2. **Đồng bộ cụm 3 nút (Nhạc, Auto-Scroll, BackToTop) & Sửa lỗi BackToTop khi đang cuộn:**
      - **Sửa lỗi BackToTop khi đang Play Scroll:** Khi bấm nút Back To Top, hệ thống gọi `pauseAutoScroll()` và chờ 1 frame để auto-scroll loop dừng hẳn trước khi gọi `window.scrollTo({ top: 0, behavior: "smooth" })`, triệt tiêu hoàn toàn xung đột bị auto-scroll đè vị trí.
