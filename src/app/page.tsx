@@ -65,7 +65,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   const eventQueryPart = rawEventStr ? `&event=${encodeURIComponent(rawEventStr)}` : "";
   const coupleNameStr = stage.primaryCoupleName;
 
-  const shareImageUrl = `${siteUrl}/images/TOBI0530.webp`;
+  const shareImageUrl = `${siteUrl}/images/TOBI0530-og.jpg`;
 
   if (guestName) {
     const title = `💌 Thân gửi: ${guestName} — ${stage.invitationHeadline} ${coupleNameStr}`;
@@ -89,9 +89,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
           {
             url: shareImageUrl,
             secureUrl: shareImageUrl,
-            width: 2048,
-            height: 1365,
-            type: "image/webp",
+            width: 1200,
+            height: 630,
+            type: "image/jpeg",
             alt: `${stage.invitationHeadline} gửi ${guestName}`,
           },
         ],
@@ -125,9 +125,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
         {
           url: shareImageUrl,
           secureUrl: shareImageUrl,
-          width: 2048,
-          height: 1365,
-          type: "image/webp",
+          width: 1200,
+          height: 630,
+          type: "image/jpeg",
           alt: `Thiệp Cưới ${coupleNameStr} — ${stage.ceremonyName}`,
         },
       ],

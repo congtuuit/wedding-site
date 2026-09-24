@@ -10,7 +10,8 @@
     { "task": "Standardize Social Preview Image: Set TOBI0530.webp with 2048x1365 dimensions and image/webp type in layout.tsx", "status": "done" },
     { "task": "Dynamic Metadata Unification: Updated page.tsx generateMetadata to uniformly use TOBI0530.webp for all personalized and fallback links while keeping custom guest titles", "status": "done" },
     { "task": "Admin Dashboard Sync: Updated share/page.tsx mock preview card to display TOBI0530.webp", "status": "done" },
-    { "task": "Production Build Verification: 100% successful compile in 2.7s with Next.js 15.5.23 (0 errors)", "status": "done" }
+    { "task": "Dynamic Domain Resolution: Replaced hardcoded domain in page.tsx with request headers (x-forwarded-host / host / proto) and metadataBase", "status": "done" },
+    { "task": "Production Build Verification: 100% successful compile in 2.4s with Next.js 15.5.23 (0 errors)", "status": "done" }
   ],
   "decisions_made": [
     {

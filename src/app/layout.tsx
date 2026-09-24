@@ -44,10 +44,10 @@ export const metadata: Metadata = {
     siteName: "Thiệp Cưới Tú Văn & Hường Nguyễn",
     images: [
       {
-        url: "/images/TOBI0530.webp",
-        width: 2048,
-        height: 1365,
-        type: "image/webp",
+        url: "/images/TOBI0530-og.jpg",
+        width: 1200,
+        height: 630,
+        type: "image/jpeg",
         alt: "Thiệp Cưới Tú Văn & Hường Nguyễn",
       },
     ],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Tú Văn & Hường Nguyễn — Thư Mời Thành Hôn 12.12.2026",
     description: "Trân trọng kính mời bạn đến chung vui cùng chúng mình!",
-    images: ["/images/TOBI0530.webp"],
+    images: ["/images/TOBI0530-og.jpg"],
   },
   icons: {
     icon: "/favicon.svg",

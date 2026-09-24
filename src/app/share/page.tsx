@@ -723,7 +723,7 @@ export default function SharePage() {
                 <div className="rounded-xl overflow-hidden border border-[#E2D4D6] bg-white shadow-sm max-w-lg mx-auto">
                   <div className="relative aspect-[1200/630] w-full bg-[#150204] flex items-center justify-center overflow-hidden border-b border-[#E8DCDD]">
                     <img
-                      src="/images/TOBI0530.webp"
+                      src="/images/TOBI0530-og.jpg"
                       alt="Open Graph Preview Card"
                       className="w-full h-full object-cover"
                     />
