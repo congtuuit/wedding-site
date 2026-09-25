@@ -268,6 +268,7 @@
   "gift": {
     "headline": "Hộp Mừng Cưới",
     "subline": "Sự hiện diện của bạn là món quà quý giá nhất. Nếu bạn muốn gửi lời chúc mừng theo một cách đặc biệt hơn:",
+    "qrVersion": "2",
     "accounts": [
       {
         "role": "groom",
@@ -276,7 +277,7 @@
         "bankName": "Ngân hàng TMCP Việt Nam Thịnh Vượng (VPBank)",
         "bankCode": "VPBank",
         "accountNumber": "38689999996",
-        "memo": "Mung cuoi Tu Van",
+        "memo": "Mung cuoi Tu Huong",
         "qrImage": "/images/qr-groom.png"
       },
       {
@@ -286,7 +287,7 @@
         "bankName": "Ngân hàng TMCP Kỹ Thương Việt Nam (Techcombank)",
         "bankCode": "Techcombank",
         "accountNumber": "19039619769011",
-        "memo": "Mung cuoi Huong Nguyen",
+        "memo": "Mung cuoi Tu Huong",
         "qrImage": "/images/qr-bride.png"
       }
     ]

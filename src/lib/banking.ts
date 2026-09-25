@@ -22,19 +22,18 @@ export function removeVietnameseTones(str: string): string {
 
 /**
  * Tạo nội dung chuyển khoản ngân hàng kèm tên người chuyển (Guest Name)
- * - Nếu có tên khách từ link thiệp mời: "[Tên khách] mung cuoi Tu Van" / "[Tên khách] mung cuoi Huong Nguyen"
+ * - Cấu trúc chuẩn: <Tên người nhận thiệp cưới> + " mung cuoi Tu Huong"
+ *   Ví dụ: "Anh Hoàng" -> "Anh Hoang mung cuoi Tu Huong"
  * - Giới hạn độ dài an toàn tối đa 50 ký tự (chuẩn Napas/VietQR)
- * - Nếu không có tên khách hoặc là mặc định ("Bạn & Người Thương"): dùng memo mặc định
+ * - Nếu không có tên khách hoặc là mặc định ("Bạn & Người Thương"): dùng "Mung cuoi Tu Huong"
  */
 export function generateBankingMemo(
   defaultMemo?: string,
   guestName?: string,
-  role: "groom" | "bride" = "groom",
+  role?: "groom" | "bride",
   memoTemplate?: string
 ): string {
-  const fallbackMemo =
-    defaultMemo ||
-    (role === "bride" ? "Mung cuoi Huong Nguyen" : "Mung cuoi Tu Van");
+  const fallbackMemo = defaultMemo || "Mung cuoi Tu Huong";
 
   if (!guestName || guestName === "Bạn & Người Thương" || guestName.trim() === "") {
     return fallbackMemo;
@@ -45,13 +44,11 @@ export function generateBankingMemo(
     return fallbackMemo;
   }
 
-  const targetCouple = role === "bride" ? "Huong Nguyen" : "Tu Van";
-
   let memo = "";
   if (memoTemplate && memoTemplate.includes("{guest}")) {
     memo = memoTemplate.replace("{guest}", cleanGuest);
   } else {
-    memo = `${cleanGuest} mung cuoi ${targetCouple}`;
+    memo = `${cleanGuest} mung cuoi Tu Huong`;
   }
 
   // Giới hạn an toàn 50 ký tự cho hệ thống ngân hàng (Napas)
@@ -59,7 +56,7 @@ export function generateBankingMemo(
     return memo;
   }
 
-  const suffix = ` mung cuoi ${targetCouple}`;
+  const suffix = " mung cuoi Tu Huong";
   const maxGuestLen = Math.max(10, 50 - suffix.length);
   const truncatedGuest = cleanGuest.slice(0, maxGuestLen).trim();
   return `${truncatedGuest}${suffix}`;

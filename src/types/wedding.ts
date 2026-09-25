@@ -96,6 +96,7 @@ export interface WeddingData {
     headline: string;
     subline: string;
     accounts: BankAccount[];
+    qrVersion?: string;
   };
   music: {
     src: string;

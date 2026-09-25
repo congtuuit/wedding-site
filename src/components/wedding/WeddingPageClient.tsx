@@ -212,7 +212,11 @@ export function WeddingPageClient({
 
       {/* 13. Gift & QR Banking */}
       <ScrollReveal direction="up" delay={100}>
-        <GiftSection gift={weddingData.gift} stageKey={stage.stageKey} />
+        <GiftSection
+          gift={weddingData.gift}
+          stageKey={stage.stageKey}
+          guestName={guestName}
+        />
       </ScrollReveal>
 
       {/* 14. Closing Thank You Section */}
