@@ -64,6 +64,8 @@ export interface BankAccount {
   qrImage: string;
   role: "groom" | "bride";
   title: string;
+  memo?: string;
+  memoTemplate?: string;
 }
 
 export interface GalleryPhoto {
@@ -94,6 +96,7 @@ export interface WeddingData {
     headline: string;
     subline: string;
     accounts: BankAccount[];
+    qrVersion?: string;
   };
   music: {
     src: string;

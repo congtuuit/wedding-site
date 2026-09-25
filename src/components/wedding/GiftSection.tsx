@@ -5,21 +5,30 @@ import Image from "next/image";
 import { WeddingData } from "@/types/wedding";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { Copy, Check, QrCode, Gift, Download, X } from "lucide-react";
+import { generateBankingMemo } from "@/lib/banking";
 
 interface GiftSectionProps {
   gift: WeddingData["gift"];
   stageKey?: "que" | "sg";
+  guestName?: string;
+}
+
+interface SelectedModalData {
+  account: WeddingData["gift"]["accounts"][0];
+  qrSrc: string;
+  memo: string;
 }
 
 export const GiftSection: React.FC<GiftSectionProps> = ({
   gift,
   stageKey = "sg",
+  guestName,
 }) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [copiedMemoIndex, setCopiedMemoIndex] = useState<number | null>(null);
+  const [copiedModalMemo, setCopiedModalMemo] = useState(false);
   const [downloadingIndex, setDownloadingIndex] = useState<number | null>(null);
-  const [selectedAccount, setSelectedAccount] = useState<
-    WeddingData["gift"]["accounts"][0] | null
-  >(null);
+  const [selectedAccount, setSelectedAccount] = useState<SelectedModalData | null>(null);
 
   const isVuQuy = stageKey === "que";
   const displayAccounts = gift.accounts.filter((account) => {
@@ -31,11 +40,15 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
     return true;
   });
 
-  const handleCopy = (accountNumber: string, index: number) => {
+  const isPersonalized = Boolean(
+    guestName && guestName !== "Bạn & Người Thương" && guestName.trim() !== ""
+  );
+
+  const handleCopy = (text: string, onSuccess: () => void) => {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(accountNumber).catch(() => {
+      navigator.clipboard.writeText(text).catch(() => {
         const textArea = document.createElement("textarea");
-        textArea.value = accountNumber;
+        textArea.value = text;
         document.body.appendChild(textArea);
         textArea.select();
         document.execCommand("copy");
@@ -43,16 +56,34 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
       });
     } else {
       const textArea = document.createElement("textarea");
-      textArea.value = accountNumber;
+      textArea.value = text;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand("copy");
       document.body.removeChild(textArea);
     }
-    setCopiedIndex(index);
-    setTimeout(() => {
-      setCopiedIndex(null);
-    }, 3000);
+    onSuccess();
+  };
+
+  const handleCopyAccount = (accountNumber: string, index: number) => {
+    handleCopy(accountNumber, () => {
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex(null), 3000);
+    });
+  };
+
+  const handleCopyMemo = (memo: string, index: number) => {
+    handleCopy(memo, () => {
+      setCopiedMemoIndex(index);
+      setTimeout(() => setCopiedMemoIndex(null), 3000);
+    });
+  };
+
+  const handleCopyModalMemo = (memo: string) => {
+    handleCopy(memo, () => {
+      setCopiedModalMemo(true);
+      setTimeout(() => setCopiedModalMemo(false), 3000);
+    });
   };
 
   const handleDownloadQr = async (
@@ -158,6 +189,18 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
               ? "QR-Mung-Cuoi-Chu-Re-Tu-Van.png"
               : "QR-Mung-Cuoi-Co-Dau-Huong-Nguyen.png";
 
+            const memo = generateBankingMemo(
+              account.memo,
+              guestName,
+              account.role as "groom" | "bride",
+              (account as { memoTemplate?: string }).memoTemplate
+            );
+
+            const qrVersion = gift.qrVersion || "1";
+            const qrSrc = isPersonalized
+              ? `/api/qr?role=${account.role}&guest=${encodeURIComponent(guestName!.trim())}&v=${qrVersion}`
+              : account.qrImage;
+
             return (
               <div
                 key={account.accountNumber || index}
@@ -178,15 +221,22 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
 
                 {/* QR Code Container (Click to enlarge) */}
                 <div
-                  onClick={() => setSelectedAccount(account)}
+                  onClick={() =>
+                    setSelectedAccount({
+                      account,
+                      qrSrc,
+                      memo,
+                    })
+                  }
                   className="relative w-48 h-48 sm:w-52 sm:h-52 mx-auto p-2.5 rounded-2xl bg-white border border-borderLight shadow-sm cursor-pointer group hover:scale-[1.02] transition-transform"
                 >
                   <Image
-                    src={account.qrImage}
+                    src={qrSrc}
                     alt={`QR ${account.ownerName}`}
                     fill
                     sizes="208px"
                     className="object-contain p-1"
+                    unoptimized={isPersonalized}
                   />
                   <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center text-white text-xs font-sans">
                     <span className="flex items-center gap-1.5 bg-black/60 px-3 py-1 rounded-full backdrop-blur-sm">
@@ -197,7 +247,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
                 </div>
 
                 {/* Bank Details */}
-                <div className="space-y-1 text-sm font-sans">
+                <div className="space-y-1.5 text-sm font-sans">
                   <p className="text-xs text-textMuted uppercase tracking-wider font-medium">
                     {account.bankName}
                   </p>
@@ -207,6 +257,35 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
                   <p className="text-xs uppercase font-medium text-textMain tracking-wider">
                     Chủ TK: {account.ownerName}
                   </p>
+
+                  {/* Personalized Banking Memo Info */}
+                  <div className="mt-3 pt-2.5 border-t border-borderLight/80 flex items-center justify-between text-xs bg-[#8C1425]/[0.03] border border-[#8C1425]/10 rounded-2xl px-3 py-2">
+                    <div className="text-left overflow-hidden mr-2">
+                      <span className="text-[10px] uppercase tracking-wider text-textMuted font-medium block">
+                        Nội dung CK:
+                      </span>
+                      <span className="font-mono text-xs font-semibold text-[#8C1425] truncate block">
+                        {memo}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleCopyMemo(memo, index)}
+                      className="inline-flex items-center gap-1 text-[11px] text-[#8C1425] hover:text-[#700F1D] font-semibold bg-white border border-[#8C1425]/20 hover:border-[#8C1425]/40 px-2.5 py-1 rounded-full shadow-2xs transition-all active:scale-95 cursor-pointer flex-shrink-0"
+                    >
+                      {copiedMemoIndex === index ? (
+                        <>
+                          <Check className="w-3 h-3 text-emerald-600" />
+                          <span className="text-emerald-700">Đã chép</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3 text-[#8C1425]" />
+                          <span>Chép ND</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Action Buttons: Copy STK & Download QR (Always 1 Line) */}
@@ -214,7 +293,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
                   {/* Copy Button */}
                   <button
                     type="button"
-                    onClick={() => handleCopy(account.accountNumber, index)}
+                    onClick={() => handleCopyAccount(account.accountNumber, index)}
                     className={`inline-flex items-center justify-center gap-1 py-2 px-2 rounded-full font-sans text-[11px] font-semibold tracking-wider uppercase transition-all duration-300 min-h-[38px] cursor-pointer whitespace-nowrap overflow-hidden ${
                       copiedIndex === index
                         ? "bg-[#8C1425] text-white shadow-md"
@@ -224,7 +303,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
                     {copiedIndex === index ? (
                       <>
                         <Check className="w-3.5 h-3.5 flex-shrink-0" />
-                        <span>Đã Chép</span>
+                        <span>Đã Chép STK</span>
                       </>
                     ) : (
                       <>
@@ -238,7 +317,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
                   <button
                     type="button"
                     onClick={() =>
-                      handleDownloadQr(account.qrImage, downloadFileName, index)
+                      handleDownloadQr(qrSrc, downloadFileName, index)
                     }
                     className="inline-flex items-center justify-center gap-1 py-2 px-2 rounded-full bg-[#8C1425] hover:bg-[#700F1D] text-white font-sans text-[11px] font-semibold tracking-wider uppercase transition-all shadow-sm hover:shadow-md active:scale-95 min-h-[38px] cursor-pointer whitespace-nowrap overflow-hidden"
                   >
@@ -277,27 +356,57 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
             </button>
 
             <p className="font-heading text-base text-[#280E12] font-semibold">
-              {selectedAccount.title}
+              {selectedAccount.account.title}
             </p>
 
             <div className="relative w-full aspect-square max-w-[280px] mx-auto p-2.5 bg-white rounded-2xl border border-borderLight shadow-sm">
               <Image
-                src={selectedAccount.qrImage}
+                src={selectedAccount.qrSrc}
                 alt="QR Code Phóng To"
                 fill
                 sizes="280px"
                 className="object-contain"
+                unoptimized={isPersonalized}
               />
             </div>
 
             <div className="space-y-1 text-xs text-textMuted font-sans">
               <p className="font-semibold text-textMain text-sm">
-                {selectedAccount.bankName}
+                {selectedAccount.account.bankName}
               </p>
               <p className="font-mono text-base font-bold text-[#8C1425]">
-                {selectedAccount.accountNumber}
+                {selectedAccount.account.accountNumber}
               </p>
-              <p className="uppercase">{selectedAccount.ownerName}</p>
+              <p className="uppercase">{selectedAccount.account.ownerName}</p>
+
+              {/* Personalized Memo in Modal */}
+              <div className="mt-3 pt-2 border-t border-borderLight/80 flex items-center justify-between text-xs bg-[#8C1425]/[0.03] border border-[#8C1425]/10 rounded-2xl px-3 py-2">
+                <div className="text-left overflow-hidden mr-2">
+                  <span className="text-[10px] uppercase tracking-wider text-textMuted font-medium block">
+                    Nội dung CK:
+                  </span>
+                  <span className="font-mono text-xs font-semibold text-[#8C1425] truncate block">
+                    {selectedAccount.memo}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleCopyModalMemo(selectedAccount.memo)}
+                  className="inline-flex items-center gap-1 text-[11px] text-[#8C1425] hover:text-[#700F1D] font-semibold bg-white border border-[#8C1425]/20 px-2.5 py-1 rounded-full shadow-2xs transition-all active:scale-95 cursor-pointer flex-shrink-0"
+                >
+                  {copiedModalMemo ? (
+                    <>
+                      <Check className="w-3 h-3 text-emerald-600" />
+                      <span className="text-emerald-700">Đã chép</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3 text-[#8C1425]" />
+                      <span>Chép ND</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Download Button in Modal */}
@@ -306,8 +415,8 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
                 type="button"
                 onClick={() =>
                   handleDownloadQr(
-                    selectedAccount.qrImage,
-                    selectedAccount.role === "groom"
+                    selectedAccount.qrSrc,
+                    selectedAccount.account.role === "groom"
                       ? "QR-Mung-Cuoi-Chu-Re-Tu-Van.png"
                       : "QR-Mung-Cuoi-Co-Dau-Huong-Nguyen.png",
                   )
@@ -324,3 +433,4 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
     </section>
   );
 };
+

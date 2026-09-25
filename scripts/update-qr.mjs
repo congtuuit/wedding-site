@@ -144,7 +144,7 @@ async function main() {
   const groomBank = getBankInfo(groomBankInput);
   const groomAcc = cliArgs["groom-acc"] || (isAutoYes ? (existingGroom.accountNumber || "38689999996") : (await prompt(`- Số tài khoản chú rể [${existingGroom.accountNumber || "38689999996"}]: `))) || existingGroom.accountNumber || "38689999996";
   const groomName = cliArgs["groom-name"] || (isAutoYes ? (existingGroom.ownerName || "VAN CONG TU") : (await prompt(`- Tên chủ tài khoản chú rể [${existingGroom.ownerName || "VAN CONG TU"}]: `))) || existingGroom.ownerName || "VAN CONG TU";
-  const groomMemo = cliArgs["groom-memo"] || (isAutoYes ? (existingGroom.memo || "Mung cuoi Tu Van") : (await prompt(`- Nội dung chuyển khoản mặc định [${existingGroom.memo || "Mung cuoi Tu Van"}]: `))) || existingGroom.memo || "Mung cuoi Tu Van";
+  const groomMemo = cliArgs["groom-memo"] || (isAutoYes ? (existingGroom.memo || "Mung cuoi Tu Huong") : (await prompt(`- Nội dung chuyển khoản mặc định [${existingGroom.memo || "Mung cuoi Tu Huong"}]: `))) || existingGroom.memo || "Mung cuoi Tu Huong";
 
   // 2. Bride Info
   console.log("\n👰 THÔNG TIN CÔ DÂU:");
@@ -152,7 +152,7 @@ async function main() {
   const brideBank = getBankInfo(brideBankInput);
   const brideAcc = cliArgs["bride-acc"] || (isAutoYes ? (existingBride.accountNumber || "19039619769011") : (await prompt(`- Số tài khoản cô dâu [${existingBride.accountNumber || "19039619769011"}]: `))) || existingBride.accountNumber || "19039619769011";
   const brideName = cliArgs["bride-name"] || (isAutoYes ? (existingBride.ownerName || "NGUYEN THI HUONG") : (await prompt(`- Tên chủ tài khoản cô dâu [${existingBride.ownerName || "NGUYEN THI HUONG"}]: `))) || existingBride.ownerName || "NGUYEN THI HUONG";
-  const brideMemo = cliArgs["bride-memo"] || (isAutoYes ? (existingBride.memo || "Mung cuoi Huong Nguyen") : (await prompt(`- Nội dung chuyển khoản mặc định [${existingBride.memo || "Mung cuoi Huong Nguyen"}]: `))) || existingBride.memo || "Mung cuoi Huong Nguyen";
+  const brideMemo = cliArgs["bride-memo"] || (isAutoYes ? (existingBride.memo || "Mung cuoi Tu Huong") : (await prompt(`- Nội dung chuyển khoản mặc định [${existingBride.memo || "Mung cuoi Tu Huong"}]: `))) || existingBride.memo || "Mung cuoi Tu Huong";
 
   console.log("\n-------------------------------------------------------");
   console.log("🔄 Đang xử lý tải mã VietQR và cập nhật cơ sở dữ liệu...");
