@@ -36,7 +36,7 @@ export async function submitRSVP(
     if (data.message && data.message.trim()) {
       addWish({
         senderName: data.guestName,
-        content: data.message,
+        content: data.message.trim().slice(0, 300),
       });
     }
 
@@ -111,7 +111,10 @@ export async function fetchLiveWishes(
       Array.isArray(json.data) &&
       json.data.length > 0
     ) {
-      const sheetWishes: WishData[] = json.data;
+      const sheetWishes: WishData[] = json.data.map((item: WishData) => ({
+        ...item,
+        content: (item.content || "").trim().slice(0, 300),
+      }));
       return sheetWishes.length < 3
         ? [...sheetWishes, ...DEFAULT_WISHES]
         : sheetWishes;
@@ -133,7 +136,7 @@ export async function addWish(
   const newWish: WishData = {
     id: `wish-${Date.now()}`,
     senderName: wish.senderName.trim() || "Khách mời ẩn danh",
-    content: wish.content.trim(),
+    content: wish.content.trim().slice(0, 300),
     createdAt: new Date().toISOString(),
   };
 

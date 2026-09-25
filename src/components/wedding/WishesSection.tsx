@@ -267,13 +267,14 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!content.trim()) return;
+    const cleanContent = content.trim().slice(0, 300);
+    if (!cleanContent) return;
 
     setIsSubmitting(true);
     const newWish = await addWish(
       {
-        senderName: senderName.trim() || "Khách quý",
-        content: content.trim(),
+        senderName: senderName.trim().slice(0, 60) || "Khách quý",
+        content: cleanContent,
       },
       webhookUrl
     );
@@ -321,23 +322,36 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
               </label>
               <input
                 type="text"
+                maxLength={60}
                 value={senderName}
-                onChange={(e) => setSenderName(e.target.value)}
+                onChange={(e) => setSenderName(e.target.value.slice(0, 60))}
                 placeholder="Nhập tên của bạn..."
                 className="w-full px-4 py-3 rounded-xl bg-surface border border-borderLight focus:border-accent focus:ring-1 focus:ring-accent outline-none text-sm text-textMain font-sans"
               />
             </div>
 
             <div>
-              <label className="block text-xs uppercase tracking-wider font-sans font-medium text-textMuted mb-1.5">
-                Lời chúc gửi tới {coupleShortName}
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs uppercase tracking-wider font-sans font-medium text-textMuted">
+                  Lời chúc gửi tới {coupleShortName}
+                </label>
+                <span
+                  className={`text-[11px] font-sans transition-colors ${
+                    content.length >= 300
+                      ? "text-accent font-semibold"
+                      : "text-textMuted/70"
+                  }`}
+                >
+                  {content.length}/300
+                </span>
+              </div>
               <textarea
                 required
                 rows={3}
+                maxLength={300}
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Viết lời chúc thân thương tại đây..."
+                onChange={(e) => setContent(e.target.value.slice(0, 300))}
+                placeholder="Viết lời chúc thân thương tại đây (tối đa 300 ký tự)..."
                 className="w-full px-4 py-3 rounded-xl bg-surface border border-borderLight focus:border-accent focus:ring-1 focus:ring-accent outline-none text-sm text-textMain font-sans resize-none"
               />
             </div>
@@ -406,28 +420,37 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
               <div
                 ref={carouselRef}
                 style={{ willChange: "scroll-position", transform: "translateZ(0)" }}
-                className="flex gap-4 overflow-x-auto no-scrollbar py-3 px-4 select-none touch-pan-x cursor-grab active:cursor-grabbing"
+                className="flex gap-4 overflow-x-auto no-scrollbar py-3 px-4 select-none touch-pan-x cursor-grab active:cursor-grabbing items-stretch"
               >
                 {displayWishes.map((item, idx) => (
                   <div
                     key={`${item.id}-${idx}`}
-                    className="min-w-[275px] max-w-[290px] sm:min-w-[310px] p-5 rounded-2xl bg-background border border-borderLight/90 hover:border-accent/50 shadow-sm hover:shadow-md transition-all duration-300 relative space-y-2.5 shrink-0 select-none text-left group cursor-pointer"
+                    className="min-w-[280px] max-w-[320px] sm:min-w-[320px] p-5 rounded-2xl bg-background border border-borderLight/90 hover:border-accent/50 shadow-sm hover:shadow-md transition-all duration-300 relative flex flex-col justify-between shrink-0 select-none text-left group cursor-pointer"
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-[#FCECEE] text-accent flex items-center justify-center text-xs font-heading font-bold border border-accent/20">
-                          {item.senderName ? item.senderName.charAt(0).toUpperCase() : "K"}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-7 h-7 rounded-full bg-[#FCECEE] text-accent flex items-center justify-center text-xs font-heading font-bold border border-accent/20 shrink-0">
+                            {item.senderName ? item.senderName.charAt(0).toUpperCase() : "K"}
+                          </div>
+                          <p className="font-heading text-sm text-textMain font-semibold tracking-wide truncate max-w-[180px]">
+                            {item.senderName}
+                          </p>
                         </div>
-                        <p className="font-heading text-sm text-textMain font-semibold tracking-wide truncate max-w-[170px]">
-                          {item.senderName}
-                        </p>
+                        <Quote className="w-4 h-4 text-accent/30 shrink-0 group-hover:text-accent/60 transition-colors" />
                       </div>
-                      <Quote className="w-4 h-4 text-accent/30 flex-shrink-0 group-hover:text-accent/60 transition-colors" />
+
+                      <p className="font-sans text-xs sm:text-[13px] text-textMuted leading-relaxed italic break-words whitespace-pre-line">
+                        "{item.content.length > 300 ? item.content.slice(0, 300) : item.content}"
+                      </p>
                     </div>
 
-                    <p className="font-sans text-xs sm:text-[13px] text-textMuted leading-relaxed line-clamp-4 italic">
-                      "{item.content}"
-                    </p>
+                    {item.createdAt && (
+                      <div className="pt-2.5 mt-3 border-t border-borderLight/50 flex items-center justify-between text-[10px] text-textMuted/60 font-sans">
+                        <span>{item.createdAt}</span>
+                        <Heart className="w-3 h-3 text-accent/40" />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
