@@ -33,11 +33,11 @@ export const metadata: Metadata = {
         ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
         : "https://tu-huong-wedding.vercel.app")
   ),
-  title: "Tú Văn & Hường Nguyễn — Thư Mời Thành Hôn 12.12.2026",
+  title: "Tú Văn & Hường Nguyễn — Thư Mời Tân Hôn 12.12.2026",
   description:
     "Trân trọng kính mời bạn đến chung vui trong ngày hạnh phúc của Tú Văn & Hường Nguyễn vào ngày 12 . 12 . 2026.",
   openGraph: {
-    title: "Tú Văn & Hường Nguyễn — Thư Mời Thành Hôn (12.12.2026)",
+    title: "Tú Văn & Hường Nguyễn — Thư Mời Tân Hôn (12.12.2026)",
     description:
       "Trân trọng kính mời bạn đến chung vui cùng chúng mình trong ngày trọng đại!",
     siteName: "Thiệp Cưới Tú Văn & Hường Nguyễn",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tú Văn & Hường Nguyễn — Thư Mời Thành Hôn 12.12.2026",
+    title: "Tú Văn & Hường Nguyễn — Thư Mời Tân Hôn 12.12.2026",
     description: "Trân trọng kính mời bạn đến chung vui cùng chúng mình!",
     images: ["/images/TOBI0530-og.jpg"],
   },

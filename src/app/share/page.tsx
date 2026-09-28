@@ -232,16 +232,16 @@ export default function SharePage() {
 
     return [
       {
-        title: "Mẫu Thân Mật (Lễ Thành Hôn — Nhà Trai)",
-        body: `Thân gửi ${name},\n\nTú & Hường rất vui mừng được trân trọng gửi lời mời đến ${name} tới chung vui trong ngày trọng đại Lễ Thành Hôn của chúng mình vào ngày ${previewStage.weddingDateFormatted}.\n\nThời gian: Thứ Bảy, 12 Tháng 12 Năm 2026 (18:00 Đón Khách - 19:00 Khai Tiệc)\nĐịa điểm: The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP.HCM.\n\nSự hiện diện của ${name} là niềm hạnh phúc to lớn đối với chúng mình!\n\nXem thiệp mời chi tiết tại đây:\n${currentLink}\n\nTrân trọng & Yêu thương!`,
+        title: "Mẫu Thân Mật (Lễ Tân Hôn — Nhà Trai)",
+        body: `Thân gửi ${name},\n\nTú & Hường rất vui mừng được trân trọng gửi lời mời đến ${name} tới chung vui trong ngày trọng đại Lễ Tân Hôn của chúng mình vào ngày ${previewStage.weddingDateFormatted}.\n\nThời gian: Thứ Bảy, 12 Tháng 12 Năm 2026 (18:00 Đón Khách - 19:00 Khai Tiệc)\nĐịa điểm: The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP.HCM.\n\nSự hiện diện của ${name} là niềm hạnh phúc to lớn đối với chúng mình!\n\nXem thiệp mời chi tiết tại đây:\n${currentLink}\n\nTrân trọng & Yêu thương!`,
       },
       {
         title: "Mẫu Trang Trọng (Người lớn, gia đình, đối tác)",
-        body: `Kính gửi ${name},\n\nGia đình chúng tôi trân trọng kính mời ${name} cùng gia đình tới dự buổi tiệc mừng Lễ Thành Hôn của hai cháu Tú Văn & Hường Nguyễn.\n\nThời gian: Thứ Bảy, 12 Tháng 12 Năm 2026\nĐịa điểm: The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP.HCM.\n\nKính mời xem thiệp cưới trực tuyến tại:\n${currentLink}\n\nRất hân hạnh được đón tiếp!`,
+        body: `Kính gửi ${name},\n\nGia đình chúng tôi trân trọng kính mời ${name} cùng gia đình tới dự buổi tiệc mừng Lễ Tân Hôn của hai cháu Tú Văn & Hường Nguyễn.\n\nThời gian: Thứ Bảy, 12 Tháng 12 Năm 2026\nĐịa điểm: The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP.HCM.\n\nKính mời xem thiệp cưới trực tuyến tại:\n${currentLink}\n\nRất hân hạnh được đón tiếp!`,
       },
       {
         title: "Mẫu Ngắn Gọn (Gửi Zalo / Messenger)",
-        body: `Mời ${name} cùng người thương tới chung vui Lễ Thành Hôn của Tú Văn & Hường Nguyễn ngày 12.12.2026 tại TP.HCM nhé!\nXem thiệp cưới tại: ${currentLink}`,
+        body: `Mời ${name} cùng người thương tới chung vui Lễ Tân Hôn của Tú Văn & Hường Nguyễn ngày 12.12.2026 tại TP.HCM nhé!\nXem thiệp cưới tại: ${currentLink}`,
       },
     ];
   }, [guestName, currentLink, previewStage]);
@@ -524,7 +524,7 @@ export default function SharePage() {
                       ? `Tự động theo ngày (Hiện tại: ${previewStage.ceremonyName})`
                       : eventTarget === "que"
                       ? "Chỉ định: Lễ Vu Quy (Nhà Gái)"
-                      : "Chỉ định: Lễ Thành Hôn (Nhà Trai)"}
+                      : "Chỉ định: Lễ Tân Hôn (Nhà Trai)"}
                   </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -539,7 +539,7 @@ export default function SharePage() {
                   >
                     <div className="font-semibold">⏱️ Tự Động (Thông minh)</div>
                     <div className="text-[10px] text-[#6B4E53] mt-0.5">
-                      Trước 10.10 là Vu Quy, sau 10.10 là Thành Hôn
+                      Trước 10.10 là Vu Quy, sau 10.10 là Tân Hôn
                     </div>
                   </button>
 
@@ -569,7 +569,7 @@ export default function SharePage() {
                   >
                     <div className="font-semibold">🏰 Nhà Trai (12.12.2026)</div>
                     <div className="text-[10px] text-[#6B4E53] mt-0.5">
-                      Lễ Thành Hôn The ADORA TP.HCM
+                      Lễ Tân Hôn The ADORA TP.HCM
                     </div>
                   </button>
                 </div>
@@ -696,7 +696,7 @@ export default function SharePage() {
                     {eventTarget === "que"
                       ? "Lễ Vu Quy (10.10.2026) — Thân gửi đến:"
                       : eventTarget === "sg"
-                      ? "Lễ Thành Hôn (12.12.2026) — Thân gửi đến:"
+                      ? "Lễ Tân Hôn (12.12.2026) — Thân gửi đến:"
                       : "Thân gửi đến:"}
                   </p>
                   <p className="font-couple text-2xl sm:text-3xl text-[#8C1425] pt-0.5">
@@ -869,7 +869,7 @@ export default function SharePage() {
                     }`}
                   >
                     <div className="font-semibold">🏰 Nhà Trai (12.12)</div>
-                    <div className="text-[10px] text-[#6B4E53]">Lễ Thành Hôn TP.HCM</div>
+                    <div className="text-[10px] text-[#6B4E53]">Lễ Tân Hôn TP.HCM</div>
                   </button>
                 </div>
               </div>

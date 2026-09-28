@@ -27,7 +27,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const secondPersonName = isVuQuy ? couple.groom.name : couple.bride.name;
 
   const displayDate = weddingDateFormatted || couple.weddingDateFormatted;
-  const displayCeremony = ceremonyName || (isVuQuy ? "Lễ Vu Quy" : "Lễ Thành Hôn");
+  const displayCeremony = ceremonyName || (isVuQuy ? "Lễ Vu Quy" : "Lễ Tân Hôn");
   const scrollToRsvp = () => {
     const el = document.getElementById("rsvp");
     if (el) {

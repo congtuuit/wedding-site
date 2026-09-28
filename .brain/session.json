@@ -1,32 +1,26 @@
 {
-  "updated_at": "2026-09-24T21:07:00+07:00",
+  "updated_at": "2026-09-28T11:03:00+07:00",
   "working_on": {
-    "feature": "Unified Social Share Preview Image (TOBI0530.webp) across Facebook, Zalo & Social Platforms",
+    "feature": "Cập nhật danh xưng tiệc cưới Nhà Trai (TP.HCM): 'Thành Hôn' -> 'Tân Hôn'",
     "status": "completed",
-    "current_state": "Investigated reason for Facebook vs Zalo preview discrepancy (multiple og:images, missing MIME types, canonical collapse). Standardized TOBI0530.webp across all pages (layout.tsx, page.tsx, share/page.tsx preview). Verified clean production build (0 errors)."
+    "current_state": "Đã đổi đồng bộ tất cả text và nhãn từ 'Thành Hôn' sang 'Tân Hôn' theo đúng phong tục tiệc cưới Nhà Trai tại Sài Gòn (wedding-timeline.ts, wedding.json, layout.tsx, HeroSection.tsx, share/page.tsx). Verified production build (npm run build PASS, 0 lỗi)."
   },
   "completed_tasks": [
-    { "task": "Investigate Facebook vs Zalo OG Discrepancy: Pinpointed multiple og:image tags where Facebook picked generic fallback and Zalo picked first image", "status": "done" },
-    { "task": "Standardize Social Preview Image: Set TOBI0530.webp with 2048x1365 dimensions and image/webp type in layout.tsx", "status": "done" },
-    { "task": "Dynamic Metadata Unification: Updated page.tsx generateMetadata to uniformly use TOBI0530.webp for all personalized and fallback links while keeping custom guest titles", "status": "done" },
-    { "task": "Admin Dashboard Sync: Updated share/page.tsx mock preview card to display TOBI0530-og.jpg", "status": "done" },
-    { "task": "Dynamic Domain Resolution: Replaced hardcoded domain in page.tsx with request headers (x-forwarded-host / host / proto) and metadataBase", "status": "done" },
-    { "task": "Optimal 1.91:1 Aspect Ratio (Facebook Checklist): Cropped TOBI0530 to exact 1200x630 (1.91:1) in TOBI0530-og.jpg (239KB), achieving 100% optimal rating on Facebook Debugger", "status": "done" },
-    { "task": "Fix Query Parameter Preservation on Preview Click: Hoisted canonical link and property='og:url' with full search params (?to=...&event=...), and made admin share preview card clickable", "status": "done" },
-    { "task": "Production Build Verification: 100% successful compile in 2.9s with Next.js 15.5.23 (0 errors)", "status": "done" }
+    { "task": "Cập nhật wedding-timeline.ts: Đổi ceremonyName, ceremonyBadge, invitationHeadline sang 'Lễ Tân Hôn', '✨ LỄ TÂN HÔN ✨', 'Thư Mời Tân Hôn'; hỗ trợ thêm param ?event=tan-hon", "status": "done" },
+    { "task": "Cập nhật wedding.json: Đổi headline 'Thư Mời Tân Hôn' và calendarDescription tiệc cưới mừng tân hôn Nhà Trai tại TP.HCM", "status": "done" },
+    { "task": "Cập nhật layout.tsx: Đồng bộ title, og:title, twitter:title mặc định sang 'Thư Mời Tân Hôn'", "status": "done" },
+    { "task": "Cập nhật HeroSection.tsx & GiftSection.tsx: Fallback danh xưng và comment đồng bộ 'Lễ Tân Hôn'", "status": "done" },
+    { "task": "Cập nhật trang /share: Cập nhật 3 mẫu tin nhắn mời (Thân mật, Trang trọng, Ngắn gọn) và các nút lọc, nhãn phong bì sang 'Lễ Tân Hôn'", "status": "done" },
+    { "task": "Build verification: npm run build thành công 100% không cảnh báo lỗi", "status": "done" }
   ],
   "decisions_made": [
     {
-      "decision": "Crop TOBI0530 to Standard 1200x630 (1.91:1) as TOBI0530-og.jpg",
-      "reason": "Resolves Facebook's 'The ratio of your og:image isn't optimal' warning while preserving bride, groom, bouquet, chandeliers, and floral arch in the golden zone."
-    },
-    {
-      "decision": "Retain Personalized Title & Description with Unified Photo",
-      "reason": "Allows guest names and ceremony dates to remain personalized in the preview text (e.g., '💌 Thân gửi: [Tên khách]') while the visual thumbnail remains consistent and instantly recognizable."
+      "decision": "Đổi toàn bộ danh xưng tiệc Nhà Trai (TP.HCM) từ 'Thành Hôn' sang 'Tân Hôn'",
+      "reason": "Chuẩn hóa theo đúng phong tục cưới hỏi truyền thống Việt Nam: Nhà Gái là Lễ Vu Quy, Nhà Trai tổ chức tiệc đón dâu là Lễ Tân Hôn."
     }
   ],
   "next_recommended_steps": [
-    { "task": "Deploy production build to Vercel / Cloudflare", "priority": "high" },
-    { "task": "Use Facebook Sharing Debugger to scrape again and clear Facebook's old link cache", "priority": "high" }
+    { "task": "Kiểm tra thực tế giao diện trên trình duyệt", "priority": "medium" },
+    { "task": "Commit và push / deploy phiên bản mới lên production", "priority": "high" }
   ]
 }

@@ -36,7 +36,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
       // Lễ Vu Quy: Ẩn thông tin chuyển khoản của Chú Rể, chỉ hiển thị Cô Dâu
       return account.role !== "groom";
     }
-    // Lễ Thành Hôn: Hiện cả 2 thông tin chuyển khoản (Chú Rể & Cô Dâu)
+    // Lễ Tân Hôn: Hiện cả 2 thông tin chuyển khoản (Chú Rể & Cô Dâu)
     return true;
   });
 

@@ -5,16 +5,16 @@ export type WeddingStageKey = "que" | "sg";
 
 export interface ActiveWeddingStage {
   stageKey: WeddingStageKey;
-  ceremonyName: string; // e.g. "Lễ Vu Quy" or "Lễ Thành Hôn"
-  ceremonyBadge: string; // e.g. "✨ LỄ VU QUY ✨" or "✨ LỄ THÀNH HÔN ✨"
-  invitationHeadline: string; // e.g. "Thư Mời Lễ Vu Quy" or "Thư Mời Thành Hôn"
+  ceremonyName: string; // e.g. "Lễ Vu Quy" or "Lễ Tân Hôn"
+  ceremonyBadge: string; // e.g. "✨ LỄ VU QUY ✨" or "✨ LỄ TÂN HÔN ✨"
+  invitationHeadline: string; // e.g. "Thư Mời Lễ Vu Quy" or "Thư Mời Tân Hôn"
   primaryCoupleName: string; // "Hường Nguyễn & Tú Văn" vs "Tú Văn & Hường Nguyễn"
   shortCoupleName: string; // "Hường & Tú" vs "Tú & Hường"
   uppercaseCoupleName: string; // "HƯỜNG NGUYỄN & TÚ VĂN" vs "TÚ VĂN & HƯỜNG NGUYỄN"
   initials: string; // "H & T" vs "T & H"
   firstName: string; // First displayed person's name
   secondName: string; // Second displayed person's name
-  showGroomAccount: boolean; // false for Vu Quy, true for Thành Hôn
+  showGroomAccount: boolean; // false for Vu Quy, true for Tân Hôn
   weddingDate: string; // "2026-10-10" or "2026-12-12"
   weddingDateFormatted: string; // "10 . 10 . 2026" or "12 . 12 . 2026"
   targetCountdownIso: string;
@@ -44,7 +44,7 @@ const nhaTraiEvent = allEvents.find((e) => e.category === "sg") || allEvents[1] 
  *    - now <= 10.10.2026 23:59:59 (GMT+7) -> Nhà Gái (Lễ Vu Quy - 10.10.2026)
  *      - Tên: Cô Dâu & Chú Rể (Hường Nguyễn & Tú Văn)
  *      - Ẩn thông tin chuyển khoản Chú Rể
- *    - 11.10.2026 <= now <= 12.12.2026 23:59:59 (GMT+7) -> Nhà Trai (Lễ Thành Hôn - 12.12.2026)
+ *    - 11.10.2026 <= now <= 12.12.2026 23:59:59 (GMT+7) -> Nhà Trai (Lễ Tân Hôn - 12.12.2026)
  *      - Tên: Chú Rể & Cô Dâu (Tú Văn & Hường Nguyễn)
  *      - Hiện cả 2 thông tin chuyển khoản (Chú Rể & Cô Dâu)
  *    - now > 12.12.2026 -> Retains Nhà Trai (12.12.2026, with isPast = true)
@@ -82,12 +82,17 @@ export function getActiveWeddingStage(
     };
   }
 
-  if (normalizedParam === "sg" || normalizedParam === "nha-trai" || normalizedParam === "thanh-hon") {
+  if (
+    normalizedParam === "sg" ||
+    normalizedParam === "nha-trai" ||
+    normalizedParam === "thanh-hon" ||
+    normalizedParam === "tan-hon"
+  ) {
     return {
       stageKey: "sg",
-      ceremonyName: "Lễ Thành Hôn",
-      ceremonyBadge: "✨ LỄ THÀNH HÔN ✨",
-      invitationHeadline: "Thư Mời Thành Hôn",
+      ceremonyName: "Lễ Tân Hôn",
+      ceremonyBadge: "✨ LỄ TÂN HÔN ✨",
+      invitationHeadline: "Thư Mời Tân Hôn",
       primaryCoupleName: "Tú Văn & Hường Nguyễn",
       shortCoupleName: "Tú & Hường",
       uppercaseCoupleName: "TÚ VĂN & HƯỜNG NGUYỄN",
@@ -140,13 +145,13 @@ export function getActiveWeddingStage(
     };
   }
 
-  // Phase 2: After 10.10.2026 and up to 12.12.2026 (Nhà Trai - Lễ Thành Hôn)
+  // Phase 2: After 10.10.2026 and up to 12.12.2026 (Nhà Trai - Lễ Tân Hôn)
   if (now <= nhaTraiCutoff) {
     return {
       stageKey: "sg",
-      ceremonyName: "Lễ Thành Hôn",
-      ceremonyBadge: "✨ LỄ THÀNH HÔN ✨",
-      invitationHeadline: "Thư Mời Thành Hôn",
+      ceremonyName: "Lễ Tân Hôn",
+      ceremonyBadge: "✨ LỄ TÂN HÔN ✨",
+      invitationHeadline: "Thư Mời Tân Hôn",
       primaryCoupleName: "Tú Văn & Hường Nguyễn",
       shortCoupleName: "Tú & Hường",
       uppercaseCoupleName: "TÚ VĂN & HƯỜNG NGUYỄN",
@@ -170,9 +175,9 @@ export function getActiveWeddingStage(
   // Phase 3: After 12.12.2026 (Retain final state)
   return {
     stageKey: "sg",
-    ceremonyName: "Lễ Thành Hôn",
-    ceremonyBadge: "✨ LỄ THÀNH HÔN ✨",
-    invitationHeadline: "Thư Mời Thành Hôn",
+    ceremonyName: "Lễ Tân Hôn",
+    ceremonyBadge: "✨ LỄ TÂN HÔN ✨",
+    invitationHeadline: "Thư Mời Tân Hôn",
     primaryCoupleName: "Tú Văn & Hường Nguyễn",
     shortCoupleName: "Tú & Hường",
     uppercaseCoupleName: "TÚ VĂN & HƯỜNG NGUYỄN",
