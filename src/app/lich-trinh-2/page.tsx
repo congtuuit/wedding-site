@@ -25,6 +25,15 @@ import weddingData from "@/data/wedding.json";
 const ITINERARY_CACHE_KEY = "lich-trinh-2:itinerary";
 const ITINERARY_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 
+// Chỉ sử dụng cache từ ngày 09/10/2026 đến hết 10/10/2026 theo giờ Việt Nam (UTC+7)
+const CACHE_START_VN = new Date("2026-10-09T00:00:00+07:00").getTime();
+const CACHE_END_VN = new Date("2026-10-10T23:59:59.999+07:00").getTime();
+
+function isCacheAllowed(): boolean {
+  const now = Date.now();
+  return now >= CACHE_START_VN && now <= CACHE_END_VN;
+}
+
 const CONTACTS = [
   { name: "Tài xế", phone: "đang cập nhật" },
   { name: "Anh Tân", phone: "0909666489" },
@@ -584,8 +593,20 @@ function LichTrinhPage() {
     const fetchSheetItinerary = async () => {
       const url = weddingData.appsheetWebhookUrl;
       const forceRefresh = searchParams.get("refresh") === "1";
+      const cacheAllowed = isCacheAllowed();
+
+      // Nếu đang ngoài thời gian cho phép (trước 09/10 hoặc sau 10/10/2026 giờ VN),
+      // tự động xoá cache đã lưu của những user từng truy cập trước đó
+      if (!cacheAllowed) {
+        try {
+          localStorage.removeItem(ITINERARY_CACHE_KEY);
+        } catch {
+          // ignore
+        }
+      }
+
       try {
-        if (!forceRefresh) {
+        if (!forceRefresh && cacheAllowed) {
           try {
             const raw = localStorage.getItem(ITINERARY_CACHE_KEY);
             if (raw) {
@@ -624,13 +645,16 @@ function LichTrinhPage() {
               });
             });
             applyByDay(byDay);
-            try {
-              localStorage.setItem(
-                ITINERARY_CACHE_KEY,
-                JSON.stringify({ ts: Date.now(), byDay }),
-              );
-            } catch {
-              // storage full/unavailable
+
+            if (cacheAllowed) {
+              try {
+                localStorage.setItem(
+                  ITINERARY_CACHE_KEY,
+                  JSON.stringify({ ts: Date.now(), byDay }),
+                );
+              } catch {
+                // storage full/unavailable
+              }
             }
           }
         }
