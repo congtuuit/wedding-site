@@ -17,8 +17,27 @@ import {
   Navigation,
   ChevronDown,
   CheckCircle2,
+  Phone,
+  X,
 } from "lucide-react";
 import weddingData from "@/data/wedding.json";
+
+const CONTACTS = [
+  { name: "Tài xế", phone: "đang cập nhật" },
+  { name: "Anh Tân", phone: "0909666489" },
+  { name: "Chị Tuyền", phone: "" },
+  { name: "Chị Nga", phone: "" },
+  { name: "Chị Thùy", phone: "0979457975" },
+  { name: "Chị Yến", phone: "" },
+  { name: "Hậu", phone: "" },
+  { name: "Tiên", phone: "" },
+  { name: "An Tiên", phone: "0888619628" },
+  { name: "Thanh", phone: "033 9833242" },
+  { name: "Huyền", phone: "0339769196" },
+  { name: "Hương", phone: "086 2443775" },
+  { name: "Phim", phone: "" },
+  { name: "Anh Kiên", phone: "" },
+];
 
 type ItineraryCategory = "travel" | "meal" | "rest" | "ceremony" | "party";
 type EventStatus = "past" | "active" | "future";
@@ -362,6 +381,82 @@ function EventCard({
   );
 }
 
+function ContactModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-end bg-black/50 backdrop-blur-sm">
+      <div className="w-full bg-white rounded-t-3xl max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="sticky top-0 bg-gradient-to-r from-rose-50 to-fuchsia-50 border-b border-rose-100 p-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-rose-400 to-fuchsia-400 flex items-center justify-center shadow-md">
+              <Phone className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="font-bold text-gray-800">Liên hệ</h2>
+              <p className="text-xs text-gray-500">Danh sách người liên lạc</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-white/50 rounded-full transition-colors"
+          >
+            <X className="w-5 h-5 text-gray-600" />
+          </button>
+        </div>
+
+        {/* Contact list */}
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-[3rem_1fr_1fr] bg-gray-50 border-b border-gray-200">
+            <div className="px-3 py-3 font-semibold text-sm text-gray-700 text-center">
+              STT
+            </div>
+            <div className="px-4 py-3 font-semibold text-sm text-gray-700">
+              Tên
+            </div>
+            <div className="px-4 py-3 font-semibold text-sm text-gray-700">
+              Số điện thoại
+            </div>
+          </div>
+          {CONTACTS.map((contact, idx) => (
+            <div
+              key={idx}
+              className="grid grid-cols-[3rem_1fr_1fr] hover:bg-gray-50 transition-colors"
+            >
+              <div className="px-3 py-3 text-sm text-gray-400 text-center tabular-nums">
+                {idx + 1}
+              </div>
+              <div className="px-4 py-3 text-sm text-gray-800 font-medium">
+                {contact.name}
+              </div>
+              <div className="px-4 py-3 text-sm">
+                {contact.phone ? (
+                  <a
+                    href={`tel:${contact.phone}`}
+                    className="text-rose-600 font-semibold hover:text-rose-700 transition-colors inline-flex items-center gap-1.5 group"
+                  >
+                    <Phone className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
+                    {contact.phone}
+                  </a>
+                ) : (
+                  <span className="text-gray-300">-</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function DaySection({
   day,
   isOpen,
@@ -465,6 +560,10 @@ function LichTrinhPage() {
   const searchParams = useSearchParams();
   const isDebug = searchParams.get("debug") === "1";
 
+  // Loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [showContacts, setShowContacts] = useState(false);
+
   // Dynamic days state synced with Google Sheets
   const [days, setDays] = useState<ItineraryDay[]>(
     () => itinerary.days as ItineraryDay[],
@@ -473,36 +572,39 @@ function LichTrinhPage() {
   useEffect(() => {
     const fetchSheetItinerary = async () => {
       const url = weddingData.appsheetWebhookUrl;
-      if (!url) return;
       try {
-        const res = await fetch(`${url}?action=lich_trinh_cong_ty`);
-        const json = await res.json();
-        if (
-          json?.status === "success" &&
-          Array.isArray(json.data) &&
-          json.data.length > 0
-        ) {
-          const byDay: Record<string, ItineraryEvent[]> = {};
-          json.data.forEach((row: Record<string, string>) => {
-            if (!byDay[row.dayId]) byDay[row.dayId] = [];
-            byDay[row.dayId].push({
-              id: row.id,
-              time: row.time,
-              title: row.title,
-              description: row.description,
-              mapUrl: row.mapUrl,
-              category: row.category as ItineraryCategory,
+        if (url) {
+          const res = await fetch(`${url}?action=lich_trinh_cong_ty`);
+          const json = await res.json();
+          if (
+            json?.status === "success" &&
+            Array.isArray(json.data) &&
+            json.data.length > 0
+          ) {
+            const byDay: Record<string, ItineraryEvent[]> = {};
+            json.data.forEach((row: Record<string, string>) => {
+              if (!byDay[row.dayId]) byDay[row.dayId] = [];
+              byDay[row.dayId].push({
+                id: row.id,
+                time: row.time,
+                title: row.title,
+                description: row.description,
+                mapUrl: row.mapUrl,
+                category: row.category as ItineraryCategory,
+              });
             });
-          });
-          setDays((prev) =>
-            prev.map((day) => ({
-              ...day,
-              events: byDay[day.id] ?? day.events,
-            })),
-          );
+            setDays((prev) =>
+              prev.map((day) => ({
+                ...day,
+                events: byDay[day.id] ?? day.events,
+              })),
+            );
+          }
         }
       } catch (e) {
         console.warn("Could not fetch sheet itinerary:", e);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchSheetItinerary();
@@ -564,6 +666,41 @@ function LichTrinhPage() {
     0,
   );
 
+  // Show loading screen while fetching data
+  if (isLoading) {
+    return (
+      <>
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+          body { font-family: 'Inter', sans-serif; background: #fdf8f6; }
+          .hero-bg { background: linear-gradient(135deg, #fff1f2 0%, #fce7f3 40%, #f3e8ff 70%, #eff6ff 100%); }
+          @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+          }
+          .heartbeat { animation: heartbeat 1.4s ease-in-out infinite; }
+        `}</style>
+        <div className="hero-bg min-h-screen w-full flex items-center justify-center relative overflow-hidden px-6">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-rose-200/30 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-fuchsia-200/30 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
+          <div className="relative z-10 text-center max-w-xs">
+            <div className="heartbeat inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-rose-400 to-fuchsia-400 shadow-lg shadow-rose-200 mb-5">
+              <Heart className="w-8 h-8 text-white fill-white" />
+            </div>
+            <h2 className="playfair text-2xl font-bold text-rose-800 mb-2">
+              Đang tải lịch trình...
+            </h2>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Vui lòng chờ trong giây lát để cập nhật thông tin mới nhất
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <style>{`
@@ -607,13 +744,22 @@ function LichTrinhPage() {
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-fuchsia-200/30 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
 
           <div className="relative z-10 max-w-md mx-auto px-4 pt-8 pb-10">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 text-rose-500 text-sm font-medium mb-6 hover:text-rose-700 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Trang chủ
-            </Link>
+            <div className="flex items-center justify-between mb-6">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-rose-500 text-sm font-medium hover:text-rose-700 transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Trang chủ
+              </Link>
+              <button
+                onClick={() => setShowContacts(true)}
+                className="inline-flex items-center gap-1.5 text-rose-500 text-sm font-medium hover:text-rose-700 transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                Liên hệ
+              </button>
+            </div>
 
             <div className="text-center fade-in-up">
               <div className="float-anim inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-rose-400 to-fuchsia-400 shadow-lg shadow-rose-200 mb-4">
@@ -769,6 +915,12 @@ function LichTrinhPage() {
           </div>
         </div>
       </main>
+
+      {/* Contact Modal */}
+      <ContactModal
+        isOpen={showContacts}
+        onClose={() => setShowContacts(false)}
+      />
     </>
   );
 }
