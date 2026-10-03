@@ -475,7 +475,7 @@ function LichTrinhPage() {
       const url = weddingData.appsheetWebhookUrl;
       if (!url) return;
       try {
-        const res = await fetch(`${url}?action=lich_trinh`);
+        const res = await fetch(`${url}?action=lich_trinh_cong_ty`);
         const json = await res.json();
         if (
           json?.status === "success" &&
