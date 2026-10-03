@@ -1,0 +1,118 @@
+{
+  "title": "Lịch Trình Di Chuyển",
+  "subtitle": "Hành trình về Lâm Đồng dự đám cưới Tú Văn & Hường Nguyễn (Đoàn Công Ty)",
+  "days": [
+    {
+      "id": "day-1",
+      "dayLabel": "Ngày 1",
+      "dayName": "Thứ Sáu, 09/10/2026",
+      "theme": "Di chuyển & Áp rạp",
+      "events": [
+        {
+          "id": "d1-e1",
+          "time": "13:00",
+          "title": "Xuất phát từ Tòa nhà Mê Kong 92 Bạch Đằng, Tân Bình, HCM",
+          "description": "Tập trung tại điểm xuất phát, chuẩn bị hành lý và lên đường.",
+          "mapUrl": "https://maps.app.goo.gl/Eh4CRHEzdTwNDqAo7",
+          "category": "travel"
+        },
+        {
+          "id": "d1-e2",
+          "time": "17:30",
+          "title": "Checkin nhà nghỉ Thu Thảo",
+          "description": "",
+          "mapUrl": "https://www.google.com/maps?q=Nh%C3%A0+ngh%E1%BB%89+Thu+Th%E1%BA%A3o,+175+Ph%E1%BA%A1m+V%C4%83n+%C4%90%E1%BB%93ng,+C%C3%A1t+Ti%C3%AAn,+L%C3%A2m+%C4%90%E1%BB%93ng&ftid=0x317381203243617b:0xd083f730d06fa8ea&entry=gps&shh=CAE&lucs=,94297699,100826479,94231188,94280568,100821555,47071704,94218641,94282134,100835699,94286869,100820247,100822504&g_ep=CAISEjI2LjM5LjAuOTg0OTU2MzcwMBgAINeCAypxLDk0Mjk3Njk5LDEwMDgyNjQ3OSw5NDIzMTE4OCw5NDI4MDU2OCwxMDA4MjE1NTUsNDcwNzE3MDQsOTQyMTg2NDEsOTQyODIxMzQsMTAwODM1Njk5LDk0Mjg2ODY5LDEwMDgyMDI0NywxMDA4MjI1MDRCAlZO&skid=a0860f35-0a52-4c95-b842-7059cbbe605a&g_st=ic",
+          "category": "rest"
+        },
+        {
+          "id": "d1-e3",
+          "time": "18:00",
+          "title": "Di chuyển đến nhà gái – Tiệc tối áp rạp cưới",
+          "description": "Tham dự tiệc tối buổi áp rạp cưới.",
+          "mapUrl": "https://maps.app.goo.gl/BqT59aKtr19VbeEC9",
+          "category": "party"
+        },
+        {
+          "id": "d1-e4",
+          "time": "20:00",
+          "title": "Quay lại nhà nghỉ",
+          "description": "Kết thúc ngày 1. Nghỉ ngơi chuẩn bị cho ngày lễ chính.",
+          "mapUrl": "https://www.google.com/maps?q=Nh%C3%A0+ngh%E1%BB%89+Thu+Th%E1%BA%A3o,+175+Ph%E1%BA%A1m+V%C4%83n+%C4%90%E1%BB%93ng,+C%C3%A1t+Ti%C3%AAn,+L%C3%A2m+%C4%90%E1%BB%93ng&ftid=0x317381203243617b:0xd083f730d06fa8ea&entry=gps&shh=CAE&lucs=,94297699,100826479,94231188,94280568,100821555,47071704,94218641,94282134,100835699,94286869,100820247,100822504&g_ep=CAISEjI2LjM5LjAuOTg0OTU2MzcwMBgAINeCAypxLDk0Mjk3Njk5LDEwMDgyNjQ3OSw5NDIzMTE4OCw5NDI4MDU2OCwxMDA4MjE1NTUsNDcwNzE3MDQsOTQyMTg2NDEsOTQyODIxMzQsMTAwODM1Njk5LDk0Mjg2ODY5LDEwMDgyMDI0NywxMDA4MjI1MDRCAlZO&skid=a0860f35-0a52-4c95-b842-7059cbbe605a&g_st=ic",
+          "category": "rest"
+        }
+      ]
+    },
+    {
+      "id": "day-2",
+      "dayLabel": "Ngày 2",
+      "dayName": "Thứ Bảy, 10/10/2026",
+      "theme": "Lễ chính & Trở về",
+      "events": [
+        {
+          "id": "d2-e1",
+          "time": "04:40",
+          "title": "Di chuyển đến nhà thờ giáo họ",
+          "description": "Chuẩn bị và di chuyển đến nhà thờ để dự thánh lễ hôn phối.",
+          "mapUrl": "https://maps.app.goo.gl/QXoHq7GWv8sSmfK87",
+          "category": "travel"
+        },
+        {
+          "id": "d2-e2",
+          "time": "05:00",
+          "title": "Bắt đầu thánh lễ tại nhà thờ",
+          "description": "Thánh lễ hôn phối tại nhà thờ giáo họ.",
+          "mapUrl": "https://maps.app.goo.gl/QXoHq7GWv8sSmfK87",
+          "category": "ceremony"
+        },
+        {
+          "id": "d2-e3",
+          "time": "06:00",
+          "title": "Ăn sáng tại nhà thờ",
+          "description": "Dùng bữa sáng tại nhà thờ sau khi kết thúc lễ.",
+          "mapUrl": "",
+          "category": "meal"
+        },
+        {
+          "id": "d2-e4",
+          "time": "07:00",
+          "title": "Quay lại khách sạn chuẩn bị trang phục",
+          "description": "Về khách sạn thay trang phục chính thức cho buổi lễ gia tiên.",
+          "mapUrl": "https://maps.app.goo.gl/8t89SH5mtoMpW2Vb9",
+          "category": "rest"
+        },
+        {
+          "id": "d2-e5",
+          "time": "08:30",
+          "title": "Di chuyển sang nhà gái (trả phòng)",
+          "description": "Quãng đường khoảng 20 phút.",
+          "mapUrl": "https://maps.app.goo.gl/BqT59aKtr19VbeEC9",
+          "category": "travel"
+        },
+        {
+          "id": "d2-e6",
+          "time": "09:00",
+          "title": "Lễ Gia Tiên",
+          "description": "Tổ chức Lễ Gia Tiên",
+          "mapUrl": "https://maps.app.goo.gl/BqT59aKtr19VbeEC9",
+          "category": "ceremony"
+        },
+        {
+          "id": "d2-e7",
+          "time": "10:00",
+          "title": "Tiệc cưới",
+          "description": "Các nghi thức cưới truyền thống tại tư gia nhà gái.",
+          "mapUrl": "https://maps.app.goo.gl/BqT59aKtr19VbeEC9",
+          "category": "party"
+        },
+        {
+          "id": "d2-e8",
+          "time": "15:00",
+          "title": "Khởi hành về lại Sài Gòn",
+          "description": "Bắt đầu hành trình trở về.",
+          "mapUrl": "",
+          "category": "travel"
+        }
+      ]
+    }
+  ]
+}

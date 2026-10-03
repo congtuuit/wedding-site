@@ -21,6 +21,7 @@ import {
   X,
 } from "lucide-react";
 import weddingData from "@/data/wedding.json";
+import itineraryCongTy from "@/data/itinerary-cong-ty.json";
 
 const ITINERARY_CACHE_KEY = "lich-trinh-2:itinerary";
 const ITINERARY_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
@@ -567,13 +568,13 @@ function DaySection({
 }
 
 function LichTrinhPage() {
-  const itinerary = weddingData.itinerary;
+  const itinerary = itineraryCongTy;
   const couple = weddingData.couple;
   const searchParams = useSearchParams();
   const isDebug = searchParams.get("debug") === "1";
 
-  // Loading state
-  const [isLoading, setIsLoading] = useState(true);
+  // Loading state (false mặc định vì dữ liệu tĩnh đã có sẵn trong source)
+  const [isLoading, setIsLoading] = useState(false);
   const [showContacts, setShowContacts] = useState(false);
 
   // Dynamic days state synced with Google Sheets
@@ -718,7 +719,7 @@ function LichTrinhPage() {
   const toggleDay = (dayId: string) =>
     setOpenDays((prev) => ({ ...prev, [dayId]: !prev[dayId] }));
 
-  const totalEvents = itinerary.days.reduce(
+  const totalEvents = days.reduce(
     (sum, d) => sum + d.events.length,
     0,
   );
