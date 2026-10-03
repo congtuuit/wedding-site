@@ -30,16 +30,16 @@ const CONTACTS = [
   { name: "Anh Tân", phone: "0909666489" },
   { name: "Chị Tuyền", phone: "" },
   { name: "Chị Nga", phone: "" },
-  { name: "Chị Thùy", phone: "0979457975" },
-  { name: "Chị Yến", phone: "" },
+  { name: "Chị Thùy", phone: "" },
+  { name: "Chị Yến", phone: "0979457975" },
   { name: "Hậu", phone: "" },
   { name: "Tiên", phone: "" },
-  { name: "An Tiên", phone: "0888619628" },
-  { name: "Thanh", phone: "033 9833242" },
-  { name: "Huyền", phone: "0339769196" },
-  { name: "Hương", phone: "086 2443775" },
-  { name: "Phim", phone: "" },
-  { name: "Anh Kiên", phone: "" },
+  { name: "An Tiên", phone: "" },
+  { name: "Thanh", phone: "0708975273" },
+  { name: "Huyền", phone: "0888619628" },
+  { name: "Hương", phone: "0339833242" },
+  { name: "Phim", phone: "0339769196" },
+  { name: "Anh Kiên", phone: "086 2443775" },
 ];
 
 type ItineraryCategory = "travel" | "meal" | "rest" | "ceremony" | "party";
@@ -909,7 +909,9 @@ function LichTrinhPage() {
             className="w-full py-2.5 px-4 rounded-2xl bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white font-medium text-xs sm:text-sm shadow-sm hover:shadow-md hover:from-rose-600 hover:to-fuchsia-600 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
           >
             <Phone className="w-4 h-4" />
-            <span>Liên hệ điều phối & đoàn xe ({CONTACTS.length} số liên lạc)</span>
+            <span>
+              Liên hệ điều phối & đoàn xe ({CONTACTS.length} số liên lạc)
+            </span>
           </button>
 
           {/* Category legend */}
