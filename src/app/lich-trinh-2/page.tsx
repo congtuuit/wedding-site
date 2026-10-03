@@ -22,6 +22,9 @@ import {
 } from "lucide-react";
 import weddingData from "@/data/wedding.json";
 
+const ITINERARY_CACHE_KEY = "lich-trinh-2:itinerary";
+const ITINERARY_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+
 const CONTACTS = [
   { name: "Tài xế", phone: "đang cập nhật" },
   { name: "Anh Tân", phone: "0909666489" },
@@ -570,9 +573,36 @@ function LichTrinhPage() {
   );
 
   useEffect(() => {
+    const applyByDay = (byDay: Record<string, ItineraryEvent[]>) =>
+      setDays((prev) =>
+        prev.map((day) => ({
+          ...day,
+          events: byDay[day.id] ?? day.events,
+        })),
+      );
+
     const fetchSheetItinerary = async () => {
       const url = weddingData.appsheetWebhookUrl;
+      const forceRefresh = searchParams.get("refresh") === "1";
       try {
+        if (!forceRefresh) {
+          try {
+            const raw = localStorage.getItem(ITINERARY_CACHE_KEY);
+            if (raw) {
+              const cached = JSON.parse(raw) as {
+                ts: number;
+                byDay: Record<string, ItineraryEvent[]>;
+              };
+              if (Date.now() - cached.ts < ITINERARY_CACHE_TTL_MS) {
+                applyByDay(cached.byDay);
+                return;
+              }
+            }
+          } catch {
+            // ignore corrupt/unavailable cache
+          }
+        }
+
         if (url) {
           const res = await fetch(`${url}?action=lich_trinh_cong_ty`);
           const json = await res.json();
@@ -593,12 +623,15 @@ function LichTrinhPage() {
                 category: row.category as ItineraryCategory,
               });
             });
-            setDays((prev) =>
-              prev.map((day) => ({
-                ...day,
-                events: byDay[day.id] ?? day.events,
-              })),
-            );
+            applyByDay(byDay);
+            try {
+              localStorage.setItem(
+                ITINERARY_CACHE_KEY,
+                JSON.stringify({ ts: Date.now(), byDay }),
+              );
+            } catch {
+              // storage full/unavailable
+            }
           }
         }
       } catch (e) {
@@ -608,7 +641,7 @@ function LichTrinhPage() {
       }
     };
     fetchSheetItinerary();
-  }, []);
+  }, [searchParams]);
 
   // Debug: mock time override (stored as VN local string "YYYY-MM-DDTHH:MM")
   const [mockTime, setMockTime] = useState<string>("");
