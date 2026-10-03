@@ -903,6 +903,15 @@ function LichTrinhPage() {
 
           <LiveClock isMock={isDebug && !!mockTime} />
 
+          {/* Nút liên hệ */}
+          <button
+            onClick={() => setShowContacts(true)}
+            className="w-full py-2.5 px-4 rounded-2xl bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white font-medium text-xs sm:text-sm shadow-sm hover:shadow-md hover:from-rose-600 hover:to-fuchsia-600 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
+          >
+            <Phone className="w-4 h-4" />
+            <span>Liên hệ điều phối & đoàn xe ({CONTACTS.length} số liên lạc)</span>
+          </button>
+
           {/* Category legend */}
           <div className="glass-card rounded-2xl border border-white/80 shadow-md p-3">
             <div className="flex flex-wrap gap-2 justify-center">
