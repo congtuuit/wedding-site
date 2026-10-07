@@ -25,19 +25,20 @@ import itineraryCongTy from "@/data/itinerary-cong-ty.json";
 
 const CONTACTS = [
   { name: "Tài xế (Tèo)", phone: "0937014629" },
-  { name: "Anh Tân (đón Amata)", phone: "0909666489" },
+  { name: "Anh Tân (trưởng đoàn)", phone: "0909666489" },
+  { name: "Chị Yến (phó đoàn)", phone: "0979457975" },
   { name: "Chị Tuyền", phone: "" },
   { name: "Chị Nga", phone: "" },
   { name: "Chị Thùy", phone: "" },
-  { name: "Chị Yến", phone: "0979457975" },
   { name: "Hậu", phone: "" },
   { name: "Tiên", phone: "" },
   { name: "An Tiên", phone: "" },
   { name: "Thanh", phone: "0708975273" },
   { name: "Huyền", phone: "0888619628" },
-  { name: "Hương (đón chợ Bà Chiểu)", phone: "0339833242" },
   { name: "Phim", phone: "0339769196" },
   { name: "Anh Kiên", phone: "086 2443775" },
+  { name: "Hương (đón chợ Bà Chiểu)", phone: "0339833242" },
+  { name: "anh Tân (đón Amata)", phone: "0344174026" },
 ];
 
 type ItineraryCategory = "travel" | "meal" | "rest" | "ceremony" | "party";
