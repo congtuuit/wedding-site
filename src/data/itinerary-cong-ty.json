@@ -17,6 +17,22 @@
           "category": "travel"
         },
         {
+          "id": "d1-pickup-1",
+          "time": "13:20",
+          "title": "Đón HƯƠNG Cổng chợ Bà Chiểu",
+          "description": "Điểm đón số 1 (Bình Thạnh). Thành viên vui lòng có mặt trước 13:15 tại cổng chợ Bà Chiểu (đường Bạch Đằng) để đoàn đón thuận tiện.",
+          "mapUrl": "https://maps.app.goo.gl/ik7XrSNUY16Rm71T7",
+          "category": "travel"
+        },
+        {
+          "id": "d1-pickup-2",
+          "time": "14:20",
+          "title": "Đón anh TÂN dưới chân cầu vượt Amata",
+          "description": "Điểm đón số 2 (Biên Hòa, Đồng Nai). Xe dừng đón dưới chân cầu vượt Amata (hướng đi Dầu Giây). Thành viên giữ liên lạc với tài xế và ban điều phối.",
+          "mapUrl": "https://maps.app.goo.gl/dQZDaPmhrDkSYjPk6",
+          "category": "travel"
+        },
+        {
           "id": "d1-e2",
           "time": "17:30",
           "title": "Checkin nhà nghỉ Thu Thảo",

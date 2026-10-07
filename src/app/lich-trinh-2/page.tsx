@@ -23,21 +23,9 @@ import {
 import weddingData from "@/data/wedding.json";
 import itineraryCongTy from "@/data/itinerary-cong-ty.json";
 
-const ITINERARY_CACHE_KEY = "lich-trinh-2:itinerary";
-const ITINERARY_CACHE_TTL_MS = 6 * 60 * 60 * 1000;
-
-// Chỉ sử dụng cache từ ngày 09/10/2026 đến hết 10/10/2026 theo giờ Việt Nam (UTC+7)
-const CACHE_START_VN = new Date("2026-10-09T00:00:00+07:00").getTime();
-const CACHE_END_VN = new Date("2026-10-10T23:59:59.999+07:00").getTime();
-
-function isCacheAllowed(): boolean {
-  const now = Date.now();
-  return now >= CACHE_START_VN && now <= CACHE_END_VN;
-}
-
 const CONTACTS = [
-  { name: "Tài xế", phone: "đang cập nhật" },
-  { name: "Anh Tân", phone: "0909666489" },
+  { name: "Tài xế (Tèo)", phone: "0937014629" },
+  { name: "Anh Tân (đón Amata)", phone: "0909666489" },
   { name: "Chị Tuyền", phone: "" },
   { name: "Chị Nga", phone: "" },
   { name: "Chị Thùy", phone: "" },
@@ -47,7 +35,7 @@ const CONTACTS = [
   { name: "An Tiên", phone: "" },
   { name: "Thanh", phone: "0708975273" },
   { name: "Huyền", phone: "0888619628" },
-  { name: "Hương", phone: "0339833242" },
+  { name: "Hương (đón chợ Bà Chiểu)", phone: "0339833242" },
   { name: "Phim", phone: "0339769196" },
   { name: "Anh Kiên", phone: "086 2443775" },
 ];
@@ -251,6 +239,8 @@ function EventCard({
   status: EventStatus;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const isPickup =
+    event.id.includes("pickup") || event.title.toLowerCase().includes("đón");
   const cat =
     CATEGORY_CONFIG[event.category as ItineraryCategory] ||
     CATEGORY_CONFIG.travel;
@@ -278,11 +268,15 @@ function EventCard({
                   ? "bg-gray-100 border-gray-200"
                   : isActive
                     ? `${cat.bg} ${cat.border} ring-2 ring-offset-2 ring-rose-300 shadow-rose-200 shadow-lg`
-                    : `${cat.bg} ${cat.border}`
+                    : isPickup
+                      ? "bg-emerald-50 border-emerald-300 text-emerald-600 shadow-emerald-100"
+                      : `${cat.bg} ${cat.border}`
               }`}
           >
             {isPast ? (
               <CheckCircle2 className="w-4 h-4 text-gray-400" />
+            ) : isPickup ? (
+              <MapPin className="w-4 h-4 text-emerald-600" />
             ) : (
               <span className={isActive ? cat.color : cat.color}>
                 {cat.icon}
@@ -311,7 +305,9 @@ function EventCard({
               ? "bg-gray-50 border-gray-200 opacity-60"
               : isActive
                 ? `${cat.bg} ${cat.border} shadow-md ring-1 ring-rose-200`
-                : `${cat.bg} ${cat.border}`
+                : isPickup
+                  ? "bg-gradient-to-br from-emerald-50/70 via-teal-50/40 to-white border-emerald-200/90 shadow-emerald-100/50"
+                  : `${cat.bg} ${cat.border}`
           }`}
       >
         {/* Active badge */}
@@ -331,20 +327,30 @@ function EventCard({
         >
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
-              <span
-                className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full border
-                  ${isPast ? "bg-gray-100 text-gray-400 border-gray-200" : `${cat.bg} ${cat.color} ${cat.border}`}`}
-              >
-                {isPast ? <CheckCircle2 className="w-3.5 h-3.5" /> : cat.icon}
-                {cat.label}
-              </span>
+              {isPickup ? (
+                <span
+                  className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full border
+                    ${isPast ? "bg-gray-100 text-gray-400 border-gray-200" : "bg-emerald-100/80 text-emerald-800 border-emerald-300"}`}
+                >
+                  <MapPin className="w-3.5 h-3.5 text-emerald-600" />
+                  Điểm đón khách
+                </span>
+              ) : (
+                <span
+                  className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full border
+                    ${isPast ? "bg-gray-100 text-gray-400 border-gray-200" : `${cat.bg} ${cat.color} ${cat.border}`}`}
+                >
+                  {isPast ? <CheckCircle2 className="w-3.5 h-3.5" /> : cat.icon}
+                  {cat.label}
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-2">
               <Clock
-                className={`w-3.5 h-3.5 flex-shrink-0 ${isPast ? "text-gray-400" : "text-rose-400"}`}
+                className={`w-3.5 h-3.5 flex-shrink-0 ${isPast ? "text-gray-400" : isPickup ? "text-emerald-500" : "text-rose-400"}`}
               />
               <span
-                className={`font-bold text-sm ${isPast ? "text-gray-400" : "text-rose-600"}`}
+                className={`font-bold text-sm ${isPast ? "text-gray-400" : isPickup ? "text-emerald-700" : "text-rose-600"}`}
               >
                 {event.time}
               </span>
@@ -354,26 +360,40 @@ function EventCard({
             >
               {event.title}
             </h3>
-            {event.mapUrl && (
-              <a
-                href={event.mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className={`inline-flex items-center gap-1.5 mt-2 text-xs font-semibold px-2.5 py-1 rounded-full border transition-all hover:shadow-sm
-                  ${
-                    isPast
-                      ? "bg-gray-100 text-gray-400 border-gray-200 hover:bg-gray-200"
-                      : `${cat.bg} ${cat.color} ${cat.border} hover:brightness-95`
-                  }`}
-              >
-                <Navigation className="w-3 h-3" />
-                Xem bản đồ
-              </a>
-            )}
+            <div className="flex flex-wrap items-center gap-2 mt-2">
+              {event.mapUrl && (
+                <a
+                  href={event.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border transition-all hover:shadow-sm
+                    ${
+                      isPast
+                        ? "bg-gray-100 text-gray-400 border-gray-200 hover:bg-gray-200"
+                        : isPickup
+                          ? "bg-white text-emerald-700 border-emerald-300 hover:bg-emerald-50"
+                          : `${cat.bg} ${cat.color} ${cat.border} hover:brightness-95`
+                    }`}
+                >
+                  <Navigation className="w-3 h-3" />
+                  {isPickup ? "Vị trí đón" : "Xem bản đồ"}
+                </a>
+              )}
+              {isPickup && (
+                <a
+                  href="tel:0937014629"
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full border border-emerald-300 bg-white text-emerald-700 hover:bg-emerald-50 transition-all hover:shadow-sm"
+                >
+                  <Phone className="w-3 h-3 text-emerald-600" />
+                  Gọi tài xế Tèo
+                </a>
+              )}
+            </div>
           </div>
           <div
-            className={`mt-1 flex-shrink-0 transition-transform duration-200 ${expanded ? "rotate-180" : ""} ${isPast ? "text-gray-300" : cat.color}`}
+            className={`mt-1 flex-shrink-0 transition-transform duration-200 ${expanded ? "rotate-180" : ""} ${isPast ? "text-gray-300" : isPickup ? "text-emerald-600" : cat.color}`}
           >
             <ChevronDown className="w-4 h-4" />
           </div>
@@ -573,100 +593,10 @@ function LichTrinhPage() {
   const searchParams = useSearchParams();
   const isDebug = searchParams.get("debug") === "1";
 
-  // Loading state (false mặc định vì dữ liệu tĩnh đã có sẵn trong source)
-  const [isLoading, setIsLoading] = useState(false);
   const [showContacts, setShowContacts] = useState(false);
 
-  // Dynamic days state synced with Google Sheets
-  const [days, setDays] = useState<ItineraryDay[]>(
-    () => itinerary.days as ItineraryDay[],
-  );
-
-  useEffect(() => {
-    const applyByDay = (byDay: Record<string, ItineraryEvent[]>) =>
-      setDays((prev) =>
-        prev.map((day) => ({
-          ...day,
-          events: byDay[day.id] ?? day.events,
-        })),
-      );
-
-    const fetchSheetItinerary = async () => {
-      const url = weddingData.appsheetWebhookUrl;
-      const forceRefresh = searchParams.get("refresh") === "1";
-      const cacheAllowed = isCacheAllowed();
-
-      // Nếu đang ngoài thời gian cho phép (trước 09/10 hoặc sau 10/10/2026 giờ VN),
-      // tự động xoá cache đã lưu của những user từng truy cập trước đó
-      if (!cacheAllowed) {
-        try {
-          localStorage.removeItem(ITINERARY_CACHE_KEY);
-        } catch {
-          // ignore
-        }
-      }
-
-      try {
-        if (!forceRefresh && cacheAllowed) {
-          try {
-            const raw = localStorage.getItem(ITINERARY_CACHE_KEY);
-            if (raw) {
-              const cached = JSON.parse(raw) as {
-                ts: number;
-                byDay: Record<string, ItineraryEvent[]>;
-              };
-              if (Date.now() - cached.ts < ITINERARY_CACHE_TTL_MS) {
-                applyByDay(cached.byDay);
-                return;
-              }
-            }
-          } catch {
-            // ignore corrupt/unavailable cache
-          }
-        }
-
-        if (url) {
-          const res = await fetch(`${url}?action=lich_trinh_cong_ty`);
-          const json = await res.json();
-          if (
-            json?.status === "success" &&
-            Array.isArray(json.data) &&
-            json.data.length > 0
-          ) {
-            const byDay: Record<string, ItineraryEvent[]> = {};
-            json.data.forEach((row: Record<string, string>) => {
-              if (!byDay[row.dayId]) byDay[row.dayId] = [];
-              byDay[row.dayId].push({
-                id: row.id,
-                time: row.time,
-                title: row.title,
-                description: row.description,
-                mapUrl: row.mapUrl,
-                category: row.category as ItineraryCategory,
-              });
-            });
-            applyByDay(byDay);
-
-            if (cacheAllowed) {
-              try {
-                localStorage.setItem(
-                  ITINERARY_CACHE_KEY,
-                  JSON.stringify({ ts: Date.now(), byDay }),
-                );
-              } catch {
-                // storage full/unavailable
-              }
-            }
-          }
-        }
-      } catch (e) {
-        console.warn("Could not fetch sheet itinerary:", e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchSheetItinerary();
-  }, [searchParams]);
+  // Sử dụng JSON data tĩnh từ file
+  const days = itinerary.days as ItineraryDay[];
 
   // Debug: mock time override (stored as VN local string "YYYY-MM-DDTHH:MM")
   const [mockTime, setMockTime] = useState<string>("");
@@ -718,46 +648,6 @@ function LichTrinhPage() {
 
   const toggleDay = (dayId: string) =>
     setOpenDays((prev) => ({ ...prev, [dayId]: !prev[dayId] }));
-
-  const totalEvents = days.reduce(
-    (sum, d) => sum + d.events.length,
-    0,
-  );
-
-  // Show loading screen while fetching data
-  if (isLoading) {
-    return (
-      <>
-        <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
-          body { font-family: 'Inter', sans-serif; background: #fdf8f6; }
-          .hero-bg { background: linear-gradient(135deg, #fff1f2 0%, #fce7f3 40%, #f3e8ff 70%, #eff6ff 100%); }
-          @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            15% { transform: scale(1.15); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.1); }
-          }
-          .heartbeat { animation: heartbeat 1.4s ease-in-out infinite; }
-        `}</style>
-        <div className="hero-bg min-h-screen w-full flex items-center justify-center relative overflow-hidden px-6">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-rose-200/30 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-fuchsia-200/30 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
-          <div className="relative z-10 text-center max-w-xs">
-            <div className="heartbeat inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-rose-400 to-fuchsia-400 shadow-lg shadow-rose-200 mb-5">
-              <Heart className="w-8 h-8 text-white fill-white" />
-            </div>
-            <h2 className="playfair text-2xl font-bold text-rose-800 mb-2">
-              Đang tải lịch trình...
-            </h2>
-            <p className="text-gray-500 text-sm leading-relaxed">
-              Vui lòng chờ trong giây lát để cập nhật thông tin mới nhất
-            </p>
-          </div>
-        </div>
-      </>
-    );
-  }
 
   return (
     <>
