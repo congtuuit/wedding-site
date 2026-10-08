@@ -37,7 +37,7 @@ const CONTACTS = [
   { name: "Huyền", phone: "0888619628" },
   { name: "Phim", phone: "0339769196" },
   { name: "Anh Kiên", phone: "086 2443775" },
-  { name: "Hương (đón chợ Bà Chiểu)", phone: "0339833242" },
+  { name: "Hương", phone: "0339833242" },
   { name: "anh Tân (đón Amata)", phone: "0344174026" },
 ];
 
