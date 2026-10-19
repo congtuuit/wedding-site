@@ -233,11 +233,11 @@ export default function SharePage() {
     return [
       {
         title: "Mẫu Thân Mật (Lễ Tân Hôn — Nhà Trai)",
-        body: `Thân gửi ${name},\n\nTú & Hường rất vui mừng được trân trọng gửi lời mời đến ${name} tới chung vui trong ngày trọng đại Lễ Tân Hôn của chúng mình vào ngày ${previewStage.weddingDateFormatted}.\n\nThời gian: Thứ Bảy, 12 Tháng 12 Năm 2026 (18:00 Đón Khách - 19:00 Khai Tiệc)\nĐịa điểm: The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP.HCM.\n\nSự hiện diện của ${name} là niềm hạnh phúc to lớn đối với chúng mình!\n\nXem thiệp mời chi tiết tại đây:\n${currentLink}\n\nTrân trọng & Yêu thương!`,
+        body: `Thân gửi ${name},\n\nTú & Hường rất vui mừng được trân trọng gửi lời mời đến ${name} tới chung vui trong ngày trọng đại Lễ Tân Hôn của chúng mình vào ngày ${previewStage.weddingDateFormatted}.\n\nThời gian: Thứ Bảy, 12 Tháng 12 Năm 2026 (18:00 Đón Khách - 19:00 Khai Tiệc)\nĐịa điểm: Sảnh Emerald, Tầng 3 - The ADORA Center (431 Hoàng Văn Thụ, Phường Tân Sơn Nhất, TP.HCM).\n\nSự hiện diện của ${name} là niềm hạnh phúc to lớn đối với chúng mình!\n\nXem thiệp mời chi tiết tại đây:\n${currentLink}\n\nTrân trọng & Yêu thương!`,
       },
       {
         title: "Mẫu Trang Trọng (Người lớn, gia đình, đối tác)",
-        body: `Kính gửi ${name},\n\nGia đình chúng tôi trân trọng kính mời ${name} cùng gia đình tới dự buổi tiệc mừng Lễ Tân Hôn của hai cháu Tú Văn & Hường Nguyễn.\n\nThời gian: Thứ Bảy, 12 Tháng 12 Năm 2026\nĐịa điểm: The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP.HCM.\n\nKính mời xem thiệp cưới trực tuyến tại:\n${currentLink}\n\nRất hân hạnh được đón tiếp!`,
+        body: `Kính gửi ${name},\n\nGia đình chúng tôi trân trọng kính mời ${name} cùng gia đình tới dự buổi tiệc mừng Lễ Tân Hôn của hai cháu Tú Văn & Hường Nguyễn.\n\nThời gian: Thứ Bảy, 12 Tháng 12 Năm 2026\nĐịa điểm: Sảnh Emerald, Tầng 3 - The ADORA Center (431 Hoàng Văn Thụ, Phường Tân Sơn Nhất, TP.HCM).\n\nKính mời xem thiệp cưới trực tuyến tại:\n${currentLink}\n\nRất hân hạnh được đón tiếp!`,
       },
       {
         title: "Mẫu Ngắn Gọn (Gửi Zalo / Messenger)",

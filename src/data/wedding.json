@@ -81,27 +81,27 @@
       "title": "Tiệc Cưới Nhà Trai",
       "date": "Thứ Bảy, 12 Tháng 12 Năm 2026",
       "time": "18:00 Tối (Đón khách) - 19:00 Khai tiệc",
-      "venue": "The ADORA Center",
-      "address": "431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh",
+      "venue": "Sảnh Emerald, Tầng 3 - The ADORA Center",
+      "address": "431 Hoàng Văn Thụ, Phường Tân Sơn Nhất, Thành phố Hồ Chí Minh",
       "mapUrl": "https://maps.app.goo.gl/FRs6bSaK1khXCZBL8",
       "calendarTitle": "Tiệc Cưới Nhà Trai - Tú Văn & Hường Nguyễn",
-      "calendarDescription": "Tiệc cưới mừng tân hôn Tú Văn & Hường Nguyễn tại The ADORA Center, TP. Hồ Chí Minh",
-      "calendarLocation": "The ADORA Center, 431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh",
+      "calendarDescription": "Tiệc cưới mừng tân hôn Tú Văn & Hường Nguyễn tại Sảnh Emerald, Tầng 3 - The ADORA Center, TP. Hồ Chí Minh",
+      "calendarLocation": "Sảnh Emerald, Tầng 3 - The ADORA Center, 431 Hoàng Văn Thụ, Phường Tân Sơn Nhất, Thành phố Hồ Chí Minh",
       "startDateIso": "2026-12-12T18:00:00+07:00",
       "endDateIso": "2026-12-12T21:30:00+07:00",
       "timeslots": [
         {
           "time": "18:00 Tối",
           "label": "Đón Khách",
-          "venue": "The ADORA Center",
-          "address": "431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh",
+          "venue": "Sảnh Emerald, Tầng 3 - The ADORA Center",
+          "address": "431 Hoàng Văn Thụ, Phường Tân Sơn Nhất, Thành phố Hồ Chí Minh",
           "mapUrl": "https://maps.app.goo.gl/FRs6bSaK1khXCZBL8"
         },
         {
           "time": "19:00 Tối",
           "label": "Khai Tiệc",
-          "venue": "The ADORA Center",
-          "address": "431 Đ. Hoàng Văn Thụ, Tân Bình, TP. Hồ Chí Minh",
+          "venue": "Sảnh Emerald, Tầng 3 - The ADORA Center",
+          "address": "431 Hoàng Văn Thụ, Phường Tân Sơn Nhất, Thành phố Hồ Chí Minh",
           "mapUrl": "https://maps.app.goo.gl/FRs6bSaK1khXCZBL8"
         }
       ]
