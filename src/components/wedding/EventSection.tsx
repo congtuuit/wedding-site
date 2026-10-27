@@ -5,6 +5,7 @@ import { WeddingEvent } from "@/types/wedding";
 import { useEventFilter } from "@/hooks/useEventFilter";
 import { EventCard } from "./EventCard";
 import { SectionDivider } from "@/components/ui/SectionDivider";
+import { useLocale } from "@/context/LocaleContext";
 
 interface EventSectionProps {
   events: WeddingEvent[];
@@ -17,6 +18,7 @@ export const EventSection: React.FC<EventSectionProps> = ({
   defaultFilter = "all",
   activeStageKey = "que",
 }) => {
+  const { dict } = useLocale();
   const { filter, setFilter, filteredEvents } = useEventFilter(events, defaultFilter);
 
   const isQueFirst = activeStageKey === "que";
@@ -25,10 +27,10 @@ export const EventSection: React.FC<EventSectionProps> = ({
     <section id="events" className="w-full py-16 px-4 bg-background text-textMain">
       <div className="max-w-4xl mx-auto text-center">
         <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-semibold">
-          Thông Tin Sự Kiện
+          {dict.events.subtitle}
         </span>
         <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-2">
-          Thời Gian & Địa Điểm
+          {dict.events.title}
         </h2>
 
         <SectionDivider variant="botanical" className="my-4" />
@@ -43,7 +45,7 @@ export const EventSection: React.FC<EventSectionProps> = ({
                 : "text-textMuted hover:text-textMain"
             }`}
           >
-            Tất Cả
+            {dict.events.filterAll}
           </button>
 
           {isQueFirst ? (
@@ -56,7 +58,7 @@ export const EventSection: React.FC<EventSectionProps> = ({
                     : "text-textMuted hover:text-textMain"
                 }`}
               >
-                Nhà Gái (10.10)
+                {dict.events.filterBride}
               </button>
               <button
                 onClick={() => setFilter("sg")}
@@ -66,7 +68,7 @@ export const EventSection: React.FC<EventSectionProps> = ({
                     : "text-textMuted hover:text-textMain"
                 }`}
               >
-                Nhà Trai (12.12)
+                {dict.events.filterGroom}
               </button>
             </>
           ) : (
@@ -79,7 +81,7 @@ export const EventSection: React.FC<EventSectionProps> = ({
                     : "text-textMuted hover:text-textMain"
                 }`}
               >
-                Nhà Trai (12.12)
+                {dict.events.filterGroom}
               </button>
               <button
                 onClick={() => setFilter("que")}
@@ -89,7 +91,7 @@ export const EventSection: React.FC<EventSectionProps> = ({
                     : "text-textMuted hover:text-textMain"
                 }`}
               >
-                Nhà Gái (10.10)
+                {dict.events.filterBride}
               </button>
             </>
           )}

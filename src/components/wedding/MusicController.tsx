@@ -9,6 +9,7 @@ import React, {
   useCallback,
 } from "react";
 import { VolumeX, Music } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 export interface MusicControllerHandle {
   play: () => Promise<void> | void;
@@ -168,12 +169,13 @@ export const MusicController = forwardRef<
     };
   }, [autoPlayTrigger]);
 
+  const { dict } = useLocale();
   const musicButton = (
     <button
       type="button"
       onClick={toggleAudio}
-      title={isPlaying ? "Tắt nhạc nền" : "Bật nhạc nền"}
-      aria-label={isPlaying ? "Tắt nhạc nền" : "Bật nhạc nền"}
+      title={isPlaying ? dict.controls.musicPause : dict.controls.musicPlay}
+      aria-label={isPlaying ? dict.controls.musicPause : dict.controls.musicPlay}
       className={`pointer-events-auto relative flex items-center justify-center w-9.5 h-9.5 sm:w-10 sm:h-10 min-w-[38px] min-h-[38px] rounded-full backdrop-blur-md transition-all duration-300 border cursor-pointer active:scale-95 select-none ${
         isPlaying
           ? "bg-white/95 border-[#8C1425]/70 text-[#8C1425] shadow-[0_3px_14px_rgba(140,20,37,0.3)] opacity-95 hover:opacity-100 hover:scale-105"

@@ -19,12 +19,12 @@ module.exports = {
         borderLight: "var(--color-border)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "var(--font-heading)", "Be Vietnam Pro", "Plus Jakarta Sans", "sans-serif"],
-        heading: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "Be Vietnam Pro", "sans-serif"],
+        sans: ["var(--font-sans)", "var(--font-heading)", "Be Vietnam Pro", "Plus Jakarta Sans", "Hiragino Sans", "Yu Gothic", "Meiryo", "sans-serif"],
+        heading: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "Be Vietnam Pro", "Hiragino Sans", "Yu Gothic", "Meiryo", "sans-serif"],
         couple: ["var(--font-couple)", "Alex Brush", "cursive"],
-        serif: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "Be Vietnam Pro", "sans-serif"],
-        playfair: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "sans-serif"],
-        cormorant: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "sans-serif"],
+        serif: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "Be Vietnam Pro", "Hiragino Sans", "Yu Gothic", "Meiryo", "sans-serif"],
+        playfair: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "Hiragino Sans", "Yu Gothic", "Meiryo", "sans-serif"],
+        cormorant: ["var(--font-heading)", "var(--font-sans)", "Plus Jakarta Sans", "Hiragino Sans", "Yu Gothic", "Meiryo", "sans-serif"],
         cursive: ["var(--font-couple)", "Alex Brush", "cursive"],
       },
       animation: {

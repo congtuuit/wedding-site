@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MapPin } from "lucide-react";
 import { CoupleInfo } from "@/types/wedding";
 import { SectionDivider } from "@/components/ui/SectionDivider";
+import { useLocale } from "@/context/LocaleContext";
 
 interface FamilySectionProps {
   couple: CoupleInfo;
@@ -13,14 +14,17 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
   couple,
   priority = "que",
 }) => {
+  const { dict } = useLocale();
   const isQuePriority = priority === "que";
-  const titleText = isQuePriority ? "Nhà Gái & Nhà Trai" : "Nhà Trai & Nhà Gái";
+  const titleText = isQuePriority
+    ? dict.family.titleQuePriority
+    : dict.family.titleSgPriority;
   return (
     <section id="family-section" className="w-full py-14 sm:py-18 px-3 sm:px-6 bg-background text-textMain">
       <div className="max-w-4xl mx-auto text-center">
         {/* Subtitle */}
         <p className="font-sans text-[10px] sm:text-xs uppercase tracking-[0.25em] text-accent font-semibold mb-1">
-          Hai Bên Gia Đình
+          {dict.family.subtitle}
         </p>
         <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide">
           {titleText}
@@ -37,7 +41,7 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
               <div className="flex flex-col justify-between p-3 sm:p-5 rounded-2xl bg-surface border border-borderLight shadow-[0_4px_20px_rgba(140,20,37,0.04)] hover:shadow-md transition-all text-center">
                 <div>
                   <div className="inline-block px-2.5 sm:px-3.5 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#9A7A22] font-sans text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold mb-2.5 sm:mb-3">
-                    Nhà Gái
+                    {dict.family.brideSide}
                   </div>
                   <div className="space-y-1 mb-2.5 sm:mb-3">
                     <p className="font-sans text-[11px] sm:text-xs md:text-sm text-textMain font-medium leading-snug whitespace-nowrap">
@@ -78,7 +82,7 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
               <div className="flex flex-col justify-between p-3 sm:p-5 rounded-2xl bg-surface border border-borderLight shadow-[0_4px_20px_rgba(140,20,37,0.04)] hover:shadow-md transition-all text-center">
                 <div>
                   <div className="inline-block px-2.5 sm:px-3.5 py-0.5 rounded-full bg-[#8C1425]/10 text-[#8C1425] font-sans text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold mb-2.5 sm:mb-3">
-                    Nhà Trai
+                    {dict.family.groomSide}
                   </div>
                   <div className="space-y-1 mb-2.5 sm:mb-3">
                     <p className="font-sans text-[11px] sm:text-xs md:text-sm text-textMain font-medium leading-snug whitespace-nowrap">
@@ -121,7 +125,7 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
               <div className="flex flex-col justify-between p-3 sm:p-5 rounded-2xl bg-surface border border-borderLight shadow-[0_4px_20px_rgba(140,20,37,0.04)] hover:shadow-md transition-all text-center">
                 <div>
                   <div className="inline-block px-2.5 sm:px-3.5 py-0.5 rounded-full bg-[#8C1425]/10 text-[#8C1425] font-sans text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold mb-2.5 sm:mb-3">
-                    Nhà Trai
+                    {dict.family.groomSide}
                   </div>
                   <div className="space-y-1 mb-2.5 sm:mb-3">
                     <p className="font-sans text-[11px] sm:text-xs md:text-sm text-textMain font-medium leading-snug whitespace-nowrap">
@@ -162,7 +166,7 @@ export const FamilySection: React.FC<FamilySectionProps> = ({
               <div className="flex flex-col justify-between p-3 sm:p-5 rounded-2xl bg-surface border border-borderLight shadow-[0_4px_20px_rgba(140,20,37,0.04)] hover:shadow-md transition-all text-center">
                 <div>
                   <div className="inline-block px-2.5 sm:px-3.5 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#9A7A22] font-sans text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold mb-2.5 sm:mb-3">
-                    Nhà Gái
+                    {dict.family.brideSide}
                   </div>
                   <div className="space-y-1 mb-2.5 sm:mb-3">
                     <p className="font-sans text-[11px] sm:text-xs md:text-sm text-textMain font-medium leading-snug whitespace-nowrap">

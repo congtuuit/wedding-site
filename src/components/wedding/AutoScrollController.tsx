@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Play, Pause } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface AutoScrollControllerProps {
   isAutoScrolling: boolean;
@@ -14,12 +15,13 @@ export const AutoScrollController: React.FC<AutoScrollControllerProps> = ({
   isPausedByUser,
   onToggle,
 }) => {
+  const { dict } = useLocale();
   return (
     <button
       type="button"
       onClick={onToggle}
-      title={isAutoScrolling ? "Tạm dừng tự động cuộn" : "Bật tự động cuộn"}
-      aria-label={isAutoScrolling ? "Tạm dừng tự động cuộn" : "Bật tự động cuộn"}
+      title={isAutoScrolling ? dict.controls.scrollPause : dict.controls.scrollStart}
+      aria-label={isAutoScrolling ? dict.controls.scrollPause : dict.controls.scrollStart}
       className={`pointer-events-auto relative flex items-center justify-center w-9.5 h-9.5 sm:w-10 sm:h-10 min-w-[38px] min-h-[38px] rounded-full backdrop-blur-md transition-all duration-300 border cursor-pointer active:scale-95 select-none ${
         isAutoScrolling
           ? "bg-white/95 border-amber-400/80 text-[#8C1425] shadow-[0_3px_14px_rgba(212,175,55,0.35)] opacity-95 hover:opacity-100 hover:scale-105"

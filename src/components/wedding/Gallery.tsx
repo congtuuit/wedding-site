@@ -6,6 +6,7 @@ import Image from "next/image";
 import { GalleryPhoto } from "@/types/wedding";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { Eye, ImageIcon, ChevronDown, ChevronUp } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 const Lightbox = dynamic(
   () => import("./Lightbox").then((mod) => mod.Lightbox),
@@ -17,6 +18,7 @@ interface GalleryProps {
 }
 
 export const Gallery: React.FC<GalleryProps> = ({ photos }) => {
+  const { dict } = useLocale();
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -34,13 +36,13 @@ export const Gallery: React.FC<GalleryProps> = ({ photos }) => {
       <div className="max-w-4xl mx-auto text-center">
         {/* Header */}
         <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-semibold">
-          Khoảnh Khắc Đẹp
+          {dict.gallery.subtitle}
         </span>
         <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-1.5">
-          Album Ảnh Cưới
+          {dict.gallery.title}
         </h2>
         <p className="text-xs text-textMuted font-sans mt-1.5">
-          Từng khoảnh khắc ghi lại tình yêu của chúng mình
+          {dict.gallery.description}
         </p>
 
         <SectionDivider variant="botanical" className="my-4" />
@@ -79,7 +81,7 @@ export const Gallery: React.FC<GalleryProps> = ({ photos }) => {
                       </p>
                     )}
                     <span className="text-[9px] text-accentGold font-sans tracking-widest uppercase">
-                      Xem chi tiết
+                      {dict.gallery.viewDetails}
                     </span>
                   </div>
                   <div className="w-7 h-7 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white">
@@ -101,12 +103,12 @@ export const Gallery: React.FC<GalleryProps> = ({ photos }) => {
             >
               {isExpanded ? (
                 <>
-                  <span>Thu Gọn Album</span>
+                  <span>{dict.gallery.collapsePhotos}</span>
                   <ChevronUp className="w-4 h-4" />
                 </>
               ) : (
                 <>
-                  <span>Xem Tất Cả ({photos.length} Ảnh)</span>
+                  <span>{dict.gallery.viewAllPhotos(photos.length)}</span>
                   <ChevronDown className="w-4 h-4" />
                 </>
               )}
@@ -117,7 +119,7 @@ export const Gallery: React.FC<GalleryProps> = ({ photos }) => {
         {/* Hint */}
         <p className="text-xs text-textMuted font-sans tracking-wide mt-5 flex items-center justify-center gap-1.5">
           <ImageIcon className="w-3.5 h-3.5 text-accent" />
-          <span>Chạm vào ảnh bất kỳ để phóng to & vuốt xem toàn bộ album</span>
+          <span>{dict.gallery.hint}</span>
         </p>
 
         {/* Lightbox Modal (Dynamic Loaded on Demand) */}

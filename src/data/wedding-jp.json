@@ -1,0 +1,455 @@
+{
+  "couple": {
+    "groom": {
+      "name": "Tú Văn",
+      "fullName": "Văn Công Tú",
+      "fatherName": "Ông: Văn Công Pha",
+      "motherName": "Bà: Trần Thị Thanh Lan",
+      "role": "長男",
+      "hometown": "ホーチミン市バーディエム",
+      "photo": "/images/groom.webp"
+    },
+    "bride": {
+      "name": "Hường Nguyễn",
+      "fullName": "Nguyễn Thị Hường",
+      "fatherName": "Ông: Nguyễn Văn Dương",
+      "motherName": "Bà: Vũ Thị Chinh",
+      "role": "末娘",
+      "hometown": "ラムドン省カッティエン3",
+      "photo": "/images/bride.webp"
+    },
+    "initials": "T & H",
+    "weddingDate": "2026-12-12",
+    "weddingDateFormatted": "2026 . 12 . 12"
+  },
+  "hero": {
+    "mainPhoto": "/images/TOBI0448.webp",
+    "tagline": "Save Our Date",
+    "subTagline": "ふたりの新しい門出を共に祝っていただければ幸いです"
+  },
+  "invitation": {
+    "headline": "結婚披露宴のご案内",
+    "quote": "本日、ふたりは手を取り合い、これからの長い未来へと歩み始めます 🩷",
+    "messageParagraphs": [
+      "日頃より温かく見守ってくださる皆様へ、心からの感謝を込めて。",
+      "皆様の温かい祝福とご臨席が、ふたりにとって何よりかけがえのない宝物です。"
+    ],
+    "closing": "皆様のお越しを心よりお待ち申し上げております。"
+  },
+  "events": [
+    {
+      "id": "event-nha-gai",
+      "category": "que",
+      "title": "挙式・新婦側披露宴",
+      "date": "2026年10月10日（土）",
+      "time": "午前05:00（教会式） - 午前09:00（親族拝礼式） - 午前10:30（開宴）",
+      "venue": "新婦生家",
+      "address": "ラムドン省カッティエン3",
+      "mapUrl": "https://maps.app.goo.gl/brA9HFBX28HNHjdGA",
+      "calendarTitle": "挙式・新婦側披露宴 - Tú & Hường",
+      "calendarDescription": "新婦生家（ラムドン省カッティエン3）にて執り行われる挙式および披露宴",
+      "calendarLocation": "ラムドン省カッティエン3",
+      "startDateIso": "2026-10-10T05:00:00+07:00",
+      "endDateIso": "2026-10-10T14:00:00+07:00",
+      "timeslots": [
+        {
+          "time": "午前05:00",
+          "label": "教会式",
+          "venue": "Gia Vien 教会",
+          "address": "ラムドン省カッティエン3",
+          "mapUrl": "https://maps.app.goo.gl/5KgwzTBsxvL325os9?g_st=iz"
+        },
+        {
+          "time": "午前09:00",
+          "label": "親族拝礼式（伝統儀式）",
+          "venue": "新婦生家",
+          "address": "ラムドン省カッティエン3",
+          "mapUrl": "https://maps.app.goo.gl/brA9HFBX28HNHjdGA"
+        },
+        {
+          "time": "午前10:30",
+          "label": "新婦側 披露宴開宴",
+          "venue": "新婦生家",
+          "address": "ラムドン省カッティエン3",
+          "mapUrl": "https://maps.app.goo.gl/brA9HFBX28HNHjdGA"
+        }
+      ]
+    },
+    {
+      "id": "event-nha-trai",
+      "category": "sg",
+      "title": "新郎側 結婚披露宴",
+      "date": "2026年12月12日（土）",
+      "time": "午後18:00（受付開始） - 午後19:00（開宴）",
+      "venue": "The ADORA Center 3階 エメラルドホール",
+      "address": "ホーチミン市タンソンニャット坊ホアンヴァンツー通り431番地",
+      "mapUrl": "https://maps.app.goo.gl/FRs6bSaK1khXCZBL8",
+      "calendarTitle": "新郎側 結婚披露宴 - Tú & Hường",
+      "calendarDescription": "Tú & Hườngの結婚披露宴（The ADORA Center 3階 エメラルドホール、ホーチミン市タンソンニャット坊ホアンヴァンツー通り431番地）",
+      "calendarLocation": "The ADORA Center 3階 エメラルドホール、ホーチミン市タンソンニャット坊ホアンヴァンツー通り431番地",
+      "startDateIso": "2026-12-12T18:00:00+07:00",
+      "endDateIso": "2026-12-12T21:30:00+07:00",
+      "timeslots": [
+        {
+          "time": "午後18:00",
+          "label": "受付・迎賓",
+          "venue": "The ADORA Center 3階 エメラルドホール",
+          "address": "ホーチミン市タンソンニャット坊ホアンヴァンツー通り431番地",
+          "mapUrl": "https://maps.app.goo.gl/FRs6bSaK1khXCZBL8"
+        },
+        {
+          "time": "午後19:00",
+          "label": "開宴",
+          "venue": "The ADORA Center 3階 エメラルドホール",
+          "address": "ホーチミン市タンソンニャット坊ホアンヴァンツー通り431番地",
+          "mapUrl": "https://maps.app.goo.gl/FRs6bSaK1khXCZBL8"
+        }
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "year": "2015",
+      "title": "運命の出会い",
+      "subtitle": "かけがえのない青春の始まり",
+      "description": "まぶしい青春の日々のなかで、ふたりの視線が重なり、温かな想いが静かに芽生えました。",
+      "image": "/images/TOBI0500.webp"
+    },
+    {
+      "year": "2016",
+      "title": "愛の告白と約束",
+      "subtitle": "手を繋ぎ、歩み始めた日",
+      "description": "素朴ながらもまっすぐな告白から、喜びも苦楽も共に分かち合う旅が始まりました。",
+      "image": "/images/TOBI0527.webp"
+    },
+    {
+      "year": "2017 – 2022",
+      "title": "成長と再会",
+      "subtitle": "そして再び巡り逢う",
+      "description": "それぞれが自分の道で学び、成長し、経験を重ねた年月。時を経て再び巡り逢ったとき、ふたりはより穏やかで深まった絆で、新しい物語を紡ぎ始めました。",
+      "image": ""
+    },
+    {
+      "year": "2022",
+      "title": "プロポーズの瞬間",
+      "subtitle": "答えはもちろん「はい！」",
+      "description": "ロマンチックな空の下、指輪と共に交わした誓い。これからの長い人生をずっと一緒に歩んでいくことを約束しました。",
+      "image": "/images/TOBI0481.webp"
+    },
+    {
+      "year": "2026",
+      "title": "家族になる日",
+      "subtitle": "2026 . 10 . 10",
+      "description": "神聖なチャペルで手をとり合い、ふたりの人生の新しい章がここから始まります。",
+      "image": "/images/TOBI0466.webp"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "p1",
+      "src": "/images/TOBI0448.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "あなたの隣にある穏やかさ",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p2",
+      "src": "/images/TOBI0466.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "幸せあふれる笑顔",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p3",
+      "src": "/images/TOBI0510.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "ふたりで歩む世界の旅",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p4",
+      "src": "/images/TOBI0530.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "甘いふたりのひととき",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p5",
+      "src": "/images/TOBI0531.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "愛のささやき",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p6",
+      "src": "/images/TOBI0673.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "夕暮れの光の中で",
+      "aspectRatio": "wide"
+    },
+    {
+      "id": "p7",
+      "src": "/images/TOBI0691.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "あなただけを見つめて",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p8",
+      "src": "/images/TOBI0706.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "優雅な佇まい",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p9",
+      "src": "/images/TOBI0889.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "そっと肩にもたれて",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p10",
+      "src": "/images/TOBI1029.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "幸せに触れる瞬間",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p11",
+      "src": "/images/TOBI1038.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "ふたりの物語",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p12",
+      "src": "/images/TOBI1052.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "恋する季節",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p13",
+      "src": "/images/TOBI1080.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "共に歳を重ねて",
+      "aspectRatio": "wide"
+    },
+    {
+      "id": "p14",
+      "src": "/images/TOBI1179.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "満ち足りた日々",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p15",
+      "src": "/images/TOBI1263.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "永遠の約束",
+      "aspectRatio": "tall"
+    },
+    {
+      "id": "p16",
+      "src": "/images/TOBI1281.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "ふたりがひとつになる日",
+      "aspectRatio": "square"
+    },
+    {
+      "id": "p17",
+      "src": "/images/TOBI1291.webp",
+      "alt": "Tú Văn & Hường Nguyễn",
+      "title": "溢れる愛とともに",
+      "aspectRatio": "wide"
+    }
+  ],
+  "gift": {
+    "headline": "お祝いの気持ち",
+    "subline": "皆様のご臨席こそが何よりのお祝いですが、もしお気持ちをお届けいただける場合はこちらよりお願い申し上げます。",
+    "qrVersion": "2",
+    "accounts": [
+      {
+        "role": "groom",
+        "title": "新郎へのお祝い",
+        "ownerName": "VAN CONG TU",
+        "bankName": "VPBank（ベトナム繁栄商業銀行）",
+        "bankCode": "VPBank",
+        "accountNumber": "38689999996",
+        "memo": "Mung cuoi Tu Huong",
+        "qrImage": "/images/qr-groom.png"
+      },
+      {
+        "role": "bride",
+        "title": "新婦へのお祝い",
+        "ownerName": "NGUYEN THI HUONG",
+        "bankName": "Techcombank（ベトナム技術商業銀行）",
+        "bankCode": "Techcombank",
+        "accountNumber": "19039619769011",
+        "memo": "Mung cuoi Tu Huong",
+        "qrImage": "/images/qr-bride.png"
+      }
+    ]
+  },
+  "music": {
+    "src": "/audio/bg-music.mp3",
+    "title": "Wedding Melody",
+    "artist": "Tú Văn & Hường Nguyễn",
+    "defaultVolume": 0.4
+  },
+  "rsvp": {
+    "showEventSelection": false
+  },
+  "appsheetWebhookUrl": "https://script.google.com/macros/s/AKfycbxunAD04AYtLnkZfYE_vp8cPU_651WUL_8Kueg_wW7EbOLT5LzAMVFxy6Dwi-SAnFHy/exec",
+  "itinerary": {
+    "title": "移動スケジュール",
+    "subtitle": "Tú Văn & Hường Nguyễnの結婚式（ラムドン省）へのご案内",
+    "days": [
+      {
+        "id": "day-1",
+        "dayLabel": "1日目",
+        "dayName": "2026年10月09日（金）",
+        "theme": "移動＆前夜祭",
+        "events": [
+          {
+            "id": "d1-e1",
+            "time": "05:00",
+            "title": "ティエンザン出発 → ホーチミン市ホックモンへ",
+            "description": "集合・荷物の確認後、出発します。",
+            "mapUrl": "https://maps.app.goo.gl/3vo1Cg8WKkEFyGqY7",
+            "category": "travel"
+          },
+          {
+            "id": "d1-e2",
+            "time": "08:30",
+            "title": "休憩・朝食",
+            "description": "フォー・リー・クオック・スーにて朝食・エネルギー補給。",
+            "mapUrl": "",
+            "category": "meal"
+          },
+          {
+            "id": "d1-e3",
+            "time": "09:00",
+            "title": "ラムドン省カッティエンへ出発",
+            "description": "所要時間は約4時間30分を予定しています。",
+            "mapUrl": "",
+            "category": "travel"
+          },
+          {
+            "id": "d1-e4",
+            "time": "13:30",
+            "title": "到着・ホテルチェックイン",
+            "description": "チェックイン後、夜の行事まで自由休憩。",
+            "mapUrl": "https://maps.app.goo.gl/8t89SH5mtoMpW2Vb9",
+            "category": "rest"
+          },
+          {
+            "id": "d1-e5",
+            "time": "16:40",
+            "title": "新婦生家へ移動・前夜祭の夕食会",
+            "description": "車で約20分。新婦生家にて前夜祭の夕食会に参加します。",
+            "mapUrl": "https://maps.app.goo.gl/BqT59aKtr19VbeEC9",
+            "category": "party"
+          },
+          {
+            "id": "d1-e6",
+            "time": "20:00",
+            "title": "ホテルへ戻り休養",
+            "description": "1日目終了。明日の本番に備えて休息。",
+            "mapUrl": "https://maps.app.goo.gl/8t89SH5mtoMpW2Vb9",
+            "category": "rest"
+          }
+        ]
+      },
+      {
+        "id": "day-2",
+        "dayLabel": "2日目",
+        "dayName": "2026年10月10日（土）",
+        "theme": "挙式・披露宴・帰路",
+        "events": [
+          {
+            "id": "d2-e1",
+            "time": "04:20",
+            "title": "教会へ移動",
+            "description": "身支度を整え、結婚ミサのため教会へ移動。",
+            "mapUrl": "https://maps.app.goo.gl/QXoHq7GWv8sSmfK87",
+            "category": "travel"
+          },
+          {
+            "id": "d2-e2",
+            "time": "05:00",
+            "title": "教会にて結婚ミサ開式",
+            "description": "教会の神聖な雰囲気の中で執り行われる結婚ミサ。",
+            "mapUrl": "https://maps.app.goo.gl/QXoHq7GWv8sSmfK87",
+            "category": "ceremony"
+          },
+          {
+            "id": "d2-e3",
+            "time": "06:00",
+            "title": "教会にて朝食",
+            "description": "ミサ終了後、教会にて朝食をいただきます。",
+            "mapUrl": "",
+            "category": "meal"
+          },
+          {
+            "id": "d2-e4",
+            "time": "07:00",
+            "title": "ホテルへ戻り正装に着替え",
+            "description": "ホテルにて伝統儀式用の正装に着替えます。",
+            "mapUrl": "https://maps.app.goo.gl/8t89SH5mtoMpW2Vb9",
+            "category": "rest"
+          },
+          {
+            "id": "d2-e5",
+            "time": "08:30",
+            "title": "新婦生家へ移動",
+            "description": "所要時間約20分。",
+            "mapUrl": "https://maps.app.goo.gl/BqT59aKtr19VbeEC9",
+            "category": "travel"
+          },
+          {
+            "id": "d2-e6",
+            "time": "09:00",
+            "title": "親族拝礼式＆伝統婚礼儀式",
+            "description": "新婦生家にて伝統的な親族拝礼式を執り行います。",
+            "mapUrl": "https://maps.app.goo.gl/BqT59aKtr19VbeEC9",
+            "category": "ceremony"
+          },
+          {
+            "id": "d2-e7",
+            "time": "13:00",
+            "title": "ホテルへ戻り荷物整理・チェックアウト",
+            "description": "荷物をまとめてチェックアウト手続きを行います。",
+            "mapUrl": "https://maps.app.goo.gl/8t89SH5mtoMpW2Vb9",
+            "category": "rest"
+          },
+          {
+            "id": "d2-e8",
+            "time": "14:00",
+            "title": "サイゴンへ向けて出発",
+            "description": "帰路へつきます。",
+            "mapUrl": "",
+            "category": "travel"
+          },
+          {
+            "id": "d2-e9",
+            "time": "19:00",
+            "title": "サイゴン到着予定",
+            "description": "サイゴンにて小休憩の後、ティエンザンへ向かいます。",
+            "mapUrl": "",
+            "category": "travel"
+          },
+          {
+            "id": "d2-e10",
+            "time": "21:30",
+            "title": "ティエンザン到着・日程終了",
+            "description": "無事帰着。全日程終了となります。",
+            "mapUrl": "",
+            "category": "travel"
+          }
+        ]
+      }
+    ]
+  }
+}

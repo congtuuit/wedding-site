@@ -1,26 +1,55 @@
 {
-  "updated_at": "2026-09-28T11:03:00+07:00",
+  "updated_at": "2026-10-27T17:16:30+07:00",
   "working_on": {
-    "feature": "Cập nhật danh xưng tiệc cưới Nhà Trai (TP.HCM): 'Thành Hôn' -> 'Tân Hôn'",
-    "status": "completed",
-    "current_state": "Đã đổi đồng bộ tất cả text và nhãn từ 'Thành Hôn' sang 'Tân Hôn' theo đúng phong tục tiệc cưới Nhà Trai tại Sài Gòn (wedding-timeline.ts, wedding.json, layout.tsx, HeroSection.tsx, share/page.tsx). Verified production build (npm run build PASS, 0 lỗi)."
+    "feature": "Japanese Localization & UI Strings Refactor (/?lang=jp)",
+    "current_plan_path": "plans/261027-1643-japanese-localization/",
+    "current_phase": "phase-05",
+    "task": "Validation, Typography & QA",
+    "status": "completed"
   },
   "completed_tasks": [
-    { "task": "Cập nhật wedding-timeline.ts: Đổi ceremonyName, ceremonyBadge, invitationHeadline sang 'Lễ Tân Hôn', '✨ LỄ TÂN HÔN ✨', 'Thư Mời Tân Hôn'; hỗ trợ thêm param ?event=tan-hon", "status": "done" },
-    { "task": "Cập nhật wedding.json: Đổi headline 'Thư Mời Tân Hôn' và calendarDescription tiệc cưới mừng tân hôn Nhà Trai tại TP.HCM", "status": "done" },
-    { "task": "Cập nhật layout.tsx: Đồng bộ title, og:title, twitter:title mặc định sang 'Thư Mời Tân Hôn'", "status": "done" },
-    { "task": "Cập nhật HeroSection.tsx & GiftSection.tsx: Fallback danh xưng và comment đồng bộ 'Lễ Tân Hôn'", "status": "done" },
-    { "task": "Cập nhật trang /share: Cập nhật 3 mẫu tin nhắn mời (Thân mật, Trang trọng, Ngắn gọn) và các nút lọc, nhãn phong bì sang 'Lễ Tân Hôn'", "status": "done" },
-    { "task": "Build verification: npm run build thành công 100% không cảnh báo lỗi", "status": "done" }
+    {
+      "phase": "phase-01",
+      "task": "Audit & Refactor VI Hardcoded Strings into type-safe locale dictionary",
+      "status": "done",
+      "details": "Định nghĩa WeddingLocaleDictionary trong src/types/locale.ts, tạo src/data/locales/vi.ts, LocaleContext, refactor 100% component trong src/components/wedding/, verified npm run build PASS."
+    },
+    {
+      "phase": "phase-02",
+      "task": "JP Data & UI Dictionary Setup",
+      "status": "done",
+      "details": "Tạo src/data/wedding-jp.json, src/data/locales/jp.ts, src/lib/i18n.ts với văn phong thiệp cưới Nhật Bản chuẩn mực."
+    },
+    {
+      "phase": "phase-03",
+      "task": "Routing & SSR Metadata for JP",
+      "status": "done",
+      "details": "Cập nhật src/app/page.tsx để nhận diện searchParams.lang, tạo dynamic SSR metadata & OpenGraph (ja_JP)."
+    },
+    {
+      "phase": "phase-04",
+      "task": "Component Integration & Language Switcher",
+      "status": "done",
+      "details": "Tạo LanguageSwitcher (🇻🇳 VI | 🇯🇵 JP), tích hợp vào WeddingPageClient, chuyển đổi mượt mà không reload trang và bảo lưu các query params to, event."
+    },
+    {
+      "phase": "phase-05",
+      "task": "Validation, Typography & QA",
+      "status": "done",
+      "details": "Bổ sung font fallback chuẩn Nhật Bản vào tailwind.config.js, kiểm tra toàn diện, build production thành công 100% (npm run build PASS)."
+    }
   ],
   "decisions_made": [
     {
-      "decision": "Đổi toàn bộ danh xưng tiệc Nhà Trai (TP.HCM) từ 'Thành Hôn' sang 'Tân Hôn'",
-      "reason": "Chuẩn hóa theo đúng phong tục cưới hỏi truyền thống Việt Nam: Nhà Gái là Lễ Vu Quy, Nhà Trai tổ chức tiệc đón dâu là Lễ Tân Hôn."
+      "decision": "Rà soát và refactor toàn bộ text cứng trên trang index sang từ điển UI trước khi localize",
+      "reason": "Yêu cầu từ User: đảm bảo code sạch, tập trung, type-safe, không phân tán text cứng trong JSX và không gây ảnh hưởng bản tiếng Việt hiện tại."
+    },
+    {
+      "decision": "Chỉ áp dụng localize trên trang Index (/)",
+      "reason": "Yêu cầu từ User: giữ nguyên các trang khác (/share, /lich-trinh)."
     }
   ],
   "next_recommended_steps": [
-    { "task": "Kiểm tra thực tế giao diện trên trình duyệt", "priority": "medium" },
-    { "task": "Commit và push / deploy phiên bản mới lên production", "priority": "high" }
+    { "task": "Kiểm tra trải nghiệm thực tế trên trình duyệt hoặc dev server", "priority": "low" }
   ]
 }

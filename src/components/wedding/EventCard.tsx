@@ -3,12 +3,14 @@
 import React from "react";
 import { WeddingEvent } from "@/types/wedding";
 import { MapPin, Calendar, Navigation } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface EventCardProps {
   event: WeddingEvent;
 }
 
 export const EventCard: React.FC<EventCardProps> = ({ event }) => {
+  const { dict } = useLocale();
   const hasTimeslots = event.timeslots && event.timeslots.length > 0;
 
   // Các timeslot có cùng venue với địa điểm chính → không lặp lại địa chỉ trong từng mốc
@@ -20,7 +22,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
       {/* Category Ribbon */}
       <div className="flex items-start mb-6">
         <span className="px-3.5 py-1 rounded-full bg-[#8C1425]/10 text-[#8C1425] font-sans text-xs font-semibold tracking-wider uppercase">
-          {event.category === "sg" ? "Nhà Trai (TP.HCM)" : "Nhà Gái (Lâm Đồng)"}
+          {event.category === "sg" ? dict.events.categoryGroom : dict.events.categoryBride}
           {event.subtitle && (
             <span className="font-normal normal-case tracking-normal opacity-70 ml-1.5">
               · {event.subtitle}
@@ -92,7 +94,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
                         className="inline-flex items-center gap-1 mt-1.5 text-[10px] font-semibold text-[#8C1425] hover:underline font-sans tracking-wide"
                       >
                         <Navigation className="w-2.5 h-2.5" />
-                        Chỉ Đường
+                        {dict.events.getDirectionsShort}
                       </a>
                     )}
                   </div>
@@ -128,7 +130,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
           className="w-full inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-full bg-[#8C1425] hover:bg-[#700F1D] text-white font-sans text-xs font-semibold tracking-wider uppercase transition-all shadow-sm hover:shadow-md active:scale-95 min-h-[44px]"
         >
           <Navigation className="w-3.5 h-3.5" />
-          <span>Chỉ Đường (Google Maps)</span>
+          <span>{dict.events.getDirections}</span>
         </a>
       </div>
     </div>

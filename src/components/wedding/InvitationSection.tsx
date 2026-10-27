@@ -2,6 +2,7 @@ import React from "react";
 import { WeddingData } from "@/types/wedding";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { Heart } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface InvitationSectionProps {
   invitation: WeddingData["invitation"];
@@ -20,6 +21,7 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({
   shortCoupleName,
   stageKey = "sg",
 }) => {
+  const { dict } = useLocale();
   const displayHeadline = headline || invitation.headline;
   const coupleName = shortCoupleName || (stageKey === "que" ? "Hường & Tú" : "Tú & Hường");
 
@@ -33,7 +35,7 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({
         {/* Header */}
         <div>
           <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-semibold">
-            Trân Trọng Kính Mời
+            {dict.invitation.subtitle}
           </span>
           <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-1.5">
             {displayHeadline}
@@ -44,7 +46,7 @@ export const InvitationSection: React.FC<InvitationSectionProps> = ({
         {/* Personalized Guest Calling */}
         <div className="inline-block py-2 px-6 rounded-full bg-background border border-borderLight shadow-sm">
           <p className="font-heading text-base sm:text-lg text-[#8C1425] font-semibold tracking-wide">
-            Thân gửi: {guestName}
+            {dict.invitation.dearGuest(guestName)}
           </p>
         </div>
 

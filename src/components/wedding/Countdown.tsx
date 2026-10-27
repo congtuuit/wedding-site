@@ -4,6 +4,7 @@ import React from "react";
 import { useCountdown } from "@/hooks/useCountdown";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { Clock } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface CountdownProps {
   targetDateIso: string;
@@ -18,14 +19,15 @@ export const Countdown: React.FC<CountdownProps> = ({
   ceremonyName,
   location,
 }) => {
+  const { dict } = useLocale();
   const { days, hours, minutes, seconds, isExpired, isHydrated } =
     useCountdown(targetDateIso);
 
   const timeUnits = [
-    { label: "Ngày", value: days },
-    { label: "Giờ", value: hours },
-    { label: "Phút", value: minutes },
-    { label: "Giây", value: seconds },
+    { label: dict.countdown.days, value: days },
+    { label: dict.countdown.hours, value: hours },
+    { label: dict.countdown.minutes, value: minutes },
+    { label: dict.countdown.seconds, value: seconds },
   ];
 
   const ceremonyLabel = ceremonyName || "Ngày Trọng Đại";
@@ -35,11 +37,11 @@ export const Countdown: React.FC<CountdownProps> = ({
       <div className="max-w-xl mx-auto space-y-5">
         <div className="flex items-center justify-center gap-2 text-[#8C1425] font-sans text-xs uppercase tracking-[0.3em] font-semibold">
           <Clock className="w-3.5 h-3.5 text-[#8C1425]" />
-          <span>Cùng Đếm Ngược</span>
+          <span>{dict.countdown.subtitle}</span>
         </div>
 
         <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide">
-          Chờ Đón {ceremonyLabel}
+          {dict.countdown.headingPrefix} {ceremonyLabel}
         </h2>
         <p className="text-xs text-textMuted font-sans tracking-widest uppercase">
           {weddingDateFormatted} {location ? `• ${location}` : ""}
@@ -51,8 +53,8 @@ export const Countdown: React.FC<CountdownProps> = ({
           <div className="py-6 px-4 rounded-2xl bg-[#8C1425]/10 border border-[#8C1425]/20">
             <p className="font-heading text-lg text-[#8C1425] font-medium">
               {ceremonyName === "Lễ Vu Quy"
-                ? "Lễ Vu Quy tại nhà gái đã diễn ra thật trọn vẹn và ấm áp! 💐"
-                : "Hôm nay là ngày chúng mình chính thức về chung một nhà! 💐"}
+                ? dict.countdown.expiredQue
+                : dict.countdown.expiredSg}
             </p>
           </div>
         ) : (
@@ -76,9 +78,10 @@ export const Countdown: React.FC<CountdownProps> = ({
         )}
 
         <p className="text-xs text-textMuted font-sans tracking-wide pt-2">
-          Từng giây từng phút trôi qua đều hướng về {ceremonyLabel.toLowerCase()} của chúng mình.
+          {dict.countdown.subtext(ceremonyLabel)}
         </p>
       </div>
     </section>
   );
 };
+

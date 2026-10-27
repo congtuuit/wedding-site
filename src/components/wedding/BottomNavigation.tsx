@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Mail, Calendar, Image as ImageIcon, Send, Gift } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface BottomNavigationProps {
   onNavigate?: () => void; // Gọi trước khi scroll (dừng auto-scroll)
@@ -9,6 +10,7 @@ interface BottomNavigationProps {
 }
 
 export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate, visible }) => {
+  const { dict } = useLocale();
   const [internalVisible, setInternalVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate, 
             className="flex flex-col items-center justify-center p-1 text-textMain/85 hover:text-accent hover:drop-shadow-[0_0_8px_rgba(128,20,36,0.6)] transition-all min-w-[40px] min-h-[40px] cursor-pointer"
           >
             <Mail className="w-4 h-4 mb-0.5 text-textMain" />
-            <span className="text-[10px] font-sans font-medium">Thư Mời</span>
+            <span className="text-[10px] font-sans font-medium">{dict.nav.invitation}</span>
           </button>
 
           <button
@@ -66,7 +68,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate, 
             className="flex flex-col items-center justify-center p-1 text-textMain/85 hover:text-accent hover:drop-shadow-[0_0_8px_rgba(128,20,36,0.6)] transition-all min-w-[40px] min-h-[40px] cursor-pointer"
           >
             <Calendar className="w-4 h-4 mb-0.5 text-textMain" />
-            <span className="text-[10px] font-sans font-medium">Sự Kiện</span>
+            <span className="text-[10px] font-sans font-medium">{dict.nav.events}</span>
           </button>
 
           <button
@@ -74,7 +76,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate, 
             className="flex flex-col items-center justify-center p-1 text-textMain/85 hover:text-accent hover:drop-shadow-[0_0_8px_rgba(128,20,36,0.6)] transition-all min-w-[40px] min-h-[40px] cursor-pointer"
           >
             <ImageIcon className="w-4 h-4 mb-0.5 text-textMain" />
-            <span className="text-[10px] font-sans font-medium">Album</span>
+            <span className="text-[10px] font-sans font-medium">{dict.nav.gallery}</span>
           </button>
 
           <button
@@ -82,7 +84,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate, 
             className="flex flex-col items-center justify-center py-1.5 px-3 rounded-full bg-gradient-to-r from-accent to-[#5A0D18] text-white font-semibold hover:brightness-110 transition-all min-w-[40px] min-h-[40px] shadow-[0_0_15px_rgba(128,20,36,0.55)] cursor-pointer active:scale-95"
           >
             <Send className="w-3.5 h-3.5 mb-0.5 fill-white" />
-            <span className="text-[10px] font-sans font-bold tracking-wider">Xác Nhận</span>
+            <span className="text-[10px] font-sans font-bold tracking-wider">{dict.nav.rsvp}</span>
           </button>
 
           <button
@@ -90,7 +92,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({ onNavigate, 
             className="flex flex-col items-center justify-center p-1 text-textMain/85 hover:text-accent hover:drop-shadow-[0_0_8px_rgba(108,127,93,0.6)] transition-all min-w-[40px] min-h-[40px] cursor-pointer"
           >
             <Gift className="w-4 h-4 mb-0.5 text-textMain" />
-            <span className="text-[10px] font-sans font-medium">Mừng Cưới</span>
+            <span className="text-[10px] font-sans font-medium">{dict.nav.gift}</span>
           </button>
         </div>
       </div>

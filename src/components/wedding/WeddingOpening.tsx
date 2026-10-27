@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { CoupleInfo } from "@/types/wedding";
 import { Mail, Sparkles, Heart } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface WeddingOpeningProps {
   couple: CoupleInfo;
@@ -53,6 +54,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
   ceremonyBadge,
   stageKey = "sg",
 }) => {
+  const { dict } = useLocale();
   const [phase, setPhase] = useState<"idle" | "loading" | "splitting" | "dismissed">("idle");
   const [progress, setProgress] = useState<number>(0);
 
@@ -257,7 +259,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
           {/* Personalized Guest Badge Frame */}
           <div className="my-5 p-3.5 rounded-2xl bg-black/25 backdrop-blur-sm border border-amber-300/40 relative shadow-[0_4px_20px_rgba(0,0,0,0.3)] z-10">
             <p className="text-[10px] sm:text-[11px] text-[#FADBD8] font-sans tracking-[0.2em] uppercase mb-1 font-medium">
-              {isPersonalized ? "Trân trọng kính mời" : "Thân gửi lời mời tới"}
+              {isPersonalized ? dict.opening.invitationHonorificPersonalized : dict.opening.invitationHonorificGeneral}
             </p>
             <p className="font-playfair text-xl sm:text-2xl text-amber-200 font-medium tracking-wide drop-shadow-sm">
               {guestName}
@@ -276,7 +278,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full animate-shimmer-fast transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
 
                 <Mail className="w-4 h-4 text-[#3D0A12] transition-transform group-hover:-translate-y-0.5 pointer-events-none" />
-                <span className="pointer-events-none font-bold tracking-wider">MỞ THIỆP CƯỚI</span>
+                <span className="pointer-events-none font-bold tracking-wider">{dict.opening.openButton}</span>
                 <Heart className="w-3.5 h-3.5 fill-[#3D0A12] text-[#3D0A12] pointer-events-none animate-pulse" />
               </button>
             ) : (
@@ -285,7 +287,7 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
                 <div className="flex items-center justify-between text-xs font-sans text-amber-200">
                   <span className="flex items-center gap-1.5 font-medium tracking-wider">
                     <Sparkles className="w-3 h-3 text-amber-300 animate-spin" />
-                    Đang mở thiệp cưới...
+                    {dict.opening.openingProgress}
                   </span>
                   <span className="font-bold text-accentGold font-mono text-sm">{progress}%</span>
                 </div>
@@ -306,8 +308,8 @@ export const WeddingOpening: React.FC<WeddingOpeningProps> = ({
 
           <p className="mt-4 text-[11px] text-amber-100/75 tracking-wider font-sans relative z-10">
             {phase === "loading"
-              ? "Giai điệu hạnh phúc đang chuẩn bị cất lên..."
-              : "Chạm để mở thiệp & lắng nghe giai điệu hạnh phúc"}
+              ? dict.opening.hintLoading
+              : dict.opening.hintIdle}
           </p>
         </div>
       </div>

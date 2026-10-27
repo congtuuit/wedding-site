@@ -6,6 +6,7 @@ import { submitRSVP, getSavedRSVP, RSVPData } from "@/lib/rsvp";
 import { triggerCelebrationConfetti } from "@/lib/confetti";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { CheckCircle2, Send, Users, Heart, Sparkles } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface RSVPSectionProps {
   events: WeddingEvent[];
@@ -22,6 +23,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
   webhookUrl,
   showEventSelection = false,
 }) => {
+  const { dict } = useLocale();
   const [guestName, setGuestName] = useState<string>("");
   const [attending, setAttending] = useState<"yes" | "no">("yes");
   const [selectedEvent, setSelectedEvent] = useState<string>("all");
@@ -48,7 +50,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!guestName.trim()) {
-      alert("Vui lòng nhập tên của bạn!");
+      alert(dict.rsvp.alertNameRequired);
       return;
     }
 
@@ -79,13 +81,13 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
       <div className="max-w-2xl mx-auto text-center">
         {/* Header */}
         <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-semibold">
-          Xác Nhận Tham Dự
+          {dict.rsvp.subtitle}
         </span>
         <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-1.5">
-          Sổ Đăng Ký Khách Mời
+          {dict.rsvp.title}
         </h2>
         <p className="text-xs text-textMuted font-sans mt-1.5">
-          Để chuẩn bị đón tiếp chu đáo nhất, xin vui lòng phản hồi trước ngày cưới
+          {dict.rsvp.description}
         </p>
 
         <SectionDivider variant="botanical" className="my-4" />
@@ -97,10 +99,10 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <h3 className="font-serif text-2xl text-textMain font-medium">
-              Cảm Ơn Bạn Đã Xác Nhận!
+              {dict.rsvp.successTitle}
             </h3>
             <p className="text-sm text-textMuted font-sans max-w-md mx-auto leading-relaxed">
-              Chúng mình đã ghi nhận thông tin từ bạn ({guestName}). Rất mong được đón tiếp bạn trong ngày hạnh phúc!
+              {dict.rsvp.successMessage(guestName)}
             </p>
             <div className="pt-2">
               <button
@@ -108,7 +110,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
                 onClick={() => setIsSubmitted(false)}
                 className="text-xs text-accent underline hover:text-accent/80 font-sans cursor-pointer"
               >
-                Chỉnh sửa lại phản hồi
+                {dict.rsvp.editResponse}
               </button>
             </div>
           </div>
@@ -121,14 +123,14 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
             {/* Guest Name */}
             <div className="space-y-2">
               <label className="block text-xs uppercase tracking-wider font-sans font-semibold text-textMain">
-                Họ & Tên Khách Mời <span className="text-red-500">*</span>
+                {dict.rsvp.guestNameLabel} <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 required
                 value={guestName}
                 onChange={(e) => setGuestName(e.target.value)}
-                placeholder="Nhập họ và tên của bạn..."
+                placeholder={dict.rsvp.guestNamePlaceholder}
                 className="w-full px-4 py-3.5 rounded-xl bg-background border border-borderLight focus:border-accent focus:ring-1 focus:ring-accent outline-none text-sm text-textMain font-sans transition-all min-h-[48px]"
               />
             </div>
@@ -136,7 +138,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
             {/* Attendance Choice */}
             <div className="space-y-2">
               <label className="block text-xs uppercase tracking-wider font-sans font-semibold text-textMain">
-                Bạn Sẽ Tham Dự Chứ? <span className="text-red-500">*</span>
+                {dict.rsvp.attendingLabel} <span className="text-red-500">*</span>
               </label>
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <button
@@ -149,7 +151,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
                   }`}
                 >
                   <Heart className="w-3.5 h-3.5 shrink-0" />
-                  <span>Có, tôi sẽ tham dự</span>
+                  <span>{dict.rsvp.attendingYes}</span>
                 </button>
 
                 <button
@@ -161,7 +163,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
                       : "bg-background border-borderLight text-textMuted hover:text-textMain"
                   }`}
                 >
-                  <span>Rất tiếc, tôi không thể</span>
+                  <span>{dict.rsvp.attendingNo}</span>
                 </button>
               </div>
             </div>
@@ -172,14 +174,14 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
                 {showEventSelection && (
                   <div className="space-y-2">
                     <label className="block text-xs uppercase tracking-wider font-sans font-semibold text-textMain">
-                      Sự Kiện Bạn Sẽ Tham Gia
+                      {dict.rsvp.eventSelectionLabel}
                     </label>
                     <select
                       value={selectedEvent}
                       onChange={(e) => setSelectedEvent(e.target.value)}
                       className="w-full px-4 py-3.5 rounded-xl bg-background border border-borderLight focus:border-accent focus:ring-1 focus:ring-accent outline-none text-sm text-textMain font-sans transition-all min-h-[48px]"
                     >
-                      <option value="all">Tham dự toàn bộ sự kiện</option>
+                      <option value="all">{dict.rsvp.eventOptionAll}</option>
                       {events && events.length > 0 ? (
                         events.map((ev) => (
                           <option key={ev.id} value={ev.id}>
@@ -188,8 +190,8 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
                         ))
                       ) : (
                         <>
-                          <option value="sg">Tiệc Cưới Tại Sài Gòn</option>
-                          <option value="que">Lễ & Tiệc Cưới Ở Quê</option>
+                          <option value="sg">{dict.rsvp.eventOptionSg}</option>
+                          <option value="que">{dict.rsvp.eventOptionQue}</option>
                         </>
                       )}
                     </select>
@@ -198,7 +200,7 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
 
                 <div className="space-y-2">
                   <label className="block text-xs uppercase tracking-wider font-sans font-semibold text-textMain">
-                    Số Lượng Người Tham Dự (Bao gồm bạn)
+                    {dict.rsvp.guestCountLabel}
                   </label>
                   <div className="flex items-center gap-3">
                     {[1, 2, 3, 4, 5].map((num) => (
@@ -227,11 +229,11 @@ export const RSVPSection: React.FC<RSVPSectionProps> = ({
               className="w-full flex items-center justify-center gap-2 py-4 rounded-full bg-accent text-white font-sans font-semibold text-sm tracking-wider uppercase hover:bg-accent/90 shadow-md transition-all active:scale-[0.99] min-h-[50px] cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
-                <span>Đang ghi nhận...</span>
+                <span>{dict.rsvp.submitting}</span>
               ) : (
                 <>
                   <Send className="w-4 h-4" />
-                  <span>Gửi Xác Nhận Tham Dự</span>
+                  <span>{dict.rsvp.submitButton}</span>
                 </>
               )}
             </button>

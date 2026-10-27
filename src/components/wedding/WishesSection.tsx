@@ -12,6 +12,7 @@ import {
   Quote,
   MessageSquareHeart,
 } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface WishesSectionProps {
   initialGuestName: string;
@@ -26,6 +27,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
   webhookUrl,
   stageKey = "sg",
 }) => {
+  const { dict } = useLocale();
   const isVuQuy = stageKey === "que";
   const coupleShortName = isVuQuy ? "Hường & Tú" : "Tú & Hường";
 
@@ -302,13 +304,13 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
         {/* Header */}
         <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-semibold flex items-center justify-center gap-1.5">
           <MessageSquareHeart className="w-3.5 h-3.5" />
-          <span>Sổ Lưu Bút</span>
+          <span>{dict.wishes.subtitle}</span>
         </span>
         <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide mt-1.5">
-          Gửi Lời Chúc Phúc
+          {dict.wishes.title}
         </h2>
         <p className="text-xs text-textMuted font-sans max-w-md mx-auto mt-1.5">
-          Từng lời chúc của bạn là món quà ý nghĩa nhất cho ngày trọng đại của {coupleShortName}
+          {dict.wishes.description(coupleShortName)}
         </p>
 
         <SectionDivider variant="botanical" className="my-4" />
@@ -318,14 +320,14 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs uppercase tracking-wider font-sans font-medium text-textMuted mb-1.5">
-                Tên của bạn
+                {dict.wishes.nameLabel}
               </label>
               <input
                 type="text"
                 maxLength={60}
                 value={senderName}
                 onChange={(e) => setSenderName(e.target.value.slice(0, 60))}
-                placeholder="Nhập tên của bạn..."
+                placeholder={dict.wishes.namePlaceholder}
                 className="w-full px-4 py-3 rounded-xl bg-surface border border-borderLight focus:border-accent focus:ring-1 focus:ring-accent outline-none text-sm text-textMain font-sans"
               />
             </div>
@@ -333,7 +335,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-xs uppercase tracking-wider font-sans font-medium text-textMuted">
-                  Lời chúc gửi tới {coupleShortName}
+                  {dict.wishes.messageLabel(coupleShortName)}
                 </label>
                 <span
                   className={`text-[11px] font-sans transition-colors ${
@@ -351,7 +353,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
                 maxLength={300}
                 value={content}
                 onChange={(e) => setContent(e.target.value.slice(0, 300))}
-                placeholder="Viết lời chúc thân thương tại đây (tối đa 300 ký tự)..."
+                placeholder={dict.wishes.messagePlaceholder}
                 className="w-full px-4 py-3 rounded-xl bg-surface border border-borderLight focus:border-accent focus:ring-1 focus:ring-accent outline-none text-sm text-textMain font-sans resize-none"
               />
             </div>
@@ -360,11 +362,11 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
               {showSuccessBadge ? (
                 <span className="text-xs text-accent font-sans flex items-center gap-1.5 animate-fade-in">
                   <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                  <span className="font-medium">Đã gửi lời chúc thành công!</span>
+                  <span className="font-medium">{dict.wishes.successBadge}</span>
                 </span>
               ) : (
                 <span className="text-[11px] text-textMuted font-sans">
-                  Lời chúc sẽ hiển thị ngay bên dưới
+                  {dict.wishes.displayHint}
                 </span>
               )}
 
@@ -374,7 +376,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent text-white font-sans text-xs font-semibold tracking-wider uppercase hover:bg-accent/90 transition-all shadow-sm active:scale-95 disabled:opacity-50 min-h-[44px] cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>{isSubmitting ? "Đang gửi..." : "Gửi Lời Chúc"}</span>
+                <span>{isSubmitting ? dict.wishes.sending : dict.wishes.sendButton}</span>
               </button>
             </div>
           </form>
@@ -387,7 +389,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
             <div className="flex items-center justify-between mb-3 px-2">
               <span className="text-xs font-heading font-semibold text-textMain flex items-center gap-1.5">
                 <Heart className="w-3.5 h-3.5 text-accent fill-accent" />
-                <span>Lời Chúc Mừng ({wishes.length})</span>
+                <span>{dict.wishes.wishesCount(wishes.length)}</span>
               </span>
 
               {/* Navigation Nudge Buttons */}
@@ -395,7 +397,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
                 <button
                   type="button"
                   onClick={handlePrev}
-                  aria-label="Lời chúc trước"
+                  aria-label={dict.wishes.prevWishAria}
                   className="w-8 h-8 rounded-full bg-background border border-borderLight hover:border-accent/50 text-textMuted hover:text-textMain flex items-center justify-center transition-all active:scale-90 shadow-xs cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -403,7 +405,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
                 <button
                   type="button"
                   onClick={handleNext}
-                  aria-label="Lời chúc kế tiếp"
+                  aria-label={dict.wishes.nextWishAria}
                   className="w-8 h-8 rounded-full bg-background border border-borderLight hover:border-accent/50 text-textMuted hover:text-textMain flex items-center justify-center transition-all active:scale-90 shadow-xs cursor-pointer"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -448,7 +450,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
                     {item.createdAt && (
                       <div className="pt-2.5 mt-3 border-t border-borderLight/50 flex items-center justify-between text-[10px] text-textMuted/60 font-sans">
                         <span>{item.createdAt}</span>
-                        <Heart className="w-3 h-3 text-accent/40" />
+                        <Heart className="w-3.5 h-3.5 text-accent/40" />
                       </div>
                     )}
                   </div>
@@ -458,7 +460,7 @@ export const WishesSection: React.FC<WishesSectionProps> = ({
 
             {/* Hint for interaction */}
             <p className="text-[10px] text-textMuted/70 font-sans tracking-wide mt-2.5 text-center">
-              ✦ Tự động cuộn lướt êm ái • Chạm hoặc vuốt tay để dừng đọc ✦
+              {dict.wishes.scrollHint}
             </p>
           </div>
         )}

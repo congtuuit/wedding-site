@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import weddingDataJson from "@/data/wedding.json";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { WeddingData } from "@/types/wedding";
 import { useGuestName } from "@/hooks/useGuestName";
 import { useAutoScroll } from "@/hooks/useAutoScroll";
 import { useActiveWeddingStage } from "@/hooks/useActiveWeddingStage";
 import { ActiveWeddingStage } from "@/lib/wedding-timeline";
+import { getWeddingData, getLocaleDictionary, normalizeLocale, SupportedLocale } from "@/lib/i18n";
 
 import { WeddingOpening } from "@/components/wedding/WeddingOpening";
 import { MusicController, MusicControllerHandle } from "@/components/wedding/MusicController";
@@ -27,20 +27,33 @@ import { BottomNavigation } from "@/components/wedding/BottomNavigation";
 import { FloatingPetals } from "@/components/ui/FloatingPetals";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { BackToTop } from "@/components/ui/BackToTop";
-
-const weddingData = weddingDataJson as WeddingData;
+import { LocaleProvider, LocaleType } from "@/context/LocaleContext";
 
 interface WeddingPageClientProps {
   initialGuestName?: string;
   initialIsPersonalized?: boolean;
   initialStage?: ActiveWeddingStage;
+  initialLang?: SupportedLocale;
 }
 
 export function WeddingPageClient({
   initialGuestName,
   initialIsPersonalized,
   initialStage,
+  initialLang = "vi",
 }: WeddingPageClientProps) {
+  const [locale, setLocale] = useState<LocaleType>(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const urlLang = params.get("lang");
+      if (urlLang) return normalizeLocale(urlLang);
+    }
+    return initialLang || "vi";
+  });
+
+  const weddingData = useMemo<WeddingData>(() => getWeddingData(locale), [locale]);
+  const dict = useMemo(() => getLocaleDictionary(locale), [locale]);
+
   const { guestName: clientGuestName, isPersonalized: clientIsPersonalized } =
     useGuestName();
 
@@ -112,8 +125,39 @@ export function WeddingPageClient({
     resumeDelay: 8000,
   });
 
+  const orderedEvents = useMemo(() => {
+    if (locale === "vi") return stage.orderedEvents;
+    if (stage.stageKey === "sg") {
+      return [...weddingData.events].sort((a, b) => (a.category === "sg" ? -1 : 1));
+    }
+    return weddingData.events;
+  }, [locale, stage.orderedEvents, stage.stageKey, weddingData.events]);
+
+  const localizedWeddingDateFormatted =
+    locale === "jp" ? weddingData.couple.weddingDateFormatted : stage.weddingDateFormatted;
+
+  const localizedCeremonyName =
+    locale === "jp"
+      ? stage.stageKey === "que"
+        ? "挙式・新婦側披露宴"
+        : "結婚披露宴"
+      : stage.ceremonyName;
+
+  const localizedHeadline =
+    locale === "jp" ? weddingData.invitation.headline : stage.invitationHeadline;
+
+  const localizedShortCoupleName = stage.shortCoupleName;
+
+  const localizedLocation =
+    locale === "jp"
+      ? stage.stageKey === "que"
+        ? "新婦生家（ラムドン省カッティエン3）"
+        : "The ADORA Center 3階 エメラルドホール（ホーチミン市タンソンニャット坊ホアンヴァンツー通り431番地）"
+      : stage.location;
+
   return (
-    <main className="relative w-full max-w-[480px] min-h-screen mx-auto bg-background text-textMain shadow-[0_0_90px_rgba(0,0,0,0.85)] border-x border-[#8C1425]/15 overflow-x-hidden">
+    <LocaleProvider locale={locale} dict={dict} setLocale={setLocale}>
+      <main className="relative w-full max-w-[480px] min-h-screen mx-auto bg-background text-textMain shadow-[0_0_90px_rgba(0,0,0,0.85)] border-x border-[#8C1425]/15 overflow-x-hidden">
       {/* 1. Opening Envelope Modal Cover with Love Burst Effect */}
       <WeddingOpening
         couple={weddingData.couple}
@@ -121,8 +165,8 @@ export function WeddingPageClient({
         isPersonalized={isPersonalized}
         onOpen={handleOpenInvitation}
         onStartAudio={handleStartAudio}
-        weddingDateFormatted={stage.weddingDateFormatted}
-        ceremonyBadge={stage.ceremonyName}
+        weddingDateFormatted={localizedWeddingDateFormatted}
+        ceremonyBadge={localizedCeremonyName}
         stageKey={stage.stageKey}
       />
 
@@ -135,8 +179,8 @@ export function WeddingPageClient({
         couple={weddingData.couple}
         heroPhoto={weddingData.hero.mainPhoto}
         isRevealed={hasOpenedInvitation}
-        weddingDateFormatted={stage.weddingDateFormatted}
-        ceremonyName={stage.ceremonyName}
+        weddingDateFormatted={localizedWeddingDateFormatted}
+        ceremonyName={localizedCeremonyName}
         stageKey={stage.stageKey}
       />
 
@@ -152,8 +196,8 @@ export function WeddingPageClient({
       <ScrollReveal direction="up" delay={100}>
         <InvitationSection
           invitation={weddingData.invitation}
-          headline={stage.invitationHeadline}
-          shortCoupleName={stage.shortCoupleName}
+          headline={localizedHeadline}
+          shortCoupleName={localizedShortCoupleName}
           stageKey={stage.stageKey}
           guestName={guestName}
           isPersonalized={isPersonalized}
@@ -164,9 +208,9 @@ export function WeddingPageClient({
       <ScrollReveal direction="up" delay={150}>
         <Countdown
           targetDateIso={stage.targetCountdownIso}
-          weddingDateFormatted={stage.weddingDateFormatted}
-          ceremonyName={stage.ceremonyName}
-          location={stage.location}
+          weddingDateFormatted={localizedWeddingDateFormatted}
+          ceremonyName={localizedCeremonyName}
+          location={localizedLocation}
         />
       </ScrollReveal>
 
@@ -178,7 +222,7 @@ export function WeddingPageClient({
       {/* 9. Wedding Events & Google Maps & Calendar */}
       <ScrollReveal direction="up" delay={100}>
         <EventSection
-          events={stage.orderedEvents}
+          events={orderedEvents}
           defaultFilter={stage.defaultFilter}
           activeStageKey={stage.stageKey}
         />
@@ -192,7 +236,7 @@ export function WeddingPageClient({
       {/* 11. RSVP Confirmation Section */}
       <ScrollReveal direction="up" delay={100}>
         <RSVPSection
-          events={stage.orderedEvents}
+          events={orderedEvents}
           initialGuestName={guestName}
           isPersonalized={isPersonalized}
           webhookUrl={weddingData.appsheetWebhookUrl}
@@ -223,7 +267,7 @@ export function WeddingPageClient({
       <ScrollReveal direction="up" delay={100}>
         <ThankYouSection
           couple={weddingData.couple}
-          weddingDateFormatted={stage.weddingDateFormatted}
+          weddingDateFormatted={localizedWeddingDateFormatted}
           stageKey={stage.stageKey}
           closingPhoto={
             weddingData.gallery[weddingData.gallery.length - 1]?.src ||
@@ -271,6 +315,7 @@ export function WeddingPageClient({
         </div>
       </div>
     </main>
+    </LocaleProvider>
   );
 }
 

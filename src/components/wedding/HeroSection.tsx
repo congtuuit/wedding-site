@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { CoupleInfo } from "@/types/wedding";
 import { ChevronDown, Calendar, Heart, Sparkles } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface HeroSectionProps {
   couple: CoupleInfo;
@@ -22,6 +23,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   ceremonyName,
   stageKey = "sg",
 }) => {
+  const { dict } = useLocale();
   const isVuQuy = stageKey === "que";
   const firstPersonName = isVuQuy ? couple.bride.name : couple.groom.name;
   const secondPersonName = isVuQuy ? couple.groom.name : couple.bride.name;
@@ -70,7 +72,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       >
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-amber-300/40 text-amber-200 text-xs font-sans tracking-[0.25em] uppercase shadow-[0_0_15px_rgba(212,175,55,0.25)]">
           <Sparkles className="w-3 h-3 text-amber-300 animate-spin-slow" />
-          <span>Save The Date</span>
+          <span>{dict.hero.badge}</span>
         </div>
       </div>
 
@@ -167,7 +169,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Shimmer on button */}
             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
             <Heart className="w-3.5 h-3.5 fill-[#3D0A12] text-[#3D0A12]" />
-            <span>Xác Nhận Tham Dự</span>
+            <span>{dict.hero.rsvpButton}</span>
           </button>
         </div>
       </div>
@@ -182,11 +184,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <button
           type="button"
           onClick={scrollToNext}
-          aria-label="Cuộn xuống xem thiệp"
+          aria-label={dict.hero.scrollDownAria}
           className="flex flex-col items-center text-white/75 hover:text-amber-200 transition-colors cursor-pointer"
         >
           <span className="text-[10px] tracking-[0.25em] uppercase mb-1 font-sans font-light">
-            Cuộn xuống
+            {dict.hero.scrollDown}
           </span>
           <ChevronDown className="w-5 h-5 animate-bounce" />
         </button>

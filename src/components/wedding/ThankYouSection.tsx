@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { CoupleInfo } from "@/types/wedding";
 import { Heart } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface ThankYouSectionProps {
   couple: CoupleInfo;
@@ -16,6 +17,7 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
   weddingDateFormatted,
   stageKey = "sg",
 }) => {
+  const { dict } = useLocale();
   const isVuQuy = stageKey === "que";
   const firstPersonName = isVuQuy ? couple.bride.name : couple.groom.name;
   const secondPersonName = isVuQuy ? couple.groom.name : couple.bride.name;
@@ -33,10 +35,10 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
         {/* Headline */}
         <div className="space-y-2">
           <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-normal tracking-wide">
-            Thank You!
+            {dict.thankYou.title}
           </h2>
           <p className="font-sans text-sm sm:text-base text-accentGold font-medium italic">
-            Cảm ơn bạn đã luôn yêu thương & đồng hành cùng chúng mình
+            {dict.thankYou.subtitle}
           </p>
         </div>
 
@@ -64,7 +66,7 @@ export const ThankYouSection: React.FC<ThankYouSectionProps> = ({
 
         {/* Subtle Footer */}
         <div className="pt-12 text-[11px] text-textMuted/60 font-sans tracking-widest uppercase border-t border-borderLight/60">
-          Forever & Always • {monogramInitials} • 2026
+          {dict.thankYou.footerQuote(monogramInitials)}
         </div>
       </div>
     </section>

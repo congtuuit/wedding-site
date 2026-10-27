@@ -1,24 +1,26 @@
 import React from "react";
 import Image from "next/image";
 import { TimelineStory } from "@/types/wedding";
-import { SectionDivider } from "@/components/ui/SectionDivider";
+ import { SectionDivider } from "@/components/ui/SectionDivider";
 import { Heart } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 interface CoupleStoryProps {
   timeline: TimelineStory[];
 }
 
 export const CoupleStory: React.FC<CoupleStoryProps> = ({ timeline }) => {
+  const { dict } = useLocale();
   return (
     <section id="story" className="w-full py-16 px-4 bg-surface text-textMain relative overflow-hidden">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
           <span className="text-[11px] uppercase font-sans tracking-[0.3em] text-accent font-medium">
-            Chuyện Chúng Mình
+            {dict.story.subtitle}
           </span>
           <h2 className="font-heading text-2xl sm:text-3xl text-textMain font-light tracking-wide mt-1.5">
-            Hành Trình Yêu Thương
+            {dict.story.title}
           </h2>
           <SectionDivider variant="botanical" className="my-4" />
         </div>
